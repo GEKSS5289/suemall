@@ -1,4 +1,4 @@
-##Sue-mall
+##Sue-mall(JPA)
 构建聚合工程 
 #####sue-mall
 #####sue-common 公共组件 
