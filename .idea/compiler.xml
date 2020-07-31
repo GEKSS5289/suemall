@@ -6,11 +6,11 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="sue-api" />
         <module name="sue-pojo" />
+        <module name="sue-api" />
+        <module name="sue-common" />
         <module name="sue-service" />
         <module name="sue-repository" />
-        <module name="sue-common" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel target="8" />
