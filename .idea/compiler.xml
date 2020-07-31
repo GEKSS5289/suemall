@@ -8,8 +8,8 @@
         <outputRelativeToContentRoot value="true" />
         <module name="sue-api" />
         <module name="sue-pojo" />
-        <module name="sue-mapper" />
         <module name="sue-service" />
+        <module name="sue-repository" />
         <module name="sue-common" />
       </profile>
     </annotationProcessing>
@@ -19,8 +19,8 @@
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="sue-api" options="-parameters" />
       <module name="sue-common" options="-parameters" />
-      <module name="sue-mapper" options="-parameters" />
       <module name="sue-pojo" options="-parameters" />
+      <module name="sue-repository" options="-parameters" />
       <module name="sue-service" options="-parameters" />
     </option>
   </component>

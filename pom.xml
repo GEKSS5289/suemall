@@ -17,7 +17,7 @@
     <modules>
         <module>sue-common</module>
         <module>sue-pojo</module>
-        <module>sue-mapper</module>
+        <module>sue-repository</module>
         <module>sue-service</module>
         <module>sue-api</module>
     </modules>
