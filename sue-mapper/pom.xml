@@ -11,11 +11,5 @@
 
     <artifactId>sue-mapper</artifactId>
 
-    <dependencies>
-        <dependency>
-            <groupId>com.sue</groupId>
-            <artifactId>sue-pojo</artifactId>
-            <version>${project.version}</version>
-        </dependency>
-    </dependencies>
+
 </project>

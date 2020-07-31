@@ -20,6 +20,7 @@
         <module>sue-mapper</module>
         <module>sue-service</module>
         <module>sue-api</module>
+        <module>sue-mapper</module>
     </modules>
 
     <properties>
