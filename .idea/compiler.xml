@@ -6,11 +6,18 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
+<<<<<<< HEAD
         <module name="sue-api" />
+=======
+>>>>>>> 656f49661d4b07c57a1eb795490b9a1aa1e7c050
         <module name="sue-pojo" />
         <module name="sue-mapper" />
         <module name="sue-service" />
         <module name="sue-common" />
+<<<<<<< HEAD
+=======
+        <module name="sue-api" />
+>>>>>>> 656f49661d4b07c57a1eb795490b9a1aa1e7c050
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel target="8" />
