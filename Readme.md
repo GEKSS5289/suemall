@@ -6,4 +6,3 @@
 #####sue-mapper 数据库映射 
 #####sue-service 业务逻辑层 
 #####sue-api 表现层
-#####mybatis
