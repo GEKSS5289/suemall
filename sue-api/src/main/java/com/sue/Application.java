@@ -15,6 +15,7 @@ import javax.persistence.Entity;
 
 
 @SpringBootApplication
+@ComponentScan(basePackages={"com.sue","org.n3r.idworker"})
 public class Application {
     public static void main(String[] args){
         SpringApplication.run(Application.class,args);

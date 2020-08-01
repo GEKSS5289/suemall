@@ -6,7 +6,7 @@ import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import java.sql.Date;
+import java.util.Date;
 import java.sql.Timestamp;
 import java.util.Objects;
 
@@ -29,8 +29,8 @@ public class Users {
     private String email;
     private Integer sex;
     private Date birthday;
-    private Timestamp createdTime;
-    private Timestamp updatedTime;
+    private Date createdTime;
+    private Date updatedTime;
 
 
 }
