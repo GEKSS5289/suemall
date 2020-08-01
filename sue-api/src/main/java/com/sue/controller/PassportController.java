@@ -44,7 +44,7 @@ public class PassportController {
 
 
     @ApiOperation(value = "用户注册",tags = {"用户注册"},httpMethod ="POST" )
-    @PostMapping("/register")
+    @PostMapping("/regist")
     public IMOOCJSONResult register(@RequestBody UserDTO userDTO){
         if(StringUtils.isNotBlank(userDTO.getUsername())&&
         StringUtils.isNotBlank(userDTO.getPassword())&&
