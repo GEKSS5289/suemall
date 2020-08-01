@@ -1,14 +1,22 @@
 package com.sue.controller;
 
 import com.sue.dto.UserDTO;
+import com.sue.pojo.Users;
 import com.sue.service.UsersServie;
+import com.sue.utils.CookieUtils;
 import com.sue.utils.IMOOCJSONResult;
+import com.sue.utils.JsonUtils;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.apache.commons.lang3.StringUtils;
 import org.aspectj.asm.IModelFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.UnsupportedEncodingException;
 
 /**
  * @author sue
@@ -45,7 +53,10 @@ public class PassportController {
 
     @ApiOperation(value = "用户注册",tags = {"用户注册"},httpMethod ="POST" )
     @PostMapping("/regist")
-    public IMOOCJSONResult register(@RequestBody UserDTO userDTO){
+    public IMOOCJSONResult register(
+            @RequestBody UserDTO userDTO,
+            HttpServletRequest request,
+            HttpServletResponse response){
         if(StringUtils.isNotBlank(userDTO.getUsername())&&
         StringUtils.isNotBlank(userDTO.getPassword())&&
         StringUtils.isNotBlank(userDTO.getConfirmPassword())){
@@ -58,11 +69,39 @@ public class PassportController {
             if(!userDTO.getPassword().equals(userDTO.getConfirmPassword())){
                 return IMOOCJSONResult.errorMsg("两次密码不一致");
             }
-            usersServie.createUser(userDTO);
+            Users user = usersServie.createUser(userDTO);
+            CookieUtils.setCookie(request,response,"user", JsonUtils.objectToJson(user),true);
             return IMOOCJSONResult.ok();
         }
         return IMOOCJSONResult.errorMsg("所有参数不可为空");
     }
+
+
+
+    @ApiOperation(value = "用户登录",notes = "用户登陆",httpMethod = "POST")
+    @PostMapping("/login")
+    public IMOOCJSONResult login(
+            @RequestBody UserDTO userDTO,
+            HttpServletRequest request,
+            HttpServletResponse response
+    ) throws UnsupportedEncodingException {
+        Users login = usersServie.login(userDTO, request, response);
+        return login!=null?IMOOCJSONResult.ok(login):IMOOCJSONResult.errorMsg("登陆失败");
+    }
+
+    @ApiOperation(value = "用户退出",notes = "用户退出",httpMethod = "POST")
+    @PostMapping("/logout")
+    public IMOOCJSONResult login(
+            @RequestBody String userId,
+            HttpServletRequest request,
+            HttpServletResponse response
+    ){
+        usersServie.logout(userId,request,response);
+        return IMOOCJSONResult.ok();
+    }
+
+
+
 
 
 }
