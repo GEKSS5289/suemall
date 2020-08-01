@@ -51,7 +51,7 @@ public class PassportController {
 
 
     @ApiOperation(value = "用户注册",notes="用户注册",httpMethod = "POST")
-    @PostMapping("/register")
+    @PostMapping("/regist")
     public IMOOCJSONResult createUser(@RequestBody UserDTO userDTO) {
 
         if (
