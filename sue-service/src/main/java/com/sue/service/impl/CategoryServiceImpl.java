@@ -3,7 +3,6 @@ package com.sue.service.impl;
 import com.sue.mapper.CategoryMapper;
 import com.sue.pojo.Category;
 import com.sue.service.CategoryService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import tk.mybatis.mapper.entity.Example;
 
