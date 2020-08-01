@@ -1,5 +1,7 @@
 package com.sue.service;
 
+import com.sue.pojo.Users;
+import com.sue.pojo.dto.UserDTO;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -12,4 +14,11 @@ public interface UserService {
      * 判断用户是否存在
      */
     public boolean queryUsernameIsExist(String username);
+
+    /**
+     * 创建用户
+     * @param userDTO
+     * @return
+     */
+    public Users createUser(UserDTO userDTO);
 }
