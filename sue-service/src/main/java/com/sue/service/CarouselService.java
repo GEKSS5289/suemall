@@ -15,4 +15,6 @@ import java.util.List;
 public interface CarouselService {
     public List<Carousel> queryall(Integer isShow);
 
+
+
 }

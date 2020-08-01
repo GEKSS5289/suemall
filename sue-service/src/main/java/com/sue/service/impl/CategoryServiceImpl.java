@@ -4,6 +4,7 @@ import com.sue.mapper.CategoryMapper;
 import com.sue.mapper.CategoryMapperCustom;
 import com.sue.pojo.Category;
 import com.sue.pojo.vo.CategoryVO;
+import com.sue.pojo.vo.NewItemsVO;
 import com.sue.pojo.vo.SubCategoryVO;
 import com.sue.service.CategoryService;
 import org.springframework.stereotype.Service;
@@ -12,7 +13,9 @@ import org.springframework.transaction.annotation.Transactional;
 import tk.mybatis.mapper.entity.Example;
 
 import javax.annotation.Resource;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author sue
@@ -45,5 +48,20 @@ public class CategoryServiceImpl implements CategoryService {
     public List<CategoryVO> getSubCatList(Integer rootCatId) {
 
         return categoryMapperCustom.getSubCatList(rootCatId);
+    }
+
+    /**
+     * 查询首页每个一级分类下的6条最新数据
+     *
+     * @param rootCatId
+     * @return
+     */
+    @Transactional(propagation = Propagation.SUPPORTS)
+    @Override
+    public List<NewItemsVO> getSixNewItemsLazy(Integer rootCatId) {
+        Map<String,Object> map = new HashMap<>();
+        map.put("rootCatId",rootCatId);
+
+        return categoryMapperCustom.getSixNewItemsLazy(map);
     }
 }

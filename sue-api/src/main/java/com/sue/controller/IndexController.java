@@ -82,4 +82,32 @@ public class IndexController {
 
 
 
+
+
+
+
+    @ApiOperation(value = "查询每个一级分类下的6条最新商品数据",notes = "查询每个一级分类下的6条最新商品数据",httpMethod = "GET")
+    @GetMapping("/sixNewItems/{rootCatId}")
+    public IMOOCJSONResult sixNewItems(
+            @ApiParam(name = "rootCatId",value = "一级分类ID",required = true)
+            @PathVariable Integer rootCatId
+    ){
+
+        if(rootCatId == null){
+            return IMOOCJSONResult.errorMsg("");
+        }
+
+        return IMOOCJSONResult.ok(categoryService.getSixNewItemsLazy(rootCatId));
+    }
+
+
+
+
+
+
+
+
+
+
+
 }
