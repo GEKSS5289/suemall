@@ -57,6 +57,12 @@ public class PassportController {
 
 
 
+
+
+
+
+
+
     @ApiOperation(value = "用户注册",notes="用户注册",httpMethod = "POST")
     @PostMapping("/regist")
     public IMOOCJSONResult createUser(
@@ -142,6 +148,9 @@ public class PassportController {
 
 
 
+
+
+
     public void setNullProperties(Users users){
         users.setPassword(null);
         users.setMobile(null);
@@ -150,6 +159,28 @@ public class PassportController {
         users.setUpdatedTime(null);
         users.setBirthday(null);
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+    @ApiOperation(value = "用户退出登录",notes="用户退出登录",httpMethod = "POST")
+    @PostMapping("/logout")
+    public IMOOCJSONResult logout(@RequestParam String userId,HttpServletRequest request,HttpServletResponse response){
+        //清除用户相关信息的cookie
+        CookieUtils.deleteCookie(request,response,"user");
+        return IMOOCJSONResult.ok();
+    }
+
+
 
 
 
