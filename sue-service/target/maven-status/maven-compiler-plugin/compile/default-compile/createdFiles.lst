@@ -1,2 +1,6 @@
+com\sue\service\CarouselService.class
+com\sue\service\impl\CategoryServiceImpl.class
+com\sue\service\CategoryService.class
+com\sue\service\impl\CarouselServiceImpl.class
 com\sue\service\UserService.class
 com\sue\service\impl\UserServiceImpl.class

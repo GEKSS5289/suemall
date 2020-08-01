@@ -1,98 +1,83 @@
 package com.sue.pojo;
 
-import javax.persistence.*;
-
 public class Category {
-    /**
-     * id
-     */
-    @Id
-    private String id;
+    private Integer id;
 
-    /**
-     * 父id
-     */
-    private String parent;
-
-    /**
-     * 名称
-     */
     private String name;
 
-    /**
-     * 顺序
-     */
-    private Integer sort;
+    private Integer type;
 
-    /**
-     * 获取id
-     *
-     * @return id - id
-     */
-    public String getId() {
+    private Integer fatherId;
+
+    private String logo;
+
+    private String slogan;
+
+    private String catImage;
+
+    private String bgColor;
+
+    public Integer getId() {
         return id;
     }
 
-    /**
-     * 设置id
-     *
-     * @param id id
-     */
-    public void setId(String id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
-    /**
-     * 获取父id
-     *
-     * @return parent - 父id
-     */
-    public String getParent() {
-        return parent;
-    }
-
-    /**
-     * 设置父id
-     *
-     * @param parent 父id
-     */
-    public void setParent(String parent) {
-        this.parent = parent;
-    }
-
-    /**
-     * 获取名称
-     *
-     * @return name - 名称
-     */
     public String getName() {
         return name;
     }
 
-    /**
-     * 设置名称
-     *
-     * @param name 名称
-     */
     public void setName(String name) {
         this.name = name;
     }
 
-    /**
-     * 获取顺序
-     *
-     * @return sort - 顺序
-     */
-    public Integer getSort() {
-        return sort;
+    public Integer getType() {
+        return type;
     }
 
-    /**
-     * 设置顺序
-     *
-     * @param sort 顺序
-     */
-    public void setSort(Integer sort) {
-        this.sort = sort;
+    public void setType(Integer type) {
+        this.type = type;
+    }
+
+    public Integer getFatherId() {
+        return fatherId;
+    }
+
+    public void setFatherId(Integer fatherId) {
+        this.fatherId = fatherId;
+    }
+
+    public String getLogo() {
+        return logo;
+    }
+
+    public void setLogo(String logo) {
+        this.logo = logo;
+    }
+
+    public String getSlogan() {
+        return slogan;
+    }
+
+    public void setSlogan(String slogan) {
+        this.slogan = slogan;
+    }
+
+    public String getCatImage() {
+        return catImage;
+    }
+
+    public void setCatImage(String catImage) {
+        this.catImage = catImage;
+    }
+
+    public String getBgColor() {
+        return bgColor;
+    }
+
+    public void setBgColor(String bgColor) {
+        this.bgColor = bgColor;
     }
 }
