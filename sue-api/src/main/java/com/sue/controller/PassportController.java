@@ -3,6 +3,8 @@ package com.sue.controller;
 import com.sue.dto.UserDTO;
 import com.sue.service.UsersServie;
 import com.sue.utils.IMOOCJSONResult;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.apache.commons.lang3.StringUtils;
 import org.aspectj.asm.IModelFilter;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
  * @author sue
  * @date 2020/7/31 10:29
  */
-
+@Api(value = "用户接口",tags = {"关于用户相关接口"})
 @RestController
 @RequestMapping("passport")
 public class PassportController {
@@ -20,6 +22,11 @@ public class PassportController {
     @Autowired
     private UsersServie usersServie;
 
+
+
+
+
+    @ApiOperation(value = "用户是否存在",tags = {"用户是否存在"},httpMethod ="GET" )
     @GetMapping("/usernameIsExist")
     public IMOOCJSONResult usernameIsExist(@RequestParam String username){
         if(StringUtils.isBlank(username)){
@@ -36,7 +43,7 @@ public class PassportController {
 
 
 
-
+    @ApiOperation(value = "用户注册",tags = {"用户注册"},httpMethod ="POST" )
     @PostMapping("/register")
     public IMOOCJSONResult register(@RequestBody UserDTO userDTO){
         if(StringUtils.isNotBlank(userDTO.getUsername())&&
