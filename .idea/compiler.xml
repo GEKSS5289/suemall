@@ -6,28 +6,13 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-<<<<<<< HEAD
-        <module name="sue-api" />
-=======
-<<<<<<< HEAD
-        <module name="sue-api" />
-=======
->>>>>>> 656f49661d4b07c57a1eb795490b9a1aa1e7c050
->>>>>>> dfd0be22e1365b3d3bef4e5cd94d45db436de1e1
         <module name="sue-pojo" />
         <module name="sue-mapper" />
         <module name="sue-service" />
         <module name="sue-common" />
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
-=======
         <module name="sue-api" />
->>>>>>> 656f49661d4b07c57a1eb795490b9a1aa1e7c050
->>>>>>> dfd0be22e1365b3d3bef4e5cd94d45db436de1e1
       </profile>
     </annotationProcessing>
-    <bytecodeTargetLevel target="8" />
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
