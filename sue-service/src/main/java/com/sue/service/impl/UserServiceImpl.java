@@ -17,6 +17,7 @@ import tk.mybatis.mapper.entity.Example;
 
 import javax.annotation.Resource;
 import java.util.Date;
+import java.util.Optional;
 
 /**
  * @author sue
@@ -84,6 +85,35 @@ public class UserServiceImpl implements UserService {
         usersMapper.insert(user);
 
         return user;
+    }
+
+
+
+
+
+
+
+
+
+    /**
+     * 检索用户名和密码是否匹配
+     *
+     * @param username
+     * @param password
+     */
+    @Transactional(propagation = Propagation.SUPPORTS)
+    @Override
+    public Users queryUserForLogin(String username, String password) {
+        Example userExample = new Example(Users.class);
+        Example.Criteria criteria = userExample.createCriteria();
+        criteria.andEqualTo("username",username);
+        criteria.andEqualTo("password",password);
+
+        Users users = usersMapper.selectOneByExample(userExample);
+
+
+
+        return users;
     }
 
 

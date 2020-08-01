@@ -17,6 +17,6 @@ public class UserDTO {
     private String username;
     @ApiModelProperty(value = "密码",name = "password",example = "sue",required = true)
     private String password;
-    @ApiModelProperty(value = "确认密码",name = "confirmPassword",example = "sue",required = true)
+    @ApiModelProperty(value = "确认密码",name = "confirmPassword",example = "sue",required = false)
     private String confirmPassword;
 }
