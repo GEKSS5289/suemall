@@ -14,6 +14,7 @@ import com.sue.utils.JsonUtils;
 import com.sue.utils.MD5Utils;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import jdk.nashorn.internal.objects.annotations.Getter;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -57,12 +58,27 @@ public class IndexController {
     @ApiOperation(value = "获取商品分类(1级)",notes = "获取商品分类(1级)",httpMethod = "GET")
     @GetMapping("/cats")
     public IMOOCJSONResult cats(){
+
         return IMOOCJSONResult.ok(categoryService.queryAllRootLevelCat());
     }
 
 
 
 
+
+    @ApiOperation(value = "获取商品子分类",notes = "获取商品子分类",httpMethod = "GET")
+    @GetMapping("/subCat/{rootCatId}")
+    public IMOOCJSONResult subCat(
+            @ApiParam(name = "rootCatId",value = "一级分类ID",required = true)
+            @PathVariable Integer rootCatId
+    ){
+
+        if(rootCatId == null){
+            return IMOOCJSONResult.errorMsg("");
+        }
+
+        return IMOOCJSONResult.ok(categoryService.getSubCatList(rootCatId));
+    }
 
 
 

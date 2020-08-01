@@ -11,118 +11,41 @@
     <result column="cat_image" jdbcType="VARCHAR" property="catImage" />
     <result column="bg_color" jdbcType="VARCHAR" property="bgColor" />
   </resultMap>
-  <sql id="Base_Column_List">
-    id, name, type, father_id, logo, slogan, cat_image, bg_color
-  </sql>
-  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
-    select 
-    <include refid="Base_Column_List" />
-    from foodie-shop-dev..category
-    where id = #{id,jdbcType=INTEGER}
+
+
+
+  <resultMap id="myCategoryVO" type="com.sue.pojo.vo.CategoryVO">
+    <id column="id" property="id" />
+    <result column="name" property="name" />
+    <result column="type" property="type" />
+    <result column="fatherId" property="fatherId"/>
+    <collection property="subCatList" ofType="com.sue.pojo.vo.SubCategoryVO">
+      <id column="subId" property="subId" />
+      <result column="subName" property="subName" />
+      <result column="subType" property="subType" />
+      <result column="subFatherId" property="subFatherId"/>
+    </collection>
+  </resultMap>
+
+
+  <select id="getSubCatList" resultMap="myCategoryVO" parameterType="int">
+    SELECT
+        f.id as id,
+        f.`name` as `name`,
+        f.type as type,
+        f.father_id as fatherId,
+        c.id as subId,
+        c.`name` as subName,
+        c.type as subType,
+        c.father_id as subFatherId
+    FROM
+        category f
+    LEFT JOIN
+        category c
+    on
+        f.id = c.father_id
+    WHERE
+        f.father_id = #{rootCatId}
+
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
-    delete from foodie-shop-dev..category
-    where id = #{id,jdbcType=INTEGER}
-  </delete>
-  <insert id="insert" parameterType="com.sue.pojo.Category">
-    insert into foodie-shop-dev..category (id, name, type, 
-      father_id, logo, slogan, 
-      cat_image, bg_color)
-    values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{type,jdbcType=INTEGER}, 
-      #{fatherId,jdbcType=INTEGER}, #{logo,jdbcType=VARCHAR}, #{slogan,jdbcType=VARCHAR}, 
-      #{catImage,jdbcType=VARCHAR}, #{bgColor,jdbcType=VARCHAR})
-  </insert>
-  <insert id="insertSelective" parameterType="com.sue.pojo.Category">
-    insert into foodie-shop-dev..category
-    <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        id,
-      </if>
-      <if test="name != null">
-        name,
-      </if>
-      <if test="type != null">
-        type,
-      </if>
-      <if test="fatherId != null">
-        father_id,
-      </if>
-      <if test="logo != null">
-        logo,
-      </if>
-      <if test="slogan != null">
-        slogan,
-      </if>
-      <if test="catImage != null">
-        cat_image,
-      </if>
-      <if test="bgColor != null">
-        bg_color,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        #{id,jdbcType=INTEGER},
-      </if>
-      <if test="name != null">
-        #{name,jdbcType=VARCHAR},
-      </if>
-      <if test="type != null">
-        #{type,jdbcType=INTEGER},
-      </if>
-      <if test="fatherId != null">
-        #{fatherId,jdbcType=INTEGER},
-      </if>
-      <if test="logo != null">
-        #{logo,jdbcType=VARCHAR},
-      </if>
-      <if test="slogan != null">
-        #{slogan,jdbcType=VARCHAR},
-      </if>
-      <if test="catImage != null">
-        #{catImage,jdbcType=VARCHAR},
-      </if>
-      <if test="bgColor != null">
-        #{bgColor,jdbcType=VARCHAR},
-      </if>
-    </trim>
-  </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.sue.pojo.Category">
-    update foodie-shop-dev..category
-    <set>
-      <if test="name != null">
-        name = #{name,jdbcType=VARCHAR},
-      </if>
-      <if test="type != null">
-        type = #{type,jdbcType=INTEGER},
-      </if>
-      <if test="fatherId != null">
-        father_id = #{fatherId,jdbcType=INTEGER},
-      </if>
-      <if test="logo != null">
-        logo = #{logo,jdbcType=VARCHAR},
-      </if>
-      <if test="slogan != null">
-        slogan = #{slogan,jdbcType=VARCHAR},
-      </if>
-      <if test="catImage != null">
-        cat_image = #{catImage,jdbcType=VARCHAR},
-      </if>
-      <if test="bgColor != null">
-        bg_color = #{bgColor,jdbcType=VARCHAR},
-      </if>
-    </set>
-    where id = #{id,jdbcType=INTEGER}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="com.sue.pojo.Category">
-    update foodie-shop-dev..category
-    set name = #{name,jdbcType=VARCHAR},
-      type = #{type,jdbcType=INTEGER},
-      father_id = #{fatherId,jdbcType=INTEGER},
-      logo = #{logo,jdbcType=VARCHAR},
-      slogan = #{slogan,jdbcType=VARCHAR},
-      cat_image = #{catImage,jdbcType=VARCHAR},
-      bg_color = #{bgColor,jdbcType=VARCHAR}
-    where id = #{id,jdbcType=INTEGER}
-  </update>
 </mapper>

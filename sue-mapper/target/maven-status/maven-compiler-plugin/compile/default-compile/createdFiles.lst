@@ -1,4 +1,5 @@
 com\sue\mapper\UsersMapper.class
+com\sue\mapper\CategoryMapperCustom.class
 com\sue\mapper\OrderStatusMapper.class
 com\sue\mapper\CarouselMapper.class
 com\sue\mapper\ItemsMapper.class

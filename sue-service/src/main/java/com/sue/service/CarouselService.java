@@ -1,6 +1,7 @@
 package com.sue.service;
 
 import com.sue.pojo.Carousel;
+import com.sue.pojo.vo.CategoryVO;
 
 import java.util.Calendar;
 import java.util.List;
@@ -13,4 +14,5 @@ import java.util.List;
 
 public interface CarouselService {
     public List<Carousel> queryall(Integer isShow);
+
 }

@@ -1,1 +1,3 @@
 com\sue\pojo\dto\UserDTO.class
+com\sue\pojo\vo\CategoryVO.class
+com\sue\pojo\vo\SubCategoryVO.class

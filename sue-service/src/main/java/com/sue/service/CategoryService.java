@@ -1,6 +1,8 @@
 package com.sue.service;
 
 import com.sue.pojo.Category;
+import com.sue.pojo.vo.CategoryVO;
+import com.sue.pojo.vo.SubCategoryVO;
 
 import java.util.List;
 
@@ -12,5 +14,7 @@ import java.util.List;
 public interface CategoryService {
 
     public List<Category> queryAllRootLevelCat();
+
+    public List<CategoryVO> getSubCatList(Integer rootCatId);
 
 }

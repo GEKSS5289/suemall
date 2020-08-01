@@ -5,6 +5,8 @@ import com.sue.pojo.Carousel;
 import com.sue.service.CarouselService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 import tk.mybatis.mapper.entity.Example;
 
 import javax.annotation.Resource;
@@ -26,6 +28,7 @@ public class CarouselServiceImpl implements CarouselService {
 
 
 
+    @Transactional(propagation = Propagation.SUPPORTS)
     @Override
     public List<Carousel> queryall(Integer isShow) {
         Example example = new Example(Carousel.class);

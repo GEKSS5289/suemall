@@ -1,12 +1,16 @@
 package com.sue.mapper;
 
-import com.sue.my.MyMapper;
-import com.sue.pojo.Carousel;
 import com.sue.pojo.Category;
 import com.sue.pojo.vo.CategoryVO;
+import com.sue.pojo.vo.SubCategoryVO;
 
 import java.util.List;
 
-public interface CategoryMapper extends MyMapper<Category> {
+/**
+ * @author sue
+ * @date 2020/8/1 15:01
+ */
+
+public interface CategoryMapperCustom {
     public List<CategoryVO> getSubCatList(Integer rootCatId);
 }
