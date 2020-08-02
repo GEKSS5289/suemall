@@ -1,9 +1,10 @@
 com\sue\pojo\vo\ItemCommentVO.class
 com\sue\pojo\dto\UserDTO.class
-com\sue\pojo\vo\ItemInfoVO.class
-com\sue\pojo\vo\ShopCartVO.class
 com\sue\pojo\vo\CategoryVO.class
 com\sue\pojo\vo\NewItemsVO.class
 com\sue\pojo\vo\SimpleItemVO.class
+com\sue\pojo\dto\SubmitOrderDTO.class
+com\sue\pojo\vo\ItemInfoVO.class
+com\sue\pojo\vo\ShopCartVO.class
 com\sue\pojo\vo\CommentLevelCountsVO.class
 com\sue\pojo\vo\SubCategoryVO.class

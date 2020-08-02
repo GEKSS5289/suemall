@@ -5,6 +5,7 @@ org\n3r\idworker\utils\HttpReq.class
 org\n3r\idworker\Code.class
 org\n3r\idworker\strategy\FileLock.class
 org\n3r\idworker\Test.class
+com\sue\enums\PayMethod.class
 org\n3r\idworker\Sid$1.class
 org\n3r\idworker\utils\Props.class
 org\n3r\idworker\strategy\DefaultRandomCodeStrategy$1.class
