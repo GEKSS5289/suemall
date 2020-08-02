@@ -8,6 +8,7 @@ import com.sue.pojo.vo.CommentLevelCountsVO;
 import com.sue.pojo.vo.ItemInfoVO;
 import com.sue.service.ItemService;
 import com.sue.utils.IMOOCJSONResult;
+import com.sue.utils.PagedGridResult;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -80,21 +81,53 @@ public class ItemsController {
 
 
 
-//    @ApiOperation(value = "查询商品评价内容",notes = "查询商品评价内容",httpMethod = "GET")
-//    @GetMapping("/commentLevel")
-//    public IMOOCJSONResult commentLevel(
-//            @ApiParam(value = "itemId",name = "商品ID",required = true)
-//            @RequestParam String itemId
-//    ){
-//
-//        if(StringUtils.isBlank(itemId)){
-//            return IMOOCJSONResult.errorMsg(null);
-//        }
-//
-//        CommentLevelCountsVO commentLevelCountsVO = itemService.queryCommentCounts(itemId);
-//
-//        return IMOOCJSONResult.ok(commentLevelCountsVO);
-//    }
+    @ApiOperation(value = "查询商品评价内容",notes = "查询商品评价内容",httpMethod = "GET")
+    @GetMapping("/comments")
+    public IMOOCJSONResult comments(
+            @ApiParam(value = "itemId",name = "商品ID",required = true)
+            @RequestParam String itemId,
+            @ApiParam(value = "level",name = "商品评价级别",required = true)
+            @RequestParam Integer level,
+            @ApiParam(value = "page",name = "查询下一页的第几页",required = true)
+            @RequestParam(defaultValue = "1",required = false) Integer page,
+            @ApiParam(value = "pageSize",name = "每页显示条数",required = true)
+            @RequestParam(defaultValue = "10",required = false) Integer pageSize
+    ){
+
+        if(StringUtils.isBlank(itemId)){
+            return IMOOCJSONResult.errorMsg(null);
+        }
+
+        PagedGridResult pagedGridResult = itemService.queryPageComments(itemId, level, page, pageSize);
+        return IMOOCJSONResult.ok(pagedGridResult);
+    }
+
+
+
+
+
+
+
+    @ApiOperation(value = "搜索商品列表",notes = "搜索商品列表",httpMethod = "GET")
+    @GetMapping("/search")
+    public IMOOCJSONResult search(
+            @ApiParam(value = "keywords",name = "查询关键字",required = true)
+            @RequestParam String keywords,
+            @ApiParam(value = "sort",name = "排序",required = true)
+            @RequestParam String sort,
+            @ApiParam(value = "page",name = "查询下一页的第几页",required = true)
+            @RequestParam(defaultValue = "1",required = false) Integer page,
+            @ApiParam(value = "pageSize",name = "每页显示条数",required = true)
+            @RequestParam(defaultValue = "10",required = false) Integer pageSize
+    ){
+
+        if(StringUtils.isBlank(keywords)){
+            return IMOOCJSONResult.errorMsg(null);
+        }
+
+        PagedGridResult pagedGridResult = itemService.searchItems(keywords, sort, page, pageSize);
+        return IMOOCJSONResult.ok(pagedGridResult);
+    }
 
 
 

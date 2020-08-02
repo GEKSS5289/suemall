@@ -20,5 +20,4 @@ public class ItemCommentVO {
     private Date createdTime;
     private String userFace;
     private String nickname;
-
 }

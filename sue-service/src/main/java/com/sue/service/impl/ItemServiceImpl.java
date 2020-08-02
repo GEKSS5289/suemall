@@ -1,11 +1,16 @@
 package com.sue.service.impl;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.sue.enums.CommentLevel;
 import com.sue.mapper.*;
 import com.sue.pojo.*;
 import com.sue.pojo.vo.CommentLevelCountsVO;
 import com.sue.pojo.vo.ItemCommentVO;
+import com.sue.pojo.vo.SearchItemsVO;
 import com.sue.service.ItemService;
+import com.sue.utils.DesensitizationUtil;
+import com.sue.utils.PagedGridResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
@@ -132,11 +137,46 @@ public class ItemServiceImpl implements ItemService {
      */
     @Transactional(propagation = Propagation.SUPPORTS)
     @Override
-    public List<ItemCommentVO> queryPageComments(String itemId, Integer level) {
+    public PagedGridResult queryPageComments(
+            String itemId,
+            Integer level
+            ,Integer page
+            ,Integer pageSize
+    ) {
         Map<String,Object> stringObjectHashMap = new HashMap<>();
         stringObjectHashMap.put("itemId",itemId);
         stringObjectHashMap.put("level",level);
-        return itemsMapper.queryItemComments(stringObjectHashMap);
+
+        PageHelper.startPage(page,pageSize);
+        List<ItemCommentVO> itemCommentVOS = itemsMapper.queryItemComments(stringObjectHashMap);
+
+        itemCommentVOS.forEach(i->{
+            i.setNickname(DesensitizationUtil.commonDisplay(i.getNickname()));
+        });
+
+        return this.setterPagedGrid(itemCommentVOS,page);
+    }
+
+    /**
+     * 搜索商品列表
+     *
+     * @param keywords
+     * @param sort
+     * @param page
+     * @param pageSize
+     * @return
+     */
+    @Transactional(propagation = Propagation.SUPPORTS)
+    @Override
+    public PagedGridResult searchItems(String keywords, String sort, Integer page, Integer pageSize) {
+        Map<String,Object> stringObjectHashMap = new HashMap<>();
+        stringObjectHashMap.put("keywords",keywords);
+        stringObjectHashMap.put("sort",sort);
+        PageHelper.startPage(page,pageSize);
+
+        List<SearchItemsVO> searchItemsVOS = itemsMapper.searchItems(stringObjectHashMap);
+
+        return  this.setterPagedGrid(searchItemsVOS,page);
     }
 
 
@@ -153,4 +193,14 @@ public class ItemServiceImpl implements ItemService {
     }
 
 
+
+    private PagedGridResult setterPagedGrid(List<?> list,Integer page){
+        PageInfo<?> pageList = new PageInfo<>(list);
+        PagedGridResult pagedGridResult = new PagedGridResult();
+        pagedGridResult.setPage(page);
+        pagedGridResult.setRows(list);
+        pagedGridResult.setTotal(pageList.getPages());
+        pagedGridResult.setRecords(pageList.getTotal());
+        return  pagedGridResult;
+    }
 }

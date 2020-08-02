@@ -44,3 +44,6 @@ mapper:
   mappers: com.sue.my.MyMapper
   not-empty: false
   identity: MYSQL
+pagehelper:
+  helper-dialect: mysql
+  support-methods-arguments: true

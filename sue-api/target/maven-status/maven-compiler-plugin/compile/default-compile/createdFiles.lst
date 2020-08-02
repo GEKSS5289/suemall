@@ -1,4 +1,5 @@
 com\sue\controller\IndexController.class
 com\sue\controller\PassportController.class
 com\sue\config\Swagger2.class
+com\sue\controller\BaseController.class
 com\sue\controller\ItemsController.class

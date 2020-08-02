@@ -6,6 +6,7 @@ import com.sue.pojo.ItemsParam;
 import com.sue.pojo.ItemsSpec;
 import com.sue.pojo.vo.CommentLevelCountsVO;
 import com.sue.pojo.vo.ItemCommentVO;
+import com.sue.utils.PagedGridResult;
 
 import java.util.List;
 
@@ -60,5 +61,18 @@ public interface ItemService {
      * @param level
      * @return
      */
-    public List<ItemCommentVO> queryPageComments(String itemId,Integer level);
+    public PagedGridResult queryPageComments(String itemId, Integer level
+            , Integer page
+            , Integer pageSize);
+
+
+    /**
+     * 搜索商品列表
+     * @param keywords
+     * @param sort
+     * @param page
+     * @param pageSize
+     * @return
+     */
+    public PagedGridResult searchItems(String keywords,String sort,Integer page,Integer pageSize);
 }

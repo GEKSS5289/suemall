@@ -1,3 +1,4 @@
+E:\SbootProject\sue-mall\sue-common\src\main\java\com\sue\enums\CommentLevel.java
 E:\SbootProject\sue-mall\sue-common\src\main\java\org\n3r\idworker\Test.java
 E:\SbootProject\sue-mall\sue-common\src\main\java\com\sue\enums\YesOrNO.java
 E:\SbootProject\sue-mall\sue-common\src\main\java\org\n3r\idworker\utils\IPv4Utils.java
@@ -6,7 +7,9 @@ E:\SbootProject\sue-mall\sue-common\src\main\java\com\sue\utils\MD5Utils.java
 E:\SbootProject\sue-mall\sue-common\src\main\java\org\n3r\idworker\DayCode.java
 E:\SbootProject\sue-mall\sue-common\src\main\java\com\sue\enums\Sex.java
 E:\SbootProject\sue-mall\sue-common\src\main\java\org\n3r\idworker\strategy\DefaultWorkerIdStrategy.java
+E:\SbootProject\sue-mall\sue-common\src\main\java\com\sue\utils\PagedGridResult.java
 E:\SbootProject\sue-mall\sue-common\src\main\java\org\n3r\idworker\IdWorker.java
+E:\SbootProject\sue-mall\sue-common\src\main\java\com\sue\utils\DesensitizationUtil.java
 E:\SbootProject\sue-mall\sue-common\src\main\java\org\n3r\idworker\Id.java
 E:\SbootProject\sue-mall\sue-common\src\main\java\org\n3r\idworker\strategy\DefaultRandomCodeStrategy.java
 E:\SbootProject\sue-mall\sue-common\src\main\java\org\n3r\idworker\utils\Utils.java
