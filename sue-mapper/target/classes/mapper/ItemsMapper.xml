@@ -80,4 +80,78 @@
             </otherwise>
         </choose>
     </select>
+
+
+    <select id="searchItemsByThirdCat" parameterType="Map" resultType="com.sue.pojo.vo.SearchItemsVO">
+    select
+        i.id as itemId,
+        i.item_name as itemName,
+        i.sell_counts as sellCounts,
+        ii.url as imgUrl,
+        tempSpec.price_discount as price
+    from
+	    items i
+    left join
+	    items_img ii
+    on
+	    i.id = ii.item_id
+    left join
+        (
+            select
+                item_id,MIN(price_discount) as price_discount
+            from
+                items_spec
+            GROUP BY
+                item_id
+        )tempSpec
+    on
+	    i.id = tempSpec.item_id
+    where
+	    ii.is_main = 1
+        and
+        i.cat_id = #{paramsMap.catId}
+        order by
+        <choose>
+            <when test="paramsMap.sort == &quot;c&quot;">
+                i.sell_counts desc
+            </when>
+            <when test="paramsMap.sort == &quot;p&quot;">
+                tempSpec.price_discount asc
+            </when>
+            <otherwise>
+                i.item_name asc
+            </otherwise>
+        </choose>
+    </select>
+
+
+    <select id="queryItemsBySpecIds" parameterType="List" resultType="com.sue.pojo.vo.ShopCartVO">
+
+    select
+        t_items.id as itemId,
+        t_items.item_name as itemName,
+        t_items_img.url as itemImgUrl,
+        t_items_spec.id as specId,
+        t_items_spec.`name` as specName,
+        t_items_spec.price_discount as priceDiscount,
+        t_items_spec.price_normal as priceNormal
+    from
+	    items_spec t_items_spec
+    left join
+	    items t_items
+    on
+	    t_items.id = t_items_spec.item_id
+    left join
+	    items_img t_items_img
+    on
+	    t_items_img.item_id = t_items.id
+    where
+	    t_items_img.is_main = 1
+    AND
+	    t_items_spec.id IN
+	    <foreach collection="paramsList" index="index" item="specId" open="("  separator="," close=")">
+            #{specId}
+        </foreach>
+
+    </select>
 </mapper>

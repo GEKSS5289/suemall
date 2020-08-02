@@ -6,6 +6,7 @@ import com.sue.pojo.ItemsParam;
 import com.sue.pojo.ItemsSpec;
 import com.sue.pojo.vo.CommentLevelCountsVO;
 import com.sue.pojo.vo.ItemInfoVO;
+import com.sue.pojo.vo.ShopCartVO;
 import com.sue.service.ItemService;
 import com.sue.utils.IMOOCJSONResult;
 import com.sue.utils.PagedGridResult;
@@ -128,6 +129,65 @@ public class ItemsController {
         PagedGridResult pagedGridResult = itemService.searchItems(keywords, sort, page, pageSize);
         return IMOOCJSONResult.ok(pagedGridResult);
     }
+
+
+
+
+
+
+
+
+
+
+
+    @ApiOperation(value = "通过分类Id搜索商品列表",notes = "通过分类Id搜索商品列表",httpMethod = "GET")
+    @GetMapping("/catItems")
+    public IMOOCJSONResult catItems(
+            @ApiParam(value = "catId",name = "分类Id",required = true)
+            @RequestParam Integer catId,
+            @ApiParam(value = "sort",name = "排序",required = true)
+            @RequestParam String sort,
+            @ApiParam(value = "page",name = "查询下一页的第几页",required = true)
+            @RequestParam(defaultValue = "1",required = false) Integer page,
+            @ApiParam(value = "pageSize",name = "每页显示条数",required = true)
+            @RequestParam(defaultValue = "10",required = false) Integer pageSize
+    ){
+
+        if(catId == null){
+            return IMOOCJSONResult.errorMsg(null);
+        }
+
+        PagedGridResult pagedGridResult = itemService.searchItems(catId, sort, page, pageSize);
+        return IMOOCJSONResult.ok(pagedGridResult);
+    }
+
+
+
+
+
+
+
+
+
+
+    @ApiOperation(value = "通过商品规格ids查询最新商品数据",notes = "通过商品规格ids查询最新商品数据",httpMethod = "GET")
+    @GetMapping("/refresh")
+    public IMOOCJSONResult refresh(
+            @ApiParam(value = "itemSpecIds",name = "拼接规格ids",required = true,example = "1001,1003,1005")
+            @RequestParam String itemSpecIds
+    ){
+
+        if(StringUtils.isBlank(itemSpecIds)){
+            return IMOOCJSONResult.ok();
+        }
+
+        return IMOOCJSONResult.ok(itemService.queryItemsBySpecIds(itemSpecIds));
+    }
+
+
+
+
+
 
 
 

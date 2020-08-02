@@ -8,6 +8,7 @@ import com.sue.pojo.*;
 import com.sue.pojo.vo.CommentLevelCountsVO;
 import com.sue.pojo.vo.ItemCommentVO;
 import com.sue.pojo.vo.SearchItemsVO;
+import com.sue.pojo.vo.ShopCartVO;
 import com.sue.service.ItemService;
 import com.sue.utils.DesensitizationUtil;
 import com.sue.utils.PagedGridResult;
@@ -18,9 +19,7 @@ import org.springframework.transaction.annotation.Transactional;
 import tk.mybatis.mapper.entity.Example;
 
 import javax.annotation.Resource;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * @author sue
@@ -179,6 +178,43 @@ public class ItemServiceImpl implements ItemService {
         return  this.setterPagedGrid(searchItemsVOS,page);
     }
 
+    /**
+     * 根据分类id搜索列表
+     *
+     * @param catId
+     * @param sort
+     * @param page
+     * @param pageSize
+     * @return
+     */
+    @Transactional(propagation = Propagation.SUPPORTS)
+    @Override
+    public PagedGridResult searchItems(Integer catId, String sort, Integer page, Integer pageSize) {
+        Map<String,Object> stringObjectHashMap = new HashMap<>();
+        stringObjectHashMap.put("catId",catId);
+        stringObjectHashMap.put("sort",sort);
+        PageHelper.startPage(page,pageSize);
+
+        List<SearchItemsVO> searchItemsVOS = itemsMapper.searchItemsByThirdCat(stringObjectHashMap);
+
+        return  this.setterPagedGrid(searchItemsVOS,page);
+    }
+
+    /**
+     * 根据规格ids查询最新的购物车中商品数据 （用于刷新渲染购物车商品数据）
+     *
+     * @param specIds
+     * @return
+     */
+    @Transactional(propagation = Propagation.SUPPORTS)
+    @Override
+    public List<ShopCartVO> queryItemsBySpecIds(String specIds) {
+        String ids[] = specIds.split(",");
+        List<String> specIdsList = new ArrayList<>();
+        Collections.addAll(specIdsList,ids);
+
+        return itemsMapper.queryItemsBySpecIds(specIdsList);
+    }
 
     @Transactional(propagation = Propagation.SUPPORTS)
     Integer getCommentCounts(String itemId,Integer level){

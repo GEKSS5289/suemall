@@ -4,8 +4,10 @@ import com.sue.pojo.Items;
 import com.sue.pojo.ItemsImg;
 import com.sue.pojo.ItemsParam;
 import com.sue.pojo.ItemsSpec;
+import com.sue.pojo.dto.ShopcartDTO;
 import com.sue.pojo.vo.CommentLevelCountsVO;
 import com.sue.pojo.vo.ItemCommentVO;
+import com.sue.pojo.vo.ShopCartVO;
 import com.sue.utils.PagedGridResult;
 
 import java.util.List;
@@ -75,4 +77,24 @@ public interface ItemService {
      * @return
      */
     public PagedGridResult searchItems(String keywords,String sort,Integer page,Integer pageSize);
+
+
+    /**
+     * 根据分类id搜索列表
+     * @param catId
+     * @param sort
+     * @param page
+     * @param pageSize
+     * @return
+     */
+    public PagedGridResult searchItems(Integer catId,String sort,Integer page,Integer pageSize);
+
+
+    /**
+     * 根据规格ids查询最新的购物车中商品数据 （用于刷新渲染购物车商品数据）
+     * @param specIds
+     * @return
+     */
+    public List<ShopCartVO> queryItemsBySpecIds(String specIds);
+
 }
