@@ -23,8 +23,8 @@ public class AddressController {
     private AddressService addressService;
 
 
-    @ApiOperation(value = "根据用户id查询用户地址列表",notes = "根据用户id查询用户地址列表",httpMethod = "GET")
-    @GetMapping("/list")
+    @ApiOperation(value = "根据用户id查询用户地址列表",notes = "根据用户id查询用户地址列表",httpMethod = "POST")
+    @PostMapping("/list")
     public IMOOCJSONResult list(@RequestParam String userId){
         if(StringUtils.isBlank(userId)){
             return IMOOCJSONResult.errorMsg("");
@@ -66,6 +66,23 @@ public class AddressController {
         }
 
         addressService.updateUserAddress(addressDTO);
+        return IMOOCJSONResult.ok();
+    }
+
+
+    @ApiOperation(value = "用户删除地址",notes = "用户删除地址",httpMethod = "POST")
+    @PostMapping("/delete")
+    public IMOOCJSONResult delete(
+            @RequestParam String userId,
+            @RequestParam String addressId
+    ){
+
+        if(StringUtils.isBlank(userId)||StringUtils.isBlank(addressId)){
+            return IMOOCJSONResult.errorMsg("删除失败");
+        }
+
+        addressService.deleteUserAddress(userId,addressId);
+
         return IMOOCJSONResult.ok();
     }
 

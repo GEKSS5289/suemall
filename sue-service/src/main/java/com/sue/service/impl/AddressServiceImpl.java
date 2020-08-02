@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
+import tk.mybatis.mapper.entity.Example;
 
 import java.util.Date;
 import java.util.List;
@@ -87,5 +88,22 @@ public class AddressServiceImpl implements AddressService {
         updateAddress.setUpdatedTime(new Date());
         //空属性不覆盖
         userAddressMapper.updateByPrimaryKeySelective(updateAddress);
+    }
+
+
+    /**
+     * 用户删除地址
+     *
+     * @param userId
+     * @param addressId
+     */
+    @Transactional(propagation = Propagation.REQUIRED)
+    @Override
+    public void deleteUserAddress(String userId, String addressId) {
+        Example example = new Example(UserAddress.class);
+        Example.Criteria criteria = example.createCriteria();
+        criteria.andEqualTo("userId",userId);
+        criteria.andEqualTo("id",addressId);
+        userAddressMapper.deleteByExample(example);
     }
 }
