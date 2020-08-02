@@ -115,6 +115,8 @@ public class AddressServiceImpl implements AddressService {
      * @param userId
      * @param addressId
      */
+
+    @Transactional(propagation = Propagation.REQUIRED)
     @Override
     public void updateUserAddressToBeDefault(String userId, String addressId) {
 
@@ -138,5 +140,25 @@ public class AddressServiceImpl implements AddressService {
 
 
 
+    }
+
+
+    /**
+     * 根据用户Id和地址Id，查询具体用户地址对象信息
+     *
+     * @param userId
+     * @param addressId
+     * @return
+     */
+    @Transactional(propagation = Propagation.SUPPORTS)
+    @Override
+    public UserAddress queryUserAddress(String userId, String addressId) {
+
+        Example example = new Example(UserAddress.class);
+        Example.Criteria criteria = example.createCriteria();
+        criteria.andEqualTo("userId",userId);
+        criteria.andEqualTo("id",addressId);
+
+        return userAddressMapper.selectOneByExample(example);
     }
 }
