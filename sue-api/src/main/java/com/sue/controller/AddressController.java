@@ -89,6 +89,26 @@ public class AddressController {
 
 
 
+
+
+    @ApiOperation(value = "设为默认地址",notes = "设为默认地址",httpMethod = "POST")
+    @PostMapping("/setDefalut")
+    public IMOOCJSONResult setDefault(
+            @RequestParam String userId,
+            @RequestParam String addressId
+    ){
+
+        if(StringUtils.isBlank(userId)||StringUtils.isBlank(addressId)){
+            return IMOOCJSONResult.errorMsg("设置默认失败");
+        }
+
+        addressService.updateUserAddressToBeDefault(userId,addressId);
+
+        return IMOOCJSONResult.ok();
+    }
+
+
+
     private IMOOCJSONResult checkAddress(AddressDTO addressDTO) {
         String receiver = addressDTO.getReceiver();
         if (StringUtils.isBlank(receiver)) {

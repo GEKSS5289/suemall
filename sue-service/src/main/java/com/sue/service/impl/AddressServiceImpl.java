@@ -1,5 +1,6 @@
 package com.sue.service.impl;
 
+import com.sue.enums.YesOrNO;
 import com.sue.mapper.UserAddressMapper;
 import com.sue.pojo.UserAddress;
 import com.sue.pojo.dto.AddressDTO;
@@ -105,5 +106,37 @@ public class AddressServiceImpl implements AddressService {
         criteria.andEqualTo("userId",userId);
         criteria.andEqualTo("id",addressId);
         userAddressMapper.deleteByExample(example);
+    }
+
+
+    /**
+     * 用户设置默认地址
+     *
+     * @param userId
+     * @param addressId
+     */
+    @Override
+    public void updateUserAddressToBeDefault(String userId, String addressId) {
+
+
+        Example example = new Example(UserAddress.class);
+        Example.Criteria criteria = example.createCriteria();
+        criteria.andEqualTo("userId",userId);
+        criteria.andEqualTo("isDefault", YesOrNO.YES.type);
+        List<UserAddress> userAddresses = userAddressMapper.selectByExample(example);
+        userAddresses.forEach(i->{
+            i.setIsDefault(YesOrNO.NO.type);
+            userAddressMapper.updateByPrimaryKeySelective(i);
+        });
+
+        UserAddress defualtUserAddress = new UserAddress();
+        defualtUserAddress.setIsDefault(YesOrNO.YES.type);
+        defualtUserAddress.setUserId(userId);
+        defualtUserAddress.setId(addressId);
+
+        userAddressMapper.updateByPrimaryKeySelective(defualtUserAddress);
+
+
+
     }
 }

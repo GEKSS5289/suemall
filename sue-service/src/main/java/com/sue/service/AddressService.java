@@ -39,4 +39,12 @@ public interface AddressService {
      */
     public void deleteUserAddress(String userId,String addressId);
 
+
+    /**
+     * 用户设置默认地址
+     * @param userId
+     * @param addressId
+     */
+    public void updateUserAddressToBeDefault(String userId,String addressId);
+
 }
