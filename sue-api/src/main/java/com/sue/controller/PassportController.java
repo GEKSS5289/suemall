@@ -1,5 +1,6 @@
 package com.sue.controller;
 
+import com.sue.exception.passportexception.PassportException;
 import com.sue.pojo.Users;
 import com.sue.pojo.dto.UserDTO;
 import com.sue.service.UserService;
@@ -136,9 +137,9 @@ public class PassportController {
                 return IMOOCJSONResult.ok(users);
             }
 
-            return IMOOCJSONResult.errorMsg("用户名或密码错误");
+            throw new PassportException(10000);
         }
-        return IMOOCJSONResult.errorMsg("用户名或密码不能为空");
+        throw new PassportException(10001);
     }
 
 

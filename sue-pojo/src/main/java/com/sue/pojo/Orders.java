@@ -10,8 +10,6 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 import java.util.Date;
 @Data
-@Builder
-@NoArgsConstructor
 public class Orders {
     @Id
     private String id;
