@@ -4,6 +4,7 @@ import com.sue.pojo.Items;
 import com.sue.pojo.ItemsImg;
 import com.sue.pojo.ItemsParam;
 import com.sue.pojo.ItemsSpec;
+import com.sue.pojo.vo.CommentLevelCountsVO;
 import com.sue.pojo.vo.ItemInfoVO;
 import com.sue.service.ItemService;
 import com.sue.utils.IMOOCJSONResult;
@@ -53,6 +54,29 @@ public class ItemsController {
 
         return IMOOCJSONResult.ok(itemInfoVO);
     }
+
+
+
+
+
+
+
+    @ApiOperation(value = "查询商品评价等级",notes = "查询商品评价等级",httpMethod = "GET")
+    @GetMapping("/commentLevel")
+    public IMOOCJSONResult commentLevel(
+            @ApiParam(value = "itemId",name = "商品ID",required = true)
+            @RequestParam String itemId
+    ){
+
+        if(StringUtils.isBlank(itemId)){
+            return IMOOCJSONResult.errorMsg(null);
+        }
+
+        CommentLevelCountsVO commentLevelCountsVO = itemService.queryCommentCounts(itemId);
+
+        return IMOOCJSONResult.ok(commentLevelCountsVO);
+    }
+
 
 
 

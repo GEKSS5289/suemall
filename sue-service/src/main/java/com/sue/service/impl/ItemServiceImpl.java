@@ -1,13 +1,9 @@
 package com.sue.service.impl;
 
-import com.sue.mapper.ItemsImgMapper;
-import com.sue.mapper.ItemsMapper;
-import com.sue.mapper.ItemsParamMapper;
-import com.sue.mapper.ItemsSpecMapper;
-import com.sue.pojo.Items;
-import com.sue.pojo.ItemsImg;
-import com.sue.pojo.ItemsParam;
-import com.sue.pojo.ItemsSpec;
+import com.sue.enums.CommentLevel;
+import com.sue.mapper.*;
+import com.sue.pojo.*;
+import com.sue.pojo.vo.CommentLevelCountsVO;
 import com.sue.service.ItemService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -37,6 +33,10 @@ public class ItemServiceImpl implements ItemService {
 
     @Resource
     private ItemsParamMapper itemsParamMapper;
+
+    @Resource
+    private ItemsCommentsMapper itemsCommentsMapper;
+
     /**
      * 根据商品Id查询详情
      *
@@ -94,4 +94,44 @@ public class ItemServiceImpl implements ItemService {
         criteria.andEqualTo("itemId",itemId);
         return itemsParamMapper.selectOneByExample(example);
     }
+
+    /**
+     * 根据商品Id查询商品评价等级数量
+     *
+     * @param itemId
+     */
+    @Transactional(propagation = Propagation.SUPPORTS)
+    @Override
+    public CommentLevelCountsVO queryCommentCounts(String itemId) {
+
+
+        Integer goodCounts = getCommentCounts(itemId, CommentLevel.GOOD.getType());
+        Integer normalCounts = getCommentCounts(itemId, CommentLevel.NORMAL.getType());
+        Integer badCounts = getCommentCounts(itemId, CommentLevel.BAD.getType());
+        Integer totalCount = goodCounts+normalCounts+badCounts;
+
+        CommentLevelCountsVO commentLevelCountsVO = new CommentLevelCountsVO();
+        commentLevelCountsVO.setBadCounts(badCounts);
+        commentLevelCountsVO.setGoodCounts(goodCounts);
+        commentLevelCountsVO.setNormalCounts(normalCounts);
+        commentLevelCountsVO.setTotalCounts(totalCount);
+
+
+        return commentLevelCountsVO;
+    }
+
+
+    @Transactional(propagation = Propagation.SUPPORTS)
+    Integer getCommentCounts(String itemId,Integer level){
+
+        ItemsComments comments = new ItemsComments();
+        comments.setItemId(itemId);
+        if(level != null){
+            comments.setCommentLevel(level);
+        }
+
+        return  itemsCommentsMapper.selectCount(comments);
+    }
+
+
 }
