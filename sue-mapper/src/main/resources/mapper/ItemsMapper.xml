@@ -15,4 +15,26 @@
     <result column="updated_time" property="updatedTime" jdbcType="TIMESTAMP" />
     <result column="content" property="content" jdbcType="LONGVARCHAR" />
   </resultMap>
+  
+  <select id="queryItemComments" parameterType="Map" resultType="com.sue.pojo.vo.ItemCommentVO">
+    select
+       ic.comment_level as commentLevel,
+       ic.content as content,
+       ic.sepc_name as specName,
+       ic.created_time as createdTiem,
+       u.face as userFace,
+       u.nickname as nikename
+    from
+       items_comments ic
+    left join
+       users u
+    on
+       ic.user_id = u.id
+    where
+       ic.item_id = #{paramsMap.itemId}
+    <if test="paramsMap.level != null and paramsMap.level != '' ">
+      and ic.comment_level = #{paramsMap.level}
+    </if>
+
+  </select>
 </mapper>

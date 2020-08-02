@@ -4,6 +4,7 @@ import com.sue.enums.CommentLevel;
 import com.sue.mapper.*;
 import com.sue.pojo.*;
 import com.sue.pojo.vo.CommentLevelCountsVO;
+import com.sue.pojo.vo.ItemCommentVO;
 import com.sue.service.ItemService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -12,7 +13,9 @@ import org.springframework.transaction.annotation.Transactional;
 import tk.mybatis.mapper.entity.Example;
 
 import javax.annotation.Resource;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author sue
@@ -118,6 +121,22 @@ public class ItemServiceImpl implements ItemService {
 
 
         return commentLevelCountsVO;
+    }
+
+    /**
+     * 根据商品id查询商品评价内容
+     *
+     * @param itemId
+     * @param level
+     * @return
+     */
+    @Transactional(propagation = Propagation.SUPPORTS)
+    @Override
+    public List<ItemCommentVO> queryPageComments(String itemId, Integer level) {
+        Map<String,Object> stringObjectHashMap = new HashMap<>();
+        stringObjectHashMap.put("itemId",itemId);
+        stringObjectHashMap.put("level",level);
+        return itemsMapper.queryItemComments(stringObjectHashMap);
     }
 
 

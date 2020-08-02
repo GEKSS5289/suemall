@@ -80,6 +80,22 @@ public class ItemsController {
 
 
 
+//    @ApiOperation(value = "查询商品评价内容",notes = "查询商品评价内容",httpMethod = "GET")
+//    @GetMapping("/commentLevel")
+//    public IMOOCJSONResult commentLevel(
+//            @ApiParam(value = "itemId",name = "商品ID",required = true)
+//            @RequestParam String itemId
+//    ){
+//
+//        if(StringUtils.isBlank(itemId)){
+//            return IMOOCJSONResult.errorMsg(null);
+//        }
+//
+//        CommentLevelCountsVO commentLevelCountsVO = itemService.queryCommentCounts(itemId);
+//
+//        return IMOOCJSONResult.ok(commentLevelCountsVO);
+//    }
+
 
 
 

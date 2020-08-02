@@ -12,6 +12,7 @@ org\n3r\idworker\Sid.class
 org\n3r\idworker\RandomCodeStrategy.class
 org\n3r\idworker\utils\IPv4Utils.class
 org\n3r\idworker\utils\Props$Silent.class
+com\sue\enums\CommentLevel.class
 org\n3r\idworker\WorkerIdStrategy.class
 org\n3r\idworker\utils\Utils.class
 com\sue\enums\Sex.class

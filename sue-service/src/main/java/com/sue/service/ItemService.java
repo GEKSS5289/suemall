@@ -5,6 +5,7 @@ import com.sue.pojo.ItemsImg;
 import com.sue.pojo.ItemsParam;
 import com.sue.pojo.ItemsSpec;
 import com.sue.pojo.vo.CommentLevelCountsVO;
+import com.sue.pojo.vo.ItemCommentVO;
 
 import java.util.List;
 
@@ -51,4 +52,13 @@ public interface ItemService {
      * @param itemId
      */
     public CommentLevelCountsVO queryCommentCounts(String itemId);
+
+
+    /**
+     * 根据商品id查询商品评价内容
+     * @param itemId
+     * @param level
+     * @return
+     */
+    public List<ItemCommentVO> queryPageComments(String itemId,Integer level);
 }
