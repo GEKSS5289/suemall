@@ -126,18 +126,21 @@ public class PassportController {
                 MD5Utils.getMD5Str(userDTO.getPassword())
         );
 
-        if (users != null) {
-            this.setNullProperties(users);
-            CookieUtils.setCookie(
-                    request,
-                    response,
-                    "user",
-                    JsonUtils.objectToJson(users),
-                    true
-            );
-            return IMOOCJSONResult.ok(users);
+        if (users == null) {
+            return IMOOCJSONResult.errorMsg("出现异常");
         }
-        return IMOOCJSONResult.errorMsg("出现异常");
+
+        this.setNullProperties(users);
+        CookieUtils.setCookie(
+                request,
+                response,
+                "user",
+                JsonUtils.objectToJson(users),
+                true
+        );
+
+        return IMOOCJSONResult.ok(users);
+
     }
 
 
