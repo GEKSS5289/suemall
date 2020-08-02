@@ -1,6 +1,5 @@
 package com.sue.controller;
 
-import com.sue.exception.passportexception.PassportException;
 import com.sue.pojo.Users;
 import com.sue.pojo.dto.UserDTO;
 import com.sue.service.UserService;
@@ -12,10 +11,12 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.validation.Valid;
 
 /**
  * @author sue
@@ -25,6 +26,7 @@ import javax.servlet.http.HttpServletResponse;
 @Api(value = "注册登录",tags = {"用于相关接口"})
 @RestController
 @RequestMapping("passport")
+@Validated
 public class PassportController {
 
     @Autowired
@@ -113,36 +115,30 @@ public class PassportController {
     @ApiOperation(value = "用户登录",notes="用户登录",httpMethod = "POST")
     @PostMapping("/login")
     public IMOOCJSONResult login(
-            @RequestBody UserDTO userDTO,
+            @Valid @RequestBody UserDTO userDTO,
             HttpServletRequest request,
             HttpServletResponse response
     ) {
 
-        if (StringUtils.isNotBlank(userDTO.getUsername())&&StringUtils.isNotBlank(userDTO.getPassword())){
 
-            Users users = userService.queryUserForLogin(
-                            userDTO.getUsername(),
-                            MD5Utils.getMD5Str(userDTO.getPassword())
-                    );
+        Users users = userService.queryUserForLogin(
+                userDTO.getUsername(),
+                MD5Utils.getMD5Str(userDTO.getPassword())
+        );
 
-            if(users!=null){
-                this.setNullProperties(users);
-                CookieUtils.setCookie(
-                        request,
-                        response,
-                        "user",
-                        JsonUtils.objectToJson(users),
-                        true
-                );
-                return IMOOCJSONResult.ok(users);
-            }
-
-            throw new PassportException(10000);
+        if (users != null) {
+            this.setNullProperties(users);
+            CookieUtils.setCookie(
+                    request,
+                    response,
+                    "user",
+                    JsonUtils.objectToJson(users),
+                    true
+            );
+            return IMOOCJSONResult.ok(users);
         }
-        throw new PassportException(10001);
+        return IMOOCJSONResult.errorMsg("出现异常");
     }
-
-
 
 
 

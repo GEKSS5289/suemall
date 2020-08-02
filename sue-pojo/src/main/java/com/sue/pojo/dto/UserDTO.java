@@ -5,6 +5,7 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
 
 /**
  * @author sue
@@ -27,7 +28,7 @@ public class UserDTO {
     private String password;
 
 
-    @NotBlank(message = "确认密码不能为空")
+//    @NotBlank(message = "确认密码不能为空")
     @ApiModelProperty(value = "确认密码",name = "confirmPassword",example = "sue",required = false)
     private String confirmPassword;
 }
