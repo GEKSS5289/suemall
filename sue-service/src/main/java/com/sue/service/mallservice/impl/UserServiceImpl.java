@@ -3,7 +3,7 @@ package com.sue.service.mallservice.impl;
 import com.sue.enums.Sex;
 import com.sue.mapper.UsersMapper;
 import com.sue.pojo.Users;
-import com.sue.pojo.dto.UserDTO;
+import com.sue.pojo.dto.malldto.UserDTO;
 import com.sue.service.mallservice.UserService;
 import com.sue.utils.DateUtil;
 import com.sue.utils.MD5Utils;

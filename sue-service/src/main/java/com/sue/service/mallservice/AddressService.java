@@ -1,7 +1,7 @@
 package com.sue.service.mallservice;
 
 import com.sue.pojo.UserAddress;
-import com.sue.pojo.dto.AddressDTO;
+import com.sue.pojo.dto.malldto.AddressDTO;
 
 import java.util.List;
 

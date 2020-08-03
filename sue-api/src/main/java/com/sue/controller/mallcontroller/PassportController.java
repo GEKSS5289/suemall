@@ -1,7 +1,7 @@
 package com.sue.controller.mallcontroller;
 
 import com.sue.pojo.Users;
-import com.sue.pojo.dto.UserDTO;
+import com.sue.pojo.dto.malldto.UserDTO;
 import com.sue.service.mallservice.UserService;
 import com.sue.utils.CookieUtils;
 import com.sue.utils.IMOOCJSONResult;

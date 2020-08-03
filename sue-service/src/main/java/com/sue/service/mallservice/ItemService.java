@@ -4,9 +4,7 @@ import com.sue.pojo.Items;
 import com.sue.pojo.ItemsImg;
 import com.sue.pojo.ItemsParam;
 import com.sue.pojo.ItemsSpec;
-import com.sue.pojo.dto.ShopcartDTO;
 import com.sue.pojo.vo.CommentLevelCountsVO;
-import com.sue.pojo.vo.ItemCommentVO;
 import com.sue.pojo.vo.ShopCartVO;
 import com.sue.utils.PagedGridResult;
 

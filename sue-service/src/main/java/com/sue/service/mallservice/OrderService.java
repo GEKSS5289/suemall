@@ -1,7 +1,7 @@
 package com.sue.service.mallservice;
 
 import com.sue.pojo.OrderStatus;
-import com.sue.pojo.dto.SubmitOrderDTO;
+import com.sue.pojo.dto.malldto.SubmitOrderDTO;
 import com.sue.pojo.vo.OrderVO;
 
 /**

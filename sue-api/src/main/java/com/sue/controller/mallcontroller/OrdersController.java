@@ -3,7 +3,7 @@ package com.sue.controller.mallcontroller;
 import com.sue.enums.OrderStatusEnum;
 import com.sue.enums.PayMethod;
 import com.sue.pojo.OrderStatus;
-import com.sue.pojo.dto.SubmitOrderDTO;
+import com.sue.pojo.dto.malldto.SubmitOrderDTO;
 import com.sue.pojo.vo.MerchantOrdersVO;
 import com.sue.pojo.vo.OrderVO;
 import com.sue.service.mallservice.OrderService;

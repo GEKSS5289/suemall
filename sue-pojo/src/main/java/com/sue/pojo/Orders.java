@@ -1,11 +1,8 @@
 package com.sue.pojo;
 
 import com.sue.enums.YesOrNO;
-import com.sue.pojo.dto.SubmitOrderDTO;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
+import com.sue.pojo.dto.malldto.SubmitOrderDTO;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.util.Date;

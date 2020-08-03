@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.validation.ConstraintViolationException;
 import java.util.List;
 
 /**
@@ -26,6 +25,7 @@ import java.util.List;
 
 @RestControllerAdvice
 public class ExceptionCatcher {
+
 
     @Autowired
     private ExceptionCodeConfiguration exceptionCodeConfiguration;

@@ -1,4 +1,4 @@
-package com.sue.pojo.dto;
+package com.sue.pojo.dto.malldto;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -11,6 +11,10 @@ import javax.validation.constraints.NotEmpty;
  * @author sue
  * @date 2020/8/1 9:09
  */
+
+
+
+
 
 
 @Data

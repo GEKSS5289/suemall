@@ -1,6 +1,6 @@
 package com.sue.controller.mallcontroller;
 
-import com.sue.pojo.dto.ShopcartDTO;
+import com.sue.pojo.dto.malldto.ShopcartDTO;
 import com.sue.utils.IMOOCJSONResult;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;

@@ -1,4 +1,4 @@
-package com.sue.pojo.dto;
+package com.sue.pojo.dto.malldto;
 
 import lombok.Data;
 

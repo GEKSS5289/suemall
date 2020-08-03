@@ -5,7 +5,7 @@ import com.sue.mapper.OrderItemsMapper;
 import com.sue.mapper.OrderStatusMapper;
 import com.sue.mapper.OrdersMapper;
 import com.sue.pojo.*;
-import com.sue.pojo.dto.SubmitOrderDTO;
+import com.sue.pojo.dto.malldto.SubmitOrderDTO;
 import com.sue.pojo.vo.MerchantOrdersVO;
 import com.sue.pojo.vo.OrderVO;
 import com.sue.service.mallservice.AddressService;

@@ -1,8 +1,7 @@
 package com.sue.service.mallservice;
 
 import com.sue.pojo.Users;
-import com.sue.pojo.dto.UserDTO;
-import org.springframework.stereotype.Repository;
+import com.sue.pojo.dto.malldto.UserDTO;
 
 /**
  * @author sue
