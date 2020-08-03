@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
  * @author sue
  * @date 2020/8/2 15:02
  */
-@Api(value = "用户地址相关",tags = {"地址相关API接口"})
+@Api(value = "用户地址相关", tags = {"地址相关API接口"})
 @RequestMapping("address")
 @RestController
 public class AddressController {
@@ -23,24 +23,24 @@ public class AddressController {
     private AddressService addressService;
 
 
-    @ApiOperation(value = "根据用户id查询用户地址列表",notes = "根据用户id查询用户地址列表",httpMethod = "POST")
+    @ApiOperation(value = "根据用户id查询用户地址列表", notes = "根据用户id查询用户地址列表", httpMethod = "POST")
     @PostMapping("/list")
-    public IMOOCJSONResult list(@RequestParam String userId){
-        if(StringUtils.isBlank(userId)){
+    public IMOOCJSONResult list(@RequestParam String userId) {
+        if (StringUtils.isBlank(userId)) {
             return IMOOCJSONResult.errorMsg("");
         }
 
-      return IMOOCJSONResult.ok(addressService.queryAll(userId));
+        return IMOOCJSONResult.ok(addressService.queryAll(userId));
     }
 
 
-    @ApiOperation(value = "用户新增地址",notes = "用户新增地址",httpMethod = "POST")
+    @ApiOperation(value = "用户新增地址", notes = "用户新增地址", httpMethod = "POST")
     @PostMapping("/add")
     public IMOOCJSONResult add(
             @RequestBody AddressDTO addressDTO
-    ){
+    ) {
         IMOOCJSONResult imoocjsonResult = checkAddress(addressDTO);
-        if(imoocjsonResult.getStatus() != 200){
+        if (imoocjsonResult.getStatus() != 200) {
             return imoocjsonResult;
         }
         addressService.addNewUserAddress(addressDTO);
@@ -48,20 +48,18 @@ public class AddressController {
     }
 
 
-
-
-    @ApiOperation(value = "用户地址修改",notes = "用户地址修改",httpMethod = "POST")
+    @ApiOperation(value = "用户地址修改", notes = "用户地址修改", httpMethod = "POST")
     @PostMapping("/update")
     public IMOOCJSONResult update(
             @RequestBody AddressDTO addressDTO
-    ){
+    ) {
 
-        if(StringUtils.isBlank(addressDTO.getAddressId())){
+        if (StringUtils.isBlank(addressDTO.getAddressId())) {
             return IMOOCJSONResult.errorMsg("修改地址出错");
         }
 
         IMOOCJSONResult imoocjsonResult = checkAddress(addressDTO);
-        if(imoocjsonResult.getStatus() != 200){
+        if (imoocjsonResult.getStatus() != 200) {
             return imoocjsonResult;
         }
 
@@ -70,43 +68,38 @@ public class AddressController {
     }
 
 
-    @ApiOperation(value = "用户删除地址",notes = "用户删除地址",httpMethod = "POST")
+    @ApiOperation(value = "用户删除地址", notes = "用户删除地址", httpMethod = "POST")
     @PostMapping("/delete")
     public IMOOCJSONResult delete(
             @RequestParam String userId,
             @RequestParam String addressId
-    ){
+    ) {
 
-        if(StringUtils.isBlank(userId)||StringUtils.isBlank(addressId)){
+        if (StringUtils.isBlank(userId) || StringUtils.isBlank(addressId)) {
             return IMOOCJSONResult.errorMsg("删除失败");
         }
 
-        addressService.deleteUserAddress(userId,addressId);
+        addressService.deleteUserAddress(userId, addressId);
 
         return IMOOCJSONResult.ok();
     }
 
 
-
-
-
-
-    @ApiOperation(value = "设为默认地址",notes = "设为默认地址",httpMethod = "POST")
+    @ApiOperation(value = "设为默认地址", notes = "设为默认地址", httpMethod = "POST")
     @PostMapping("/setDefalut")
     public IMOOCJSONResult setDefault(
             @RequestParam String userId,
             @RequestParam String addressId
-    ){
+    ) {
 
-        if(StringUtils.isBlank(userId)||StringUtils.isBlank(addressId)){
+        if (StringUtils.isBlank(userId) || StringUtils.isBlank(addressId)) {
             return IMOOCJSONResult.errorMsg("设置默认失败");
         }
 
-        addressService.updateUserAddressToBeDefault(userId,addressId);
+        addressService.updateUserAddressToBeDefault(userId, addressId);
 
         return IMOOCJSONResult.ok();
     }
-
 
 
     private IMOOCJSONResult checkAddress(AddressDTO addressDTO) {

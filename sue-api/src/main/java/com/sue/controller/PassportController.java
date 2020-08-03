@@ -23,7 +23,7 @@ import javax.validation.Valid;
  * @date 2020/7/31 10:29
  */
 
-@Api(value = "注册登录",tags = {"用于相关接口"})
+@Api(value = "注册登录", tags = {"用于相关接口"})
 @RestController
 @RequestMapping("passport")
 @Validated
@@ -33,10 +33,7 @@ public class PassportController {
     private UserService userService;
 
 
-
-
-
-    @ApiOperation(value = "用户名是否存在",notes="用户名是否存在",httpMethod = "GET")
+    @ApiOperation(value = "用户名是否存在", notes = "用户名是否存在", httpMethod = "GET")
     @GetMapping("/usernameIsExist")
     public IMOOCJSONResult usernameIsExist(@RequestParam String username) {
 
@@ -55,18 +52,7 @@ public class PassportController {
     }
 
 
-
-
-
-
-
-
-
-
-
-
-
-    @ApiOperation(value = "用户注册",notes="用户注册",httpMethod = "POST")
+    @ApiOperation(value = "用户注册", notes = "用户注册", httpMethod = "POST")
     @PostMapping("/regist")
     public IMOOCJSONResult createUser(
             @RequestBody UserDTO userDTO,
@@ -75,17 +61,17 @@ public class PassportController {
     ) {
 
         if (
-                StringUtils.isNotBlank(userDTO.getUsername())&&
+                StringUtils.isNotBlank(userDTO.getUsername()) &&
                         StringUtils.isNotBlank(userDTO.getPassword()) &&
                         StringUtils.isNotBlank(userDTO.getConfirmPassword())
-        ){
-            if(userService.queryUsernameIsExist(userDTO.getUsername())){
-                return  IMOOCJSONResult.errorMsg("已经存在该用户");
+        ) {
+            if (userService.queryUsernameIsExist(userDTO.getUsername())) {
+                return IMOOCJSONResult.errorMsg("已经存在该用户");
             }
-            if(userDTO.getPassword().length()<6){
-                return  IMOOCJSONResult.errorMsg("密码长度不能小于6");
+            if (userDTO.getPassword().length() < 6) {
+                return IMOOCJSONResult.errorMsg("密码长度不能小于6");
             }
-            if(!userDTO.getPassword().equals(userDTO.getConfirmPassword())){
+            if (!userDTO.getPassword().equals(userDTO.getConfirmPassword())) {
                 return IMOOCJSONResult.errorMsg("两次密码不一致");
             }
 
@@ -106,13 +92,7 @@ public class PassportController {
     }
 
 
-
-
-
-
-
-
-    @ApiOperation(value = "用户登录",notes="用户登录",httpMethod = "POST")
+    @ApiOperation(value = "用户登录", notes = "用户登录", httpMethod = "POST")
     @PostMapping("/login")
     public IMOOCJSONResult login(
             @Valid @RequestBody UserDTO userDTO,
@@ -144,14 +124,7 @@ public class PassportController {
     }
 
 
-
-
-
-
-
-
-
-    public void setNullProperties(Users users){
+    public void setNullProperties(Users users) {
         users.setPassword(null);
         users.setMobile(null);
         users.setEmail(null);
@@ -161,30 +134,13 @@ public class PassportController {
     }
 
 
-
-
-
-
-
-
-
-
-
-
-
-    @ApiOperation(value = "用户退出登录",notes="用户退出登录",httpMethod = "POST")
+    @ApiOperation(value = "用户退出登录", notes = "用户退出登录", httpMethod = "POST")
     @PostMapping("/logout")
-    public IMOOCJSONResult logout(@RequestParam String userId,HttpServletRequest request,HttpServletResponse response){
+    public IMOOCJSONResult logout(@RequestParam String userId, HttpServletRequest request, HttpServletResponse response) {
         //清除用户相关信息的cookie
-        CookieUtils.deleteCookie(request,response,"user");
+        CookieUtils.deleteCookie(request, response, "user");
         return IMOOCJSONResult.ok();
     }
-
-
-
-
-
-
 
 
 }

@@ -3,6 +3,7 @@ package com.sue.service.impl;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.sue.enums.CommentLevel;
+import com.sue.enums.YesOrNO;
 import com.sue.mapper.*;
 import com.sue.pojo.*;
 import com.sue.pojo.vo.CommentLevelCountsVO;
@@ -216,6 +217,10 @@ public class ItemServiceImpl implements ItemService {
         return itemsMapper.queryItemsBySpecIds(specIdsList);
     }
 
+
+
+
+
     @Transactional(propagation = Propagation.SUPPORTS)
     Integer getCommentCounts(String itemId,Integer level){
 
@@ -229,8 +234,51 @@ public class ItemServiceImpl implements ItemService {
     }
 
 
+    /**
+     * 根据商品规格Id获取规格对象的具体信息
+     *
+     * @param specId
+     * @return
+     */
+    @Transactional(propagation = Propagation.SUPPORTS)
+    @Override
+    public ItemsSpec queryItemSpecById(String specId) {
+        return itemsSpecMapper.selectByPrimaryKey(specId);
+    }
 
-    private PagedGridResult setterPagedGrid(List<?> list,Integer page){
+
+    /**
+     * 根据商品id获取商品图片
+     *
+     * @param itemId
+     * @return
+     */
+    @Transactional(propagation = Propagation.SUPPORTS)
+    @Override
+    public String queryItemMainImgById(String itemId) {
+        ItemsImg itemsImg = new ItemsImg();
+        itemsImg.setItemId(itemId);
+        itemsImg.setIsMain(YesOrNO.YES.type);
+
+        ItemsImg result = itemsImgMapper.selectOne(itemsImg);
+
+        return result != null ? result.getUrl():"";
+    }
+
+
+    /**
+     * 扣减商品库存
+     *
+     * @param specId
+     * @param buyCounts
+     */
+    @Transactional(propagation = Propagation.REQUIRED)
+    @Override
+    public void decreaseItemSpecStock(String specId, int buyCounts) {
+
+    }
+
+    private PagedGridResult setterPagedGrid(List<?> list, Integer page){
         PageInfo<?> pageList = new PageInfo<>(list);
         PagedGridResult pagedGridResult = new PagedGridResult();
         pagedGridResult.setPage(page);
@@ -239,4 +287,7 @@ public class ItemServiceImpl implements ItemService {
         pagedGridResult.setRecords(pageList.getTotal());
         return  pagedGridResult;
     }
+
+
+
 }

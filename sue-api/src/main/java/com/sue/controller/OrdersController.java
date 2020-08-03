@@ -15,16 +15,16 @@ import org.springframework.web.bind.annotation.RestController;
  * @date 2020/8/2 16:26
  */
 
-@Api(value = "订单相关",tags = {"订单相关接口"})
+@Api(value = "订单相关", tags = {"订单相关接口"})
 @RequestMapping("orders")
 @RestController
 public class OrdersController {
-    @ApiOperation(value = "用户下单",notes = "用户下单",httpMethod = "POST")
+    @ApiOperation(value = "用户下单", notes = "用户下单", httpMethod = "POST")
     @PostMapping("create")
-    public IMOOCJSONResult create(@RequestBody SubmitOrderDTO submitOrderDTO){
+    public IMOOCJSONResult create(@RequestBody SubmitOrderDTO submitOrderDTO) {
 
-        if(submitOrderDTO.getPayMethod() != PayMethod.ALIPAY.getType()&&
-                        submitOrderDTO.getPayMethod() != PayMethod.ALIPAY.getType()){
+        if (submitOrderDTO.getPayMethod() != PayMethod.ALIPAY.getType() &&
+                submitOrderDTO.getPayMethod() != PayMethod.ALIPAY.getType()) {
             return IMOOCJSONResult.errorMsg("支付方式不支持");
         }
 

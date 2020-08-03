@@ -6,7 +6,6 @@ import com.sue.pojo.ItemsParam;
 import com.sue.pojo.ItemsSpec;
 import com.sue.pojo.vo.CommentLevelCountsVO;
 import com.sue.pojo.vo.ItemInfoVO;
-import com.sue.pojo.vo.ShopCartVO;
 import com.sue.service.ItemService;
 import com.sue.utils.IMOOCJSONResult;
 import com.sue.utils.PagedGridResult;
@@ -24,7 +23,7 @@ import java.util.List;
  * @date 2020/8/1 17:48
  */
 
-@Api(value = "商品接口",tags = {"商品信息展示接口"})
+@Api(value = "商品接口", tags = {"商品信息展示接口"})
 @RequestMapping("items")
 @RestController
 public class ItemsController {
@@ -34,15 +33,14 @@ public class ItemsController {
     private ItemService itemService;
 
 
-
-    @ApiOperation(value = "商品信息",notes = "商品信息",httpMethod = "GET")
+    @ApiOperation(value = "商品信息", notes = "商品信息", httpMethod = "GET")
     @GetMapping("/info/{itemId}")
     public IMOOCJSONResult itemInfo(
-            @ApiParam(value = "itemId",name = "商品ID",required = true)
+            @ApiParam(value = "itemId", name = "商品ID", required = true)
             @PathVariable String itemId
-            ){
+    ) {
 
-        if(StringUtils.isBlank(itemId)){
+        if (StringUtils.isBlank(itemId)) {
             return IMOOCJSONResult.errorMsg(null);
         }
 
@@ -58,19 +56,14 @@ public class ItemsController {
     }
 
 
-
-
-
-
-
-    @ApiOperation(value = "查询商品评价等级",notes = "查询商品评价等级",httpMethod = "GET")
+    @ApiOperation(value = "查询商品评价等级", notes = "查询商品评价等级", httpMethod = "GET")
     @GetMapping("/commentLevel")
     public IMOOCJSONResult commentLevel(
-            @ApiParam(value = "itemId",name = "商品ID",required = true)
+            @ApiParam(value = "itemId", name = "商品ID", required = true)
             @RequestParam String itemId
-    ){
+    ) {
 
-        if(StringUtils.isBlank(itemId)){
+        if (StringUtils.isBlank(itemId)) {
             return IMOOCJSONResult.errorMsg(null);
         }
 
@@ -80,22 +73,20 @@ public class ItemsController {
     }
 
 
-
-
-    @ApiOperation(value = "查询商品评价内容",notes = "查询商品评价内容",httpMethod = "GET")
+    @ApiOperation(value = "查询商品评价内容", notes = "查询商品评价内容", httpMethod = "GET")
     @GetMapping("/comments")
     public IMOOCJSONResult comments(
-            @ApiParam(value = "itemId",name = "商品ID",required = true)
+            @ApiParam(value = "itemId", name = "商品ID", required = true)
             @RequestParam String itemId,
-            @ApiParam(value = "level",name = "商品评价级别",required = true)
+            @ApiParam(value = "level", name = "商品评价级别", required = true)
             @RequestParam Integer level,
-            @ApiParam(value = "page",name = "查询下一页的第几页",required = true)
-            @RequestParam(defaultValue = "1",required = false) Integer page,
-            @ApiParam(value = "pageSize",name = "每页显示条数",required = true)
-            @RequestParam(defaultValue = "10",required = false) Integer pageSize
-    ){
+            @ApiParam(value = "page", name = "查询下一页的第几页", required = true)
+            @RequestParam(defaultValue = "1", required = false) Integer page,
+            @ApiParam(value = "pageSize", name = "每页显示条数", required = true)
+            @RequestParam(defaultValue = "10", required = false) Integer pageSize
+    ) {
 
-        if(StringUtils.isBlank(itemId)){
+        if (StringUtils.isBlank(itemId)) {
             return IMOOCJSONResult.errorMsg(null);
         }
 
@@ -104,25 +95,20 @@ public class ItemsController {
     }
 
 
-
-
-
-
-
-    @ApiOperation(value = "搜索商品列表",notes = "搜索商品列表",httpMethod = "GET")
+    @ApiOperation(value = "搜索商品列表", notes = "搜索商品列表", httpMethod = "GET")
     @GetMapping("/search")
     public IMOOCJSONResult search(
-            @ApiParam(value = "keywords",name = "查询关键字",required = true)
+            @ApiParam(value = "keywords", name = "查询关键字", required = true)
             @RequestParam String keywords,
-            @ApiParam(value = "sort",name = "排序",required = true)
+            @ApiParam(value = "sort", name = "排序", required = true)
             @RequestParam String sort,
-            @ApiParam(value = "page",name = "查询下一页的第几页",required = true)
-            @RequestParam(defaultValue = "1",required = false) Integer page,
-            @ApiParam(value = "pageSize",name = "每页显示条数",required = true)
-            @RequestParam(defaultValue = "10",required = false) Integer pageSize
-    ){
+            @ApiParam(value = "page", name = "查询下一页的第几页", required = true)
+            @RequestParam(defaultValue = "1", required = false) Integer page,
+            @ApiParam(value = "pageSize", name = "每页显示条数", required = true)
+            @RequestParam(defaultValue = "10", required = false) Integer pageSize
+    ) {
 
-        if(StringUtils.isBlank(keywords)){
+        if (StringUtils.isBlank(keywords)) {
             return IMOOCJSONResult.errorMsg(null);
         }
 
@@ -131,29 +117,20 @@ public class ItemsController {
     }
 
 
-
-
-
-
-
-
-
-
-
-    @ApiOperation(value = "通过分类Id搜索商品列表",notes = "通过分类Id搜索商品列表",httpMethod = "GET")
+    @ApiOperation(value = "通过分类Id搜索商品列表", notes = "通过分类Id搜索商品列表", httpMethod = "GET")
     @GetMapping("/catItems")
     public IMOOCJSONResult catItems(
-            @ApiParam(value = "catId",name = "分类Id",required = true)
+            @ApiParam(value = "catId", name = "分类Id", required = true)
             @RequestParam Integer catId,
-            @ApiParam(value = "sort",name = "排序",required = true)
+            @ApiParam(value = "sort", name = "排序", required = true)
             @RequestParam String sort,
-            @ApiParam(value = "page",name = "查询下一页的第几页",required = true)
-            @RequestParam(defaultValue = "1",required = false) Integer page,
-            @ApiParam(value = "pageSize",name = "每页显示条数",required = true)
-            @RequestParam(defaultValue = "10",required = false) Integer pageSize
-    ){
+            @ApiParam(value = "page", name = "查询下一页的第几页", required = true)
+            @RequestParam(defaultValue = "1", required = false) Integer page,
+            @ApiParam(value = "pageSize", name = "每页显示条数", required = true)
+            @RequestParam(defaultValue = "10", required = false) Integer pageSize
+    ) {
 
-        if(catId == null){
+        if (catId == null) {
             return IMOOCJSONResult.errorMsg(null);
         }
 
@@ -162,36 +139,19 @@ public class ItemsController {
     }
 
 
-
-
-
-
-
-
-
-
-    @ApiOperation(value = "通过商品规格ids查询最新商品数据",notes = "通过商品规格ids查询最新商品数据",httpMethod = "GET")
+    @ApiOperation(value = "通过商品规格ids查询最新商品数据", notes = "通过商品规格ids查询最新商品数据", httpMethod = "GET")
     @GetMapping("/refresh")
     public IMOOCJSONResult refresh(
-            @ApiParam(value = "itemSpecIds",name = "拼接规格ids",required = true,example = "1001,1003,1005")
+            @ApiParam(value = "itemSpecIds", name = "拼接规格ids", required = true, example = "1001,1003,1005")
             @RequestParam String itemSpecIds
-    ){
+    ) {
 
-        if(StringUtils.isBlank(itemSpecIds)){
+        if (StringUtils.isBlank(itemSpecIds)) {
             return IMOOCJSONResult.ok();
         }
 
         return IMOOCJSONResult.ok(itemService.queryItemsBySpecIds(itemSpecIds));
     }
-
-
-
-
-
-
-
-
-
 
 
 }
