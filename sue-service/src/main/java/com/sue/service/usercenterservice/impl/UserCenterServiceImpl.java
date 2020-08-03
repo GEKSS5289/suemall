@@ -66,4 +66,27 @@ public class UserCenterServiceImpl implements UserCenterService {
     }
 
 
+    /**
+     * 修改用户头像
+     *
+     * @param userId
+     * @param faceUrl
+     * @return
+     */
+    @Transactional(propagation = Propagation.REQUIRED)
+    @Override
+    public Users updateUserFace(String userId, String faceUrl) {
+
+
+        Users updateUser = new Users();
+        updateUser.setId(userId);
+        updateUser.setFace(faceUrl);
+        updateUser.setUpdatedTime(new Date());
+        usersMapper.updateByPrimaryKeySelective(updateUser);
+
+        Users users = queryUserInfo(userId);
+
+        return users;
+
+    }
 }

@@ -5,6 +5,7 @@ import com.sue.pojo.Users;
 import com.sue.pojo.dto.usercenterdto.CenterUserDTO;
 import com.sue.service.usercenterservice.UserCenterService;
 import com.sue.utils.CookieUtils;
+import com.sue.utils.DateUtil;
 import com.sue.utils.IMOOCJSONResult;
 import com.sue.utils.JsonUtils;
 import io.swagger.annotations.Api;
@@ -14,6 +15,7 @@ import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.Banner;
+import org.springframework.util.unit.DataUnit;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -35,7 +37,7 @@ import java.io.InputStream;
 @RestController
 @RequestMapping("/userInfo")
 @Validated
-public class CenterUserController extends BaseController {
+public class UserCenterController extends BaseController {
 
 
     @Autowired
@@ -101,6 +103,10 @@ public class CenterUserController extends BaseController {
                     //上传头像最终保存地址
                     String finalFacePath = fileSpace + uploadPathPrefix + File.separator + newFileName;
 
+                    //用于提供给web服务访问的地址
+                    uploadPathPrefix += ("/"+newFileName);
+
+
                     //构建文件对象
                     File outFile = new File(finalFacePath);
                     if (outFile.getParentFile() != null) {
@@ -129,8 +135,26 @@ public class CenterUserController extends BaseController {
         }
 
 
+        String finalUserFaceUrl = "http://localhost:8088/foodie/faces" + uploadPathPrefix + "?t="+ DateUtil.getCurrentDateString(DateUtil.DATE_PATTERN);
+        //更新用户头像到数据库
+        Users users = userCenterService.updateUserFace(userId, finalUserFaceUrl);
+
+        setNullProperties(users);
+        CookieUtils.setCookie(
+                request,
+                response,
+                "user",
+                JsonUtils.objectToJson(users),
+                true
+        );
+
         return IMOOCJSONResult.ok();
     }
+
+
+
+
+
 
 
     public void setNullProperties(Users users) {
@@ -141,5 +165,7 @@ public class CenterUserController extends BaseController {
         users.setUpdatedTime(null);
         users.setBirthday(null);
     }
+
+
 
 }
