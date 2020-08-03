@@ -13,6 +13,7 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.multipart.MaxUploadSizeExceededException;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -70,6 +71,13 @@ public class ExceptionCatcher {
 //        String message = e.getMessage();
 //        return new IMOOCJSONResult(message);
 //    }
+
+
+    @ExceptionHandler(value = MaxUploadSizeExceededException.class)
+    public IMOOCJSONResult handlerMaxUploadFile(MaxUploadSizeExceededException ex){
+        return IMOOCJSONResult.errorMsg("文件超过500k,请压缩图片后上传");
+    }
+
 
     private String formatAllErrorMessage(List<ObjectError> errors){
         StringBuffer stringBuffer = new StringBuffer();

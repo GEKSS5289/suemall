@@ -96,6 +96,15 @@ public class UserCenterController extends BaseController {
                     //获取文件后缀
                     String suffix = split[split.length - 1];
 
+
+                    if(!suffix.equalsIgnoreCase("png")&&
+                            !suffix.equalsIgnoreCase("jpg")&&
+                            !suffix.equalsIgnoreCase("jpeg")
+                    ){
+                        return IMOOCJSONResult.errorMsg("图片格式不正确");
+                    }
+
+
                     //face-{userid}.jpg
                     //文件名重组
                     String newFileName = "face-" + userId + "." + suffix;
