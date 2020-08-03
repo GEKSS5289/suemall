@@ -1,7 +1,7 @@
-package com.sue.controller;
+package com.sue.controller.mallcontroller;
 
 import com.sue.pojo.dto.AddressDTO;
-import com.sue.service.AddressService;
+import com.sue.service.mallservice.AddressService;
 import com.sue.utils.IMOOCJSONResult;
 import com.sue.utils.MobileEmailUtils;
 import io.swagger.annotations.Api;

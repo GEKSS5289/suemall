@@ -1,4 +1,4 @@
-package com.sue.controller;
+package com.sue.controller.mallcontroller;
 
 import com.sue.pojo.Items;
 import com.sue.pojo.ItemsImg;
@@ -6,7 +6,7 @@ import com.sue.pojo.ItemsParam;
 import com.sue.pojo.ItemsSpec;
 import com.sue.pojo.vo.CommentLevelCountsVO;
 import com.sue.pojo.vo.ItemInfoVO;
-import com.sue.service.ItemService;
+import com.sue.service.mallservice.ItemService;
 import com.sue.utils.IMOOCJSONResult;
 import com.sue.utils.PagedGridResult;
 import io.swagger.annotations.Api;

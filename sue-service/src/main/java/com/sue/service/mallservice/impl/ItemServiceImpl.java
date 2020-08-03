@@ -1,4 +1,4 @@
-package com.sue.service.impl;
+package com.sue.service.mallservice.impl;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
@@ -10,10 +10,9 @@ import com.sue.pojo.vo.CommentLevelCountsVO;
 import com.sue.pojo.vo.ItemCommentVO;
 import com.sue.pojo.vo.SearchItemsVO;
 import com.sue.pojo.vo.ShopCartVO;
-import com.sue.service.ItemService;
+import com.sue.service.mallservice.ItemService;
 import com.sue.utils.DesensitizationUtil;
 import com.sue.utils.PagedGridResult;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;

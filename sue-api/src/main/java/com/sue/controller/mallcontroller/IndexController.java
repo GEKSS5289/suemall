@@ -1,8 +1,8 @@
-package com.sue.controller;
+package com.sue.controller.mallcontroller;
 
 import com.sue.enums.YesOrNO;
-import com.sue.service.CarouselService;
-import com.sue.service.CategoryService;
+import com.sue.service.mallservice.CarouselService;
+import com.sue.service.mallservice.CategoryService;
 import com.sue.utils.IMOOCJSONResult;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;

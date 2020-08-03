@@ -1,4 +1,4 @@
-package com.sue.controller;
+package com.sue.controller.mallcontroller;
 
 import com.sue.enums.OrderStatusEnum;
 import com.sue.enums.PayMethod;
@@ -6,8 +6,7 @@ import com.sue.pojo.OrderStatus;
 import com.sue.pojo.dto.SubmitOrderDTO;
 import com.sue.pojo.vo.MerchantOrdersVO;
 import com.sue.pojo.vo.OrderVO;
-import com.sue.service.OrderService;
-import com.sue.utils.CookieUtils;
+import com.sue.service.mallservice.OrderService;
 import com.sue.utils.IMOOCJSONResult;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -19,7 +18,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
-import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 

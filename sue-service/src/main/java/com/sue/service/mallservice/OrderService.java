@@ -1,4 +1,4 @@
-package com.sue.service;
+package com.sue.service.mallservice;
 
 import com.sue.pojo.OrderStatus;
 import com.sue.pojo.dto.SubmitOrderDTO;

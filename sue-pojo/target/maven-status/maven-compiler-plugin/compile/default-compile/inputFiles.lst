@@ -7,6 +7,7 @@ E:\SbootProject\sue-mall\sue-pojo\src\main\java\com\sue\pojo\Orders.java
 E:\SbootProject\sue-mall\sue-pojo\src\main\java\com\sue\pojo\OrderItems.java
 E:\SbootProject\sue-mall\sue-pojo\src\main\java\com\sue\pojo\ItemsSpec.java
 E:\SbootProject\sue-mall\sue-pojo\src\main\java\com\sue\pojo\vo\SearchItemsVO.java
+E:\SbootProject\sue-mall\sue-pojo\src\main\java\com\sue\pojo\vo\MerchantOrdersVO.java
 E:\SbootProject\sue-mall\sue-pojo\src\main\java\com\sue\pojo\dto\ShopcartDTO.java
 E:\SbootProject\sue-mall\sue-pojo\src\main\java\com\sue\pojo\OrderStatus.java
 E:\SbootProject\sue-mall\sue-pojo\src\main\java\com\sue\pojo\Category.java
@@ -16,6 +17,7 @@ E:\SbootProject\sue-mall\sue-pojo\src\main\java\com\sue\pojo\ItemsComments.java
 E:\SbootProject\sue-mall\sue-pojo\src\main\java\com\sue\pojo\dto\SubmitOrderDTO.java
 E:\SbootProject\sue-mall\sue-pojo\src\main\java\com\sue\pojo\vo\SimpleItemVO.java
 E:\SbootProject\sue-mall\sue-pojo\src\main\java\com\sue\pojo\Carousel.java
+E:\SbootProject\sue-mall\sue-pojo\src\main\java\com\sue\pojo\vo\OrderVO.java
 E:\SbootProject\sue-mall\sue-pojo\src\main\java\com\sue\pojo\vo\ItemInfoVO.java
 E:\SbootProject\sue-mall\sue-pojo\src\main\java\com\sue\pojo\vo\SubCategoryVO.java
 E:\SbootProject\sue-mall\sue-pojo\src\main\java\com\sue\pojo\dto\AddressDTO.java

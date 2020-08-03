@@ -1,4 +1,4 @@
-package com.sue.controller;
+package com.sue.controller.mallcontroller;
 
 import com.sue.pojo.dto.ShopcartDTO;
 import com.sue.utils.IMOOCJSONResult;

@@ -1,12 +1,11 @@
-package com.sue.service.impl;
+package com.sue.service.mallservice.impl;
 
 import com.sue.mapper.CategoryMapper;
 import com.sue.mapper.CategoryMapperCustom;
 import com.sue.pojo.Category;
 import com.sue.pojo.vo.CategoryVO;
 import com.sue.pojo.vo.NewItemsVO;
-import com.sue.pojo.vo.SubCategoryVO;
-import com.sue.service.CategoryService;
+import com.sue.service.mallservice.CategoryService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;

@@ -1,7 +1,6 @@
 package com.sue.config;
 
-import com.sue.pojo.OrderStatus;
-import com.sue.service.OrderService;
+import com.sue.service.mallservice.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;

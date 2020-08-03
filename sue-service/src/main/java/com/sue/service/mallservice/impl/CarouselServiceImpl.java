@@ -1,16 +1,14 @@
-package com.sue.service.impl;
+package com.sue.service.mallservice.impl;
 
 import com.sue.mapper.CarouselMapper;
 import com.sue.pojo.Carousel;
-import com.sue.service.CarouselService;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.sue.service.mallservice.CarouselService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import tk.mybatis.mapper.entity.Example;
 
 import javax.annotation.Resource;
-import java.util.Calendar;
 import java.util.List;
 
 /**

@@ -1,4 +1,4 @@
-package com.sue.controller;
+package com.sue.controller.mallcontroller;
 
 import org.springframework.web.bind.annotation.RestController;
 

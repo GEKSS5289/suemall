@@ -1,10 +1,10 @@
-package com.sue.service.impl;
+package com.sue.service.mallservice.impl;
 
 import com.sue.enums.YesOrNO;
 import com.sue.mapper.UserAddressMapper;
 import com.sue.pojo.UserAddress;
 import com.sue.pojo.dto.AddressDTO;
-import com.sue.service.AddressService;
+import com.sue.service.mallservice.AddressService;
 import org.n3r.idworker.Sid;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,4 +1,4 @@
-package com.sue.service;
+package com.sue.service.mallservice;
 
 import com.sue.pojo.Carousel;
 import com.sue.pojo.vo.CategoryVO;

@@ -1,4 +1,4 @@
-package com.sue.service.impl;
+package com.sue.service.mallservice.impl;
 
 import com.sue.enums.OrderStatusEnum;
 import com.sue.mapper.OrderItemsMapper;
@@ -8,11 +8,10 @@ import com.sue.pojo.*;
 import com.sue.pojo.dto.SubmitOrderDTO;
 import com.sue.pojo.vo.MerchantOrdersVO;
 import com.sue.pojo.vo.OrderVO;
-import com.sue.service.AddressService;
-import com.sue.service.ItemService;
-import com.sue.service.OrderService;
+import com.sue.service.mallservice.AddressService;
+import com.sue.service.mallservice.ItemService;
+import com.sue.service.mallservice.OrderService;
 import com.sue.utils.DateUtil;
-import org.aspectj.weaver.ast.Or;
 import org.n3r.idworker.Sid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,10 +19,8 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
-import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
-import java.util.concurrent.atomic.AtomicReference;
 
 /**
  * @author sue

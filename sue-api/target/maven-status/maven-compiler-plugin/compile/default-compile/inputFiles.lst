@@ -1,5 +1,6 @@
 E:\SbootProject\sue-mall\sue-api\src\main\java\com\sue\aspect\ServiceLogAspect.java
-E:\SbootProject\sue-mall\sue-api\src\main\java\com\sue\config\WebConfig.java
+E:\SbootProject\sue-mall\sue-api\src\main\java\com\sue\config\OrderJob.java
+E:\SbootProject\sue-mall\sue-api\src\main\java\com\sue\config\WebMvcConfig.java
 E:\SbootProject\sue-mall\sue-api\src\main\java\com\sue\config\Swagger2.java
 E:\SbootProject\sue-mall\sue-api\src\main\java\com\sue\controller\IndexController.java
 E:\SbootProject\sue-mall\sue-api\src\main\java\com\sue\controller\AddressController.java

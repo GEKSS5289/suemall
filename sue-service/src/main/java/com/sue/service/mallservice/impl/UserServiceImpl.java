@@ -1,13 +1,12 @@
-package com.sue.service.impl;
+package com.sue.service.mallservice.impl;
 
 import com.sue.enums.Sex;
 import com.sue.mapper.UsersMapper;
 import com.sue.pojo.Users;
 import com.sue.pojo.dto.UserDTO;
-import com.sue.service.UserService;
+import com.sue.service.mallservice.UserService;
 import com.sue.utils.DateUtil;
 import com.sue.utils.MD5Utils;
-import org.apache.catalina.User;
 import org.n3r.idworker.Sid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,7 +16,6 @@ import tk.mybatis.mapper.entity.Example;
 
 import javax.annotation.Resource;
 import java.util.Date;
-import java.util.Optional;
 
 /**
  * @author sue
