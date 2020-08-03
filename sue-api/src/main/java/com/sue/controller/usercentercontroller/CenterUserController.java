@@ -1,5 +1,6 @@
 package com.sue.controller.usercentercontroller;
 
+import com.sue.controller.mallcontroller.BaseController;
 import com.sue.pojo.Users;
 import com.sue.pojo.dto.usercenterdto.CenterUserDTO;
 import com.sue.service.usercenterservice.UserCenterService;
@@ -9,13 +10,21 @@ import com.sue.utils.JsonUtils;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
+import org.apache.commons.io.IOUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.Banner;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 
 /**
  * @author sue
@@ -26,7 +35,7 @@ import javax.validation.Valid;
 @RestController
 @RequestMapping("/userInfo")
 @Validated
-public class CenterUserController {
+public class CenterUserController extends BaseController {
 
 
     @Autowired
@@ -52,6 +61,75 @@ public class CenterUserController {
                 true
         );
         return IMOOCJSONResult.ok(users);
+    }
+
+
+    @ApiOperation(value = "用户头像修改", notes = "用户头像修改", httpMethod = "POST")
+    @PostMapping("/uploadFace")
+    public IMOOCJSONResult uploadFace(
+            @ApiParam(name = "userId", value = "用户Id", required = true)
+            @RequestParam String userId,
+            @ApiParam(name = "file", value = "用户头像", required = true)
+                    MultipartFile file,
+            HttpServletRequest request,
+            HttpServletResponse response
+    ) {
+
+        //定义头像保存的地址
+        String fileSpace = IMAGE_USER_FACE_LOCATION;
+        String uploadPathPrefix = File.separator + userId;
+        FileOutputStream fileOutputStream = null;
+        InputStream inputStream = null;
+
+        try {
+            if (file != null) {
+                //获取文件上传名称
+                String fileName = file.getOriginalFilename();
+
+                if (StringUtils.isNotBlank(fileName)) {
+
+                    //imooc.jpg -> ["imooc","jpg"]
+                    String[] split = fileName.split("\\.");
+
+                    //获取文件后缀
+                    String suffix = split[split.length - 1];
+
+                    //face-{userid}.jpg
+                    //文件名重组
+                    String newFileName = "face-" + userId + "." + suffix;
+
+                    //上传头像最终保存地址
+                    String finalFacePath = fileSpace + uploadPathPrefix + File.separator + newFileName;
+
+                    //构建文件对象
+                    File outFile = new File(finalFacePath);
+                    if (outFile.getParentFile() != null) {
+                        //创建文件夹
+                        outFile.getParentFile().mkdirs();
+                    }
+
+                    //文件输出保存到目录
+                    fileOutputStream = new FileOutputStream(outFile);
+                    inputStream = file.getInputStream();
+                    IOUtils.copy(inputStream, fileOutputStream);
+
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (fileOutputStream != null){
+                    fileOutputStream.flush();
+                    fileOutputStream.close();
+                }
+            }catch (IOException e){
+                e.printStackTrace();
+            }
+        }
+
+
+        return IMOOCJSONResult.ok();
     }
 
 
