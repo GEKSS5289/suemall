@@ -68,7 +68,7 @@ public class ItemServiceImpl implements ItemService {
     public List<ItemsImg> queryItemImgList(String itemId) {
         Example example = new Example(ItemsImg.class);
         Example.Criteria criteria = example.createCriteria();
-        criteria.andEqualTo("itemId",itemId);
+        criteria.andEqualTo("itemId", itemId);
 
         return itemsImgMapper.selectByExample(example);
     }
@@ -84,7 +84,7 @@ public class ItemServiceImpl implements ItemService {
     public List<ItemsSpec> queryItemSpecList(String itemId) {
         Example example = new Example(ItemsSpec.class);
         Example.Criteria criteria = example.createCriteria();
-        criteria.andEqualTo("itemId",itemId);
+        criteria.andEqualTo("itemId", itemId);
         return itemsSpecMapper.selectByExample(example);
     }
 
@@ -99,7 +99,7 @@ public class ItemServiceImpl implements ItemService {
     public ItemsParam queryItemParam(String itemId) {
         Example example = new Example(ItemsParam.class);
         Example.Criteria criteria = example.createCriteria();
-        criteria.andEqualTo("itemId",itemId);
+        criteria.andEqualTo("itemId", itemId);
         return itemsParamMapper.selectOneByExample(example);
     }
 
@@ -116,7 +116,7 @@ public class ItemServiceImpl implements ItemService {
         Integer goodCounts = getCommentCounts(itemId, CommentLevel.GOOD.getType());
         Integer normalCounts = getCommentCounts(itemId, CommentLevel.NORMAL.getType());
         Integer badCounts = getCommentCounts(itemId, CommentLevel.BAD.getType());
-        Integer totalCount = goodCounts+normalCounts+badCounts;
+        Integer totalCount = goodCounts + normalCounts + badCounts;
 
         CommentLevelCountsVO commentLevelCountsVO = new CommentLevelCountsVO();
         commentLevelCountsVO.setBadCounts(badCounts);
@@ -140,21 +140,21 @@ public class ItemServiceImpl implements ItemService {
     public PagedGridResult queryPageComments(
             String itemId,
             Integer level
-            ,Integer page
-            ,Integer pageSize
+            , Integer page
+            , Integer pageSize
     ) {
-        Map<String,Object> stringObjectHashMap = new HashMap<>();
-        stringObjectHashMap.put("itemId",itemId);
-        stringObjectHashMap.put("level",level);
+        Map<String, Object> stringObjectHashMap = new HashMap<>();
+        stringObjectHashMap.put("itemId", itemId);
+        stringObjectHashMap.put("level", level);
 
-        PageHelper.startPage(page,pageSize);
+        PageHelper.startPage(page, pageSize);
         List<ItemCommentVO> itemCommentVOS = itemsMapper.queryItemComments(stringObjectHashMap);
 
-        itemCommentVOS.forEach(i->{
+        itemCommentVOS.forEach(i -> {
             i.setNickname(DesensitizationUtil.commonDisplay(i.getNickname()));
         });
 
-        return this.setterPagedGrid(itemCommentVOS,page);
+        return this.setterPagedGrid(itemCommentVOS, page);
     }
 
     /**
@@ -169,14 +169,14 @@ public class ItemServiceImpl implements ItemService {
     @Transactional(propagation = Propagation.SUPPORTS)
     @Override
     public PagedGridResult searchItems(String keywords, String sort, Integer page, Integer pageSize) {
-        Map<String,Object> stringObjectHashMap = new HashMap<>();
-        stringObjectHashMap.put("keywords",keywords);
-        stringObjectHashMap.put("sort",sort);
-        PageHelper.startPage(page,pageSize);
+        Map<String, Object> stringObjectHashMap = new HashMap<>();
+        stringObjectHashMap.put("keywords", keywords);
+        stringObjectHashMap.put("sort", sort);
+        PageHelper.startPage(page, pageSize);
 
         List<SearchItemsVO> searchItemsVOS = itemsMapper.searchItems(stringObjectHashMap);
 
-        return  this.setterPagedGrid(searchItemsVOS,page);
+        return this.setterPagedGrid(searchItemsVOS, page);
     }
 
     /**
@@ -191,14 +191,14 @@ public class ItemServiceImpl implements ItemService {
     @Transactional(propagation = Propagation.SUPPORTS)
     @Override
     public PagedGridResult searchItems(Integer catId, String sort, Integer page, Integer pageSize) {
-        Map<String,Object> stringObjectHashMap = new HashMap<>();
-        stringObjectHashMap.put("catId",catId);
-        stringObjectHashMap.put("sort",sort);
-        PageHelper.startPage(page,pageSize);
+        Map<String, Object> stringObjectHashMap = new HashMap<>();
+        stringObjectHashMap.put("catId", catId);
+        stringObjectHashMap.put("sort", sort);
+        PageHelper.startPage(page, pageSize);
 
         List<SearchItemsVO> searchItemsVOS = itemsMapper.searchItemsByThirdCat(stringObjectHashMap);
 
-        return  this.setterPagedGrid(searchItemsVOS,page);
+        return this.setterPagedGrid(searchItemsVOS, page);
     }
 
     /**
@@ -212,25 +212,22 @@ public class ItemServiceImpl implements ItemService {
     public List<ShopCartVO> queryItemsBySpecIds(String specIds) {
         String ids[] = specIds.split(",");
         List<String> specIdsList = new ArrayList<>();
-        Collections.addAll(specIdsList,ids);
+        Collections.addAll(specIdsList, ids);
 
         return itemsMapper.queryItemsBySpecIds(specIdsList);
     }
 
 
-
-
-
     @Transactional(propagation = Propagation.SUPPORTS)
-    Integer getCommentCounts(String itemId,Integer level){
+    Integer getCommentCounts(String itemId, Integer level) {
 
         ItemsComments comments = new ItemsComments();
         comments.setItemId(itemId);
-        if(level != null){
+        if (level != null) {
             comments.setCommentLevel(level);
         }
 
-        return  itemsCommentsMapper.selectCount(comments);
+        return itemsCommentsMapper.selectCount(comments);
     }
 
 
@@ -262,7 +259,7 @@ public class ItemServiceImpl implements ItemService {
 
         ItemsImg result = itemsImgMapper.selectOne(itemsImg);
 
-        return result != null ? result.getUrl():"";
+        return result != null ? result.getUrl() : "";
     }
 
 
@@ -276,18 +273,27 @@ public class ItemServiceImpl implements ItemService {
     @Override
     public void decreaseItemSpecStock(String specId, int buyCounts) {
 
+        //synchronized () 不推荐使用 集群下无用，性能低下
+        //锁数据库 不推荐 导致数据库性能低下
+        //分布式锁 zookeeper redis 两个都可以做分布式锁
+        int result = itemsMapper.decreaseItemSpecStock(specId, buyCounts);
+
+        if(result != 1){
+            throw new RuntimeException("订单创建失败，原因库存不足");
+        }
+
+
     }
 
-    private PagedGridResult setterPagedGrid(List<?> list, Integer page){
+    private PagedGridResult setterPagedGrid(List<?> list, Integer page) {
         PageInfo<?> pageList = new PageInfo<>(list);
         PagedGridResult pagedGridResult = new PagedGridResult();
         pagedGridResult.setPage(page);
         pagedGridResult.setRows(list);
         pagedGridResult.setTotal(pageList.getPages());
         pagedGridResult.setRecords(pageList.getTotal());
-        return  pagedGridResult;
+        return pagedGridResult;
     }
-
 
 
 }

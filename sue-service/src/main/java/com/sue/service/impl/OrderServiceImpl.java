@@ -29,7 +29,6 @@ import java.util.concurrent.atomic.AtomicReference;
 public class OrderServiceImpl implements OrderService {
 
 
-
     @Autowired
     private AddressService addressService;
 
@@ -44,7 +43,6 @@ public class OrderServiceImpl implements OrderService {
 
     @Resource
     private OrderStatusMapper orderStatusMapper;
-
 
 
     @Autowired
@@ -80,7 +78,7 @@ public class OrderServiceImpl implements OrderService {
         Integer totalAmount = 0;
         Integer realPayAmount = 0; //优惠后的价格累计
 
-        for(String itemSpecId:itemSpecIdArr){
+        for (String itemSpecId : itemSpecIdArr) {
 
             //TODO 整合redis之后，商品购买的数量重新从redis的购物车中获取
             int buyCounts = 1;
@@ -100,7 +98,6 @@ public class OrderServiceImpl implements OrderService {
             String imgUrl = itemService.queryItemMainImgById(itemId);
 
 
-
             OrderItems subOrderItem = new OrderItems();
             String subOrderId = sid.nextShort();
             subOrderItem.setId(subOrderId);
@@ -116,11 +113,9 @@ public class OrderServiceImpl implements OrderService {
 
             orderItemsMapper.insert(subOrderItem);
 
-
-
+            itemService.decreaseItemSpecStock(itemSpecId,buyCounts);
 
         }
-
 
 
         newOrders.setTotalAmount(totalAmount);
