@@ -1,6 +1,7 @@
 package com.sue.service;
 
 import com.sue.pojo.dto.SubmitOrderDTO;
+import com.sue.pojo.vo.OrderVO;
 
 /**
  * @author sue
@@ -12,5 +13,13 @@ public interface OrderService {
      * 用于创建订单相关信息
      * @param submitOrderDTO
      */
-    public void createOrder(SubmitOrderDTO submitOrderDTO);
+    public OrderVO createOrder(SubmitOrderDTO submitOrderDTO);
+
+
+    /**
+     * 修改订单状态
+     * @param orderId
+     * @param orderStatus
+     */
+    public void updateOrderStatus(String orderId,Integer orderStatus);
 }

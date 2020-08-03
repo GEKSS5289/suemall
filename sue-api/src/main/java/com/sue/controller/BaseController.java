@@ -9,4 +9,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class BaseController {
+    public static final String FOODIE_SHOPCART = "shopcart";
+
+    //微信支付成功 -> 支付中心 -> 天天吃货平台 （会调通知的Url）
+    public String payReturnUrl = "http://localhost:8088/orders/notifyMerchantOrderPaid";
 }

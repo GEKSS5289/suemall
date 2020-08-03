@@ -44,13 +44,13 @@ public class Orders {
 
     public Orders(String orderId, SubmitOrderDTO submitOrderDTO,UserAddress userAddress){
         this.setId(orderId);
-        this.setUserId(userId);
+        this.setUserId(submitOrderDTO.getUserId());
         this.setReceiverName(userAddress.getReceiver());
         this.setReceiverMobile(userAddress.getMobile());
         this.setReceiverAddress(userAddress.getReceiver()+" "+userAddress.getCity()+" "+userAddress.getDistrict()+" "+userAddress.getDistrict());
         this.setPostAmount(0);
-        this.setPayMethod(payMethod);
-        this.setLeftMsg(leftMsg);
+        this.setPayMethod(submitOrderDTO.getPayMethod());
+        this.setLeftMsg(submitOrderDTO.getLeftMsg());
         this.setIsComment(YesOrNO.NO.type);
         this.setIsDelete(YesOrNO.NO.type);
         this.setCreatedTime(new Date());

@@ -6,6 +6,8 @@ import com.sue.mapper.OrderStatusMapper;
 import com.sue.mapper.OrdersMapper;
 import com.sue.pojo.*;
 import com.sue.pojo.dto.SubmitOrderDTO;
+import com.sue.pojo.vo.MerchantOrdersVO;
+import com.sue.pojo.vo.OrderVO;
 import com.sue.service.AddressService;
 import com.sue.service.ItemService;
 import com.sue.service.OrderService;
@@ -55,7 +57,7 @@ public class OrderServiceImpl implements OrderService {
      */
     @Transactional(propagation = Propagation.REQUIRED)
     @Override
-    public void createOrder(SubmitOrderDTO submitOrderDTO) {
+    public OrderVO createOrder(SubmitOrderDTO submitOrderDTO) {
 
 
         String userId = submitOrderDTO.getUserId();
@@ -113,7 +115,7 @@ public class OrderServiceImpl implements OrderService {
 
             orderItemsMapper.insert(subOrderItem);
 
-            itemService.decreaseItemSpecStock(itemSpecId,buyCounts);
+            itemService.decreaseItemSpecStock(itemSpecId, buyCounts);
 
         }
 
@@ -131,6 +133,38 @@ public class OrderServiceImpl implements OrderService {
 
         orderStatusMapper.insert(waitPayOrderStatus);
 
+
+        //构建商户订单，用于传给支付中心
+        MerchantOrdersVO merchantOrdersVO = new MerchantOrdersVO();
+        merchantOrdersVO.setMerchantOrderId(orderId);
+        merchantOrdersVO.setMerchantUserId(userId);
+        merchantOrdersVO.setAmount(realPayAmount + 0);
+        merchantOrdersVO.setPayMethod(submitOrderDTO.getPayMethod());
+
+        //构建自定义订单VO
+        OrderVO orderVO = new OrderVO();
+        orderVO.setOrderId(orderId);
+        orderVO.setMerchantOrdersVO(merchantOrdersVO);
+        return orderVO;
+    }
+
+
+    /**
+     * 修改订单状态
+     *
+     * @param orderId
+     * @param orderStatus
+     */
+    @Transactional(propagation = Propagation.REQUIRED)
+    @Override
+    public void updateOrderStatus(String orderId, Integer orderStatus) {
+
+        OrderStatus padiStatus = new OrderStatus();
+
+        padiStatus.setOrderId(orderId);
+        padiStatus.setOrderStatus(orderStatus);
+        padiStatus.setPayTime(new Date());
+        orderStatusMapper.updateByPrimaryKeySelective(padiStatus);
 
     }
 }
