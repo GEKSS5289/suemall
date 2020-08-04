@@ -21,4 +21,68 @@
     <result column="created_time" property="createdTime" jdbcType="TIMESTAMP" />
     <result column="updated_time" property="updatedTime" jdbcType="TIMESTAMP" />
   </resultMap>
+
+
+  <resultMap id="myOrdersVO" type="com.sue.pojo.vo.MyOrdersVO">
+    <id column="orderId" property="orderId"></id>
+    <result column="createdTime" property="createdTime"></result>
+    <result column="payMethod" property="payMethod"></result>
+    <result column="realPayAmount" property="realPayAmount"></result>
+    <result column="postAmount" property="postAmount"></result>
+    <result column="orderStatus" property="orderStatus"></result>
+    <result column="isComment" property="isComment"/>
+    <collection property="subOrderItemList"
+                select="getSubItems"
+                column="orderId"
+                ofType="com.sue.pojo.vo.MySubOrderItemVO">
+      <result column="itemId" property="itemId"></result>
+      <result column="itemName" property="itemName"></result>
+      <result column="itemImg" property="itemImg"></result>
+      <result column="itemSpecName" property="itemSpecName"></result>
+      <result column="buyCounts" property="buyCounts"></result>
+      <result column="price" property="price"></result>
+    </collection>
+  </resultMap>
+    
+
+  <select id="queryMyOrders"  parameterType="map"  resultMap="myOrdersVO">
+SELECT
+   od.id as orderId,
+	 od.created_time as createdTime,
+	 od.pay_method as payMethod,
+	 od.real_pay_amount as realPayAmount,
+	 od.post_amount as postAmount,
+	 os.order_status as orderStatus
+FROM
+	orders od
+LEFT JOIN
+	order_status os
+on od.id = os.order_id
+WHERE
+	od.user_id = #{paramsMap.userId}
+AND
+	od.is_delete = 0
+	<if test="paramsMap.orderStatus != null">
+      AND os.order_status = #{paramsMap.orderStatus}
+    </if>
+ORDER BY
+	od.updated_time ASC
+  </select>
+    
+    
+    <select id="getSubItems" parameterType="String" resultType="com.sue.pojo.vo.MySubOrderItemVO">
+        select
+        	 oi.item_id as itemId,
+             oi.item_name as itemName,
+             oi.item_img as itemImg,
+             oi.item_spec_id as itemSpecId,
+             oi.item_spec_name as itemSpecName,
+             oi.buy_counts as buyCounts,
+             oi.price as price
+        from
+             order_items oi
+        where
+            oi.order_id = #{orderId}
+    </select>
+    
 </mapper>

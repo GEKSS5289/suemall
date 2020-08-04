@@ -3,10 +3,12 @@ package com.sue.pojo;
 import com.sue.enums.YesOrNO;
 import com.sue.pojo.dto.malldto.SubmitOrderDTO;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.util.Date;
 @Data
+@NoArgsConstructor
 public class Orders {
     @Id
     private String id;

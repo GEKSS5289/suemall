@@ -12,6 +12,7 @@ com\sue\pojo\dto\malldto\UserDTO.class
 com\sue\pojo\Items.class
 com\sue\pojo\Carousel.class
 com\sue\pojo\OrderItems.class
+com\sue\pojo\vo\MySubOrderItemVO.class
 com\sue\pojo\dto\malldto\SubmitOrderDTO.class
 com\sue\pojo\vo\SearchItemsVO.class
 com\sue\pojo\ItemsImg.class
@@ -23,6 +24,7 @@ com\sue\pojo\Users.class
 com\sue\pojo\UserAddress.class
 com\sue\pojo\vo\OrderVO.class
 com\sue\pojo\vo\CommentLevelCountsVO.class
+com\sue\pojo\vo\MyOrdersVO.class
 com\sue\pojo\vo\SubCategoryVO.class
 com\sue\pojo\Category.class
 com\sue\pojo\ItemsComments.class
