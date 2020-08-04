@@ -103,7 +103,7 @@ public class MyOrdersController extends BaseController {
             @RequestParam String userId
     ){
         if(StringUtils.isBlank(userId)){
-            return IMOOCJSONResult.errorMsg(null);
+          throw new DataNullException(44400);
         }
         OrderStatusCountsVO orderStatusCounts = myOrdersService.getOrderStatusCounts(userId);
         return IMOOCJSONResult.ok(orderStatusCounts);
@@ -117,9 +117,9 @@ public class MyOrdersController extends BaseController {
             @ApiParam(name = "userId",value = "用户Id",required = true)
             @RequestParam String userId,
             @ApiParam(name = "page",value = "查询下一页的第几页",required = false)
-            @RequestParam Integer page,
+            @RequestParam(defaultValue = "1", required = false) Integer page,
             @ApiParam(name = "pageSize",value = "分页的每一页显示的条数",required = false)
-            @RequestParam Integer pageSize
+            @RequestParam(defaultValue = "10", required = false) Integer pageSize
     ){
         if(StringUtils.isBlank(userId)){
             return IMOOCJSONResult.errorMsg(null);

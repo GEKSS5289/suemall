@@ -37,7 +37,7 @@ public class UserCenterController extends BaseController {
     private UserCenterService userCenterService;
 
 
-    @ApiOperation(value = "获取用户信息", notes = "获取用户信息", httpMethod = "POST")
+    @ApiOperation(value = "更新用户信息", notes = "更新用户信息", httpMethod = "POST")
     @PostMapping("/update")
     public IMOOCJSONResult userInfo(
             @ApiParam(name = "userId", value = "用户Id", required = true)
@@ -87,13 +87,6 @@ public class UserCenterController extends BaseController {
 
         return IMOOCJSONResult.ok();
     }
-
-
-
-
-
-
-
 
 
 }
