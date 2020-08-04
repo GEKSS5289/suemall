@@ -52,7 +52,8 @@ SELECT
 	 od.pay_method as payMethod,
 	 od.real_pay_amount as realPayAmount,
 	 od.post_amount as postAmount,
-	 os.order_status as orderStatus
+	 os.order_status as orderStatus,
+	 od.is_comment as isComment
 FROM
 	orders od
 LEFT JOIN

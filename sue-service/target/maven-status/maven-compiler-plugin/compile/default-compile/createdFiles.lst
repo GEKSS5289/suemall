@@ -1,2 +1,4 @@
+com\sue\service\usercenterservice\MyCommentService.class
+com\sue\service\usercenterservice\impl\MyCommentServiceImpl.class
 com\sue\service\usercenterservice\impl\MyOrdersServiceImpl.class
 com\sue\service\usercenterservice\MyOrdersService.class

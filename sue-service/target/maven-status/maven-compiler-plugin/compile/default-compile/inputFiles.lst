@@ -1,5 +1,6 @@
 E:\SbootProject\sue-mall\sue-service\src\main\java\com\sue\service\mallservice\CategoryService.java
 E:\SbootProject\sue-mall\sue-service\src\main\java\com\sue\service\mallservice\impl\CategoryServiceImpl.java
+E:\SbootProject\sue-mall\sue-service\src\main\java\com\sue\service\usercenterservice\impl\MyCommentServiceImpl.java
 E:\SbootProject\sue-mall\sue-service\src\main\java\com\sue\service\mallservice\ItemService.java
 E:\SbootProject\sue-mall\sue-service\src\main\java\com\sue\service\mallservice\CarouselService.java
 E:\SbootProject\sue-mall\sue-service\src\main\java\com\sue\service\mallservice\OrderService.java
@@ -14,3 +15,4 @@ E:\SbootProject\sue-mall\sue-service\src\main\java\com\sue\service\mallservice\i
 E:\SbootProject\sue-mall\sue-service\src\main\java\com\sue\service\usercenterservice\impl\MyOrdersServiceImpl.java
 E:\SbootProject\sue-mall\sue-service\src\main\java\com\sue\service\mallservice\impl\AddressServiceImpl.java
 E:\SbootProject\sue-mall\sue-service\src\main\java\com\sue\service\usercenterservice\MyOrdersService.java
+E:\SbootProject\sue-mall\sue-service\src\main\java\com\sue\service\usercenterservice\MyCommentService.java
