@@ -43,7 +43,7 @@
       <result column="price" property="price"></result>
     </collection>
   </resultMap>
-
+    
 
   <select id="queryMyOrders"  parameterType="map"  resultMap="myOrdersVO">
 SELECT
@@ -52,22 +52,12 @@ SELECT
 	 od.pay_method as payMethod,
 	 od.real_pay_amount as realPayAmount,
 	 od.post_amount as postAmount,
-	 os.order_status as orderStatus,
-	 oi.item_id as itemId,
-	 oi.item_name as itemName,
-	 oi.item_img as itemImg,
-	 oi.item_spec_id as itemSpecId,
-	 oi.item_spec_name as itemSpecName,
-	 oi.buy_counts as buyCounts,
-	 oi.price as price
+	 os.order_status as orderStatus
 FROM
 	orders od
 LEFT JOIN
 	order_status os
 on od.id = os.order_id
-LEFT JOIN
-	order_items oi
-on od.id = oi.order_id
 WHERE
 	od.user_id = #{paramsMap.userId}
 AND
@@ -78,4 +68,21 @@ AND
 ORDER BY
 	od.updated_time ASC
   </select>
+    
+    
+    <select id="getSubItems" parameterType="String" resultType="com.sue.pojo.vo.MySubOrderItemVO">
+        select
+        	 oi.item_id as itemId,
+             oi.item_name as itemName,
+             oi.item_img as itemImg,
+             oi.item_spec_id as itemSpecId,
+             oi.item_spec_name as itemSpecName,
+             oi.buy_counts as buyCounts,
+             oi.price as price
+        from
+             order_items oi
+        where
+            oi.order_id = #{orderId}
+    </select>
+    
 </mapper>
