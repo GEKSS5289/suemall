@@ -1,6 +1,7 @@
 package com.sue.service.usercenterservice;
 
 import com.sue.pojo.Orders;
+import com.sue.pojo.vo.OrderStatusCountsVO;
 import com.sue.utils.PagedGridResult;
 
 /**
@@ -45,4 +46,23 @@ public interface MyOrdersService {
      * @return
      */
     public boolean deleteOrder(String userId,String orderId);
+
+
+    /**
+     * 查询用户订单数
+     * @param userId
+     * @return
+     */
+    public OrderStatusCountsVO getOrderStatusCounts(String userId);
+
+
+    /**
+     * 获得分页订单动向
+     * @param userId
+
+     * @param page
+     * @param pageSize
+     * @return
+     */
+    public PagedGridResult getOrdersTrend(String userId,Integer page,Integer pageSize);
 }

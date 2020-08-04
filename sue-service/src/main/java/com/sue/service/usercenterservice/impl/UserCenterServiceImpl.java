@@ -21,7 +21,6 @@ import java.util.Date;
 public class UserCenterServiceImpl implements UserCenterService {
 
 
-
     @Resource
     private UsersMapper usersMapper;
 
@@ -45,6 +44,7 @@ public class UserCenterServiceImpl implements UserCenterService {
 
     /**
      * 修改用户信息
+     *
      * @param userId
      * @param centerUserDTO
      * @return
@@ -54,7 +54,7 @@ public class UserCenterServiceImpl implements UserCenterService {
     public Users updateUserInfo(String userId, CenterUserDTO centerUserDTO) {
 
         Users updateUser = new Users();
-        BeanUtils.copyProperties(centerUserDTO,updateUser);
+        BeanUtils.copyProperties(centerUserDTO, updateUser);
         updateUser.setId(userId);
         updateUser.setUpdatedTime(new Date());
         usersMapper.updateByPrimaryKeySelective(updateUser);

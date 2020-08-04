@@ -12,6 +12,7 @@ import com.sue.pojo.vo.OrderVO;
 public interface OrderService {
     /**
      * 用于创建订单相关信息
+     *
      * @param submitOrderDTO
      */
     public OrderVO createOrder(SubmitOrderDTO submitOrderDTO);
@@ -19,14 +20,16 @@ public interface OrderService {
 
     /**
      * 修改订单状态
+     *
      * @param orderId
      * @param orderStatus
      */
-    public void updateOrderStatus(String orderId,Integer orderStatus);
+    public void updateOrderStatus(String orderId, Integer orderStatus);
 
 
     /**
      * 查询订单
+     *
      * @param orderId
      * @return
      */

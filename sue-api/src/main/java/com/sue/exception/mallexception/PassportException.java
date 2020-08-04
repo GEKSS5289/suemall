@@ -1,4 +1,4 @@
-package com.sue.exception.passportexception;
+package com.sue.exception.mallexception;
 
 import com.sue.exception.AbstractException;
 

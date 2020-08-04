@@ -1,7 +1,10 @@
 package com.sue.controller.mallcontroller;
 
+import com.sue.core.util.ClearDataUtils;
+import com.sue.exception.mallexception.PassportException;
 import com.sue.pojo.Users;
 import com.sue.pojo.dto.malldto.UserDTO;
+import com.sue.pojo.dto.malldto.UserRegisterDTO;
 import com.sue.service.mallservice.UserService;
 import com.sue.utils.CookieUtils;
 import com.sue.utils.IMOOCJSONResult;
@@ -10,6 +13,7 @@ import com.sue.utils.MD5Utils;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -39,12 +43,12 @@ public class PassportController {
 
 
         if (StringUtils.isBlank(username)) {
-            return IMOOCJSONResult.errorMsg("用户名不能为空");
+            throw new PassportException(10001);
         }
 
         //查找注册的用户名是否存在
         if (userService.queryUsernameIsExist(username)) {
-            return IMOOCJSONResult.errorMsg("用户名已经存在");
+            throw new PassportException(10002);
         }
 
         return IMOOCJSONResult.ok();
@@ -55,42 +59,31 @@ public class PassportController {
     @ApiOperation(value = "用户注册", notes = "用户注册", httpMethod = "POST")
     @PostMapping("/regist")
     public IMOOCJSONResult createUser(
-            @RequestBody UserDTO userDTO,
+            @RequestBody UserRegisterDTO userRegisterDTO,
             HttpServletRequest request,
             HttpServletResponse response
     ) {
 
-        if (
-                StringUtils.isNotBlank(userDTO.getUsername()) &&
-                        StringUtils.isNotBlank(userDTO.getPassword()) &&
-                        StringUtils.isNotBlank(userDTO.getConfirmPassword())
-        ) {
-            if (userService.queryUsernameIsExist(userDTO.getUsername())) {
-                return IMOOCJSONResult.errorMsg("已经存在该用户");
-            }
-            if (userDTO.getPassword().length() < 6) {
-                return IMOOCJSONResult.errorMsg("密码长度不能小于6");
-            }
-            if (!userDTO.getPassword().equals(userDTO.getConfirmPassword())) {
-                return IMOOCJSONResult.errorMsg("两次密码不一致");
-            }
 
-            Users user = userService.createUser(userDTO);
+        UserDTO userDTO = new UserDTO();
 
-            this.setNullProperties(user);
-            CookieUtils.setCookie(
-                    request,
-                    response,
-                    "user",
-                    JsonUtils.objectToJson(user),
-                    true
-            );
+        BeanUtils.copyProperties(userRegisterDTO, userDTO);
 
-            return IMOOCJSONResult.ok();
-        }
-        return IMOOCJSONResult.errorMsg("有空字段");
+        Users user = userService.createUser(userDTO);
+
+        ClearDataUtils.setNullProperties(user);
+
+        CookieUtils.setCookie(
+                request,
+                response,
+                "user",
+                JsonUtils.objectToJson(user),
+                true
+        );
+
+        return IMOOCJSONResult.ok();
+
     }
-
 
     @ApiOperation(value = "用户登录", notes = "用户登录", httpMethod = "POST")
     @PostMapping("/login")
@@ -107,10 +100,10 @@ public class PassportController {
         );
 
         if (users == null) {
-            return IMOOCJSONResult.errorMsg("出现异常");
+           throw new PassportException(10000);
         }
 
-        this.setNullProperties(users);
+        ClearDataUtils.setNullProperties(users);
         CookieUtils.setCookie(
                 request,
                 response,
@@ -121,16 +114,6 @@ public class PassportController {
 
         return IMOOCJSONResult.ok(users);
 
-    }
-
-
-    public void setNullProperties(Users users) {
-        users.setPassword(null);
-        users.setMobile(null);
-        users.setEmail(null);
-        users.setCreatedTime(null);
-        users.setUpdatedTime(null);
-        users.setBirthday(null);
     }
 
 

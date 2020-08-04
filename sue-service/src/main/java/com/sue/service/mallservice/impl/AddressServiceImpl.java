@@ -13,6 +13,7 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import tk.mybatis.mapper.entity.Example;
 
+import javax.annotation.Resource;
 import java.util.Date;
 import java.util.List;
 
@@ -24,7 +25,7 @@ import java.util.List;
 @Service
 public class AddressServiceImpl implements AddressService {
 
-    @Autowired
+    @Resource
     private UserAddressMapper userAddressMapper;
 
     @Autowired
@@ -57,12 +58,12 @@ public class AddressServiceImpl implements AddressService {
         Integer isDefaultAdderss = 0;
         String addressId = sid.nextShort();
         List<UserAddress> userAddresses = this.queryAll(addressDTO.getUserId());
-        if(userAddresses == null || userAddresses.isEmpty()||userAddresses.size()==0){
+        if (userAddresses == null || userAddresses.isEmpty() || userAddresses.size() == 0) {
             isDefaultAdderss = 1;
         }
 
         UserAddress newUserAddress = new UserAddress();
-        BeanUtils.copyProperties(addressDTO,newUserAddress);
+        BeanUtils.copyProperties(addressDTO, newUserAddress);
         newUserAddress.setId(addressId);
         newUserAddress.setIsDefault(isDefaultAdderss);
         newUserAddress.setCreatedTime(new Date());
@@ -84,7 +85,7 @@ public class AddressServiceImpl implements AddressService {
     public void updateUserAddress(AddressDTO addressDTO) {
         String addressId = addressDTO.getAddressId();
         UserAddress updateAddress = new UserAddress();
-        BeanUtils.copyProperties(addressDTO,updateAddress);
+        BeanUtils.copyProperties(addressDTO, updateAddress);
         updateAddress.setId(addressId);
         updateAddress.setUpdatedTime(new Date());
         //空属性不覆盖
@@ -103,8 +104,8 @@ public class AddressServiceImpl implements AddressService {
     public void deleteUserAddress(String userId, String addressId) {
         Example example = new Example(UserAddress.class);
         Example.Criteria criteria = example.createCriteria();
-        criteria.andEqualTo("userId",userId);
-        criteria.andEqualTo("id",addressId);
+        criteria.andEqualTo("userId", userId);
+        criteria.andEqualTo("id", addressId);
         userAddressMapper.deleteByExample(example);
     }
 
@@ -123,10 +124,10 @@ public class AddressServiceImpl implements AddressService {
 
         Example example = new Example(UserAddress.class);
         Example.Criteria criteria = example.createCriteria();
-        criteria.andEqualTo("userId",userId);
+        criteria.andEqualTo("userId", userId);
         criteria.andEqualTo("isDefault", YesOrNO.YES.type);
         List<UserAddress> userAddresses = userAddressMapper.selectByExample(example);
-        userAddresses.forEach(i->{
+        userAddresses.forEach(i -> {
             i.setIsDefault(YesOrNO.NO.type);
             userAddressMapper.updateByPrimaryKeySelective(i);
         });
@@ -137,7 +138,6 @@ public class AddressServiceImpl implements AddressService {
         defualtUserAddress.setId(addressId);
 
         userAddressMapper.updateByPrimaryKeySelective(defualtUserAddress);
-
 
 
     }
@@ -156,8 +156,8 @@ public class AddressServiceImpl implements AddressService {
 
         Example example = new Example(UserAddress.class);
         Example.Criteria criteria = example.createCriteria();
-        criteria.andEqualTo("userId",userId);
-        criteria.andEqualTo("id",addressId);
+        criteria.andEqualTo("userId", userId);
+        criteria.andEqualTo("id", addressId);
 
         return userAddressMapper.selectOneByExample(example);
     }

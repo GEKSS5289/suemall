@@ -1,7 +1,8 @@
 package com.sue.core;
 
 import com.sue.core.configuration.ExceptionCodeConfiguration;
-import com.sue.exception.passportexception.PassportException;
+import com.sue.exception.AbstractException;
+import com.sue.exception.mallexception.PassportException;
 import com.sue.utils.IMOOCJSONResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -31,19 +32,27 @@ public class ExceptionCatcher {
     @Autowired
     private ExceptionCodeConfiguration exceptionCodeConfiguration;
 
-    @ExceptionHandler(value = PassportException.class)
-    public ResponseEntity<IMOOCJSONResult> handlePassportException(HttpServletRequest request, HttpServletResponse response, PassportException e){
+//    @ExceptionHandler(value = PassportException.class)
+//    public ResponseEntity<IMOOCJSONResult> handlePassportException(HttpServletRequest request, HttpServletResponse response, PassportException e){
+//
+//        HttpHeaders httpHeaders = new HttpHeaders();
+//        httpHeaders.setContentType(MediaType.APPLICATION_JSON);
+//        HttpStatus httpStatus = HttpStatus.resolve(HttpStatus.UNAUTHORIZED.value());
+//        IMOOCJSONResult imoocjsonResult = IMOOCJSONResult.errorMsg(exceptionCodeConfiguration.getMessage(e.getCode()));
+//        ResponseEntity<IMOOCJSONResult> responseEntity = new ResponseEntity<IMOOCJSONResult>(
+//                imoocjsonResult,
+//                httpHeaders,
+//                httpStatus
+//        );
+//        return responseEntity;
+//    }
 
-        HttpHeaders httpHeaders = new HttpHeaders();
-        httpHeaders.setContentType(MediaType.APPLICATION_JSON);
-        HttpStatus httpStatus = HttpStatus.resolve(HttpStatus.UNAUTHORIZED.value());
-        IMOOCJSONResult imoocjsonResult = IMOOCJSONResult.errorMsg(exceptionCodeConfiguration.getMessage(e.getCode()));
-        ResponseEntity<IMOOCJSONResult> responseEntity = new ResponseEntity<IMOOCJSONResult>(
-                imoocjsonResult,
-                httpHeaders,
-                httpStatus
-        );
-        return responseEntity;
+    @ExceptionHandler(value = AbstractException.class)
+    @ResponseStatus(code = HttpStatus.OK)
+    public IMOOCJSONResult handleExceptions(
+            AbstractException e
+    ){
+        return IMOOCJSONResult.errorMsg(exceptionCodeConfiguration.getMessage(e.getCode()));
     }
 
 
@@ -53,7 +62,7 @@ public class ExceptionCatcher {
             HttpServletRequest request,
             MethodArgumentNotValidException e
     ){
-        System.out.println("捕获到了2");
+
         String requestUrl = request.getRequestURL().toString();
         String method = request.getMethod();
 

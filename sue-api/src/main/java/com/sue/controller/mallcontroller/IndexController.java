@@ -1,6 +1,7 @@
 package com.sue.controller.mallcontroller;
 
 import com.sue.enums.YesOrNO;
+import com.sue.exception.commonException.DataNullException;
 import com.sue.service.mallservice.CarouselService;
 import com.sue.service.mallservice.CategoryService;
 import com.sue.utils.IMOOCJSONResult;
@@ -58,7 +59,7 @@ public class IndexController {
     ) {
 
         if (rootCatId == null) {
-            return IMOOCJSONResult.errorMsg("");
+            throw new DataNullException(44400);
         }
 
         return IMOOCJSONResult.ok(categoryService.getSubCatList(rootCatId));
@@ -73,7 +74,7 @@ public class IndexController {
     ) {
 
         if (rootCatId == null) {
-            return IMOOCJSONResult.errorMsg("");
+            throw new DataNullException(44400);
         }
 
         return IMOOCJSONResult.ok(categoryService.getSixNewItemsLazy(rootCatId));

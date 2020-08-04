@@ -34,11 +34,9 @@ public class UserServiceImpl implements UserService {
     public static final String USER_FACE = "http://122.152.205.72:88/group1/M00/00/05/CpoxxFw_8_qAIlFXAAAcIhVPdSg994.png";
 
 
-
-
-
     /**
      * 判断用户名是否存在
+     *
      * @param username
      * @return
      */
@@ -48,18 +46,13 @@ public class UserServiceImpl implements UserService {
 
         Example userExample = new Example(Users.class);
         Example.Criteria criteria = userExample.createCriteria();
-        criteria.andEqualTo("username",username);
+        criteria.andEqualTo("username", username);
         Users users = usersMapper.selectOneByExample(userExample);
 
 
         return users == null ? false : true;
 
     }
-
-
-
-
-
 
 
     @Transactional(propagation = Propagation.REQUIRED)
@@ -86,13 +79,6 @@ public class UserServiceImpl implements UserService {
     }
 
 
-
-
-
-
-
-
-
     /**
      * 检索用户名和密码是否匹配
      *
@@ -104,12 +90,10 @@ public class UserServiceImpl implements UserService {
     public Users queryUserForLogin(String username, String password) {
         Example userExample = new Example(Users.class);
         Example.Criteria criteria = userExample.createCriteria();
-        criteria.andEqualTo("username",username);
-        criteria.andEqualTo("password",password);
+        criteria.andEqualTo("username", username);
+        criteria.andEqualTo("password", password);
 
         Users users = usersMapper.selectOneByExample(userExample);
-
-
 
         return users;
     }

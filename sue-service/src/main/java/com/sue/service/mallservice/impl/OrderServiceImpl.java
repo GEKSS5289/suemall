@@ -189,11 +189,11 @@ public class OrderServiceImpl implements OrderService {
         OrderStatus queryOrder = new OrderStatus();
         queryOrder.setOrderStatus(OrderStatusEnum.WAIT_PAY.type);
         List<OrderStatus> notpayLists = orderStatusMapper.select(queryOrder);
-        notpayLists.forEach(i->{
+        notpayLists.forEach(i -> {
             //获得订单创建时间
             Date createdTime = i.getCreatedTime();
             int days = DateUtil.daysBetween(createdTime, new Date());
-            if(days >=1){
+            if (days >= 1) {
                 //超过1天，关闭订单
                 doCloseOrder(i.getOrderId());
             }
@@ -201,7 +201,7 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Transactional(propagation = Propagation.REQUIRED)
-    void doCloseOrder(String orderId){
+    void doCloseOrder(String orderId) {
         OrderStatus close = new OrderStatus();
         close.setOrderId(orderId);
         close.setOrderStatus(OrderStatusEnum.CLOSE.type);

@@ -1,7 +1,9 @@
 package com.sue.controller.mallcontroller;
 
+import com.sue.core.util.PayCenterDataUtils;
 import com.sue.enums.OrderStatusEnum;
 import com.sue.enums.PayMethod;
+import com.sue.exception.mallexception.OrdersException;
 import com.sue.pojo.OrderStatus;
 import com.sue.pojo.dto.malldto.SubmitOrderDTO;
 import com.sue.pojo.vo.MerchantOrdersVO;
@@ -10,6 +12,7 @@ import com.sue.service.mallservice.OrderService;
 import com.sue.utils.IMOOCJSONResult;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import org.aspectj.weaver.ast.Or;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.*;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -45,7 +48,7 @@ public class OrdersController extends BaseController {
 
         if (submitOrderDTO.getPayMethod() != PayMethod.WEIXIN.getType() &&
                 submitOrderDTO.getPayMethod() != PayMethod.ALIPAY.getType()) {
-            return IMOOCJSONResult.errorMsg("支付方式不支持");
+            throw new OrdersException(20000);
         }
 
         //创建订单
@@ -53,27 +56,12 @@ public class OrdersController extends BaseController {
         String orderId = order.getOrderId();
 
 
-
 //        CookieUtils.setCookie(request,response,FOODIE_SHOPCART,"",true);
 
-        //向支付中心发送当前订单，用于保存支付中心订单数据
-        MerchantOrdersVO merchantOrdersVO = order.getMerchantOrdersVO();
-        merchantOrdersVO.setReturnUrl(payReturnUrl);
-        merchantOrdersVO.setAmount(1);
-        HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.APPLICATION_JSON);
-        headers.add("imoocUserId", "4588687-496966859");
-        headers.add("password", "po13-e0o3-r01p-f0o3");
-
-        HttpEntity<MerchantOrdersVO> entity = new HttpEntity<>(merchantOrdersVO,headers);
-
-        ResponseEntity<IMOOCJSONResult> responseEntity = restTemplate.postForEntity(paymentUrl, entity, IMOOCJSONResult.class);
-
-        IMOOCJSONResult paymentResult = responseEntity.getBody();
-
-        if(paymentResult.getStatus() != 200){
-            return IMOOCJSONResult.errorMsg("支付中心创建失败，请联系管理员");
+        if(!PayCenterDataUtils.sendPayCenter(order,restTemplate)){
+            throw new OrdersException(20001);
         }
+
 
         return IMOOCJSONResult.ok(orderId);
     }

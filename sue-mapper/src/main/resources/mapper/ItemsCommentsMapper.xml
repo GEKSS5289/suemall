@@ -16,4 +16,72 @@
     <result column="created_time" property="createdTime" jdbcType="TIMESTAMP" />
     <result column="updated_time" property="updatedTime" jdbcType="TIMESTAMP" />
   </resultMap>
+  <insert id="saveComments" parameterType="map">
+    insert into
+    items_comments
+    (
+    id,
+    user_id,
+    item_id,
+    item_name,
+    item_spec_id,
+    sepc_name,
+    comment_level,
+    content,
+    created_time,
+    updated_time
+    )
+    values
+    <foreach collection="commentList" item="item" index="index" separator=",">
+      (
+      #{item.commentId},
+      #{userId},
+      #{item.itemId},
+      #{item.itemName},
+      #{item.itemSpecId},
+      #{item.itemSpecName},
+      #{item.commentLevel},
+      #{item.content},
+      now(),
+      now()
+      )
+    </foreach>
+  </insert>
+
+  <resultMap id="myComments" type="com.sue.pojo.vo.MyCommentVO">
+    <id column="commentId" property="commentId"></id>
+    <result column="content" property="content"></result>
+    <result column="createdTime" property="createdTime"></result>
+    <result column="itemId" property="itemId"></result>
+    <result column="itemName" property="itemName"></result>
+    <result column="specName" property="specName"></result>
+    <result column="itemImg" property="itemImg"></result>
+  </resultMap>
+
+  <select id="queryMyComments" parameterType="Map" resultMap="myComments">
+        SELECT
+            ic.id as commentId,
+            ic.content as content,
+            ic.created_time as createdTime,
+            ic.item_id as itemId,
+            ic.item_name as itemName,
+            ic.sepc_name as specName,
+            ii.url as itemImg
+        FROM
+          items_comments ic
+        LEFT JOIN
+            items_img ii
+        ON
+            ic.item_id = ii.item_id
+        WHERE
+            ic.user_id = #{paramsMap.userId}
+        AND
+            ii.is_main = 1
+        ORDER BY
+            ic.created_time
+        DESC
+
+    </select>
+
+
 </mapper>

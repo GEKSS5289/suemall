@@ -1,5 +1,7 @@
 package com.sue.controller.mallcontroller;
 
+import com.sue.exception.commonException.DataNullException;
+import com.sue.exception.mallexception.AddressException;
 import com.sue.pojo.dto.malldto.AddressDTO;
 import com.sue.service.mallservice.AddressService;
 import com.sue.utils.IMOOCJSONResult;
@@ -27,7 +29,7 @@ public class AddressController {
     @PostMapping("/list")
     public IMOOCJSONResult list(@RequestParam String userId) {
         if (StringUtils.isBlank(userId)) {
-            return IMOOCJSONResult.errorMsg("");
+            throw new DataNullException(44400);
         }
 
         return IMOOCJSONResult.ok(addressService.queryAll(userId));
@@ -39,10 +41,10 @@ public class AddressController {
     public IMOOCJSONResult add(
             @RequestBody AddressDTO addressDTO
     ) {
-        IMOOCJSONResult imoocjsonResult = checkAddress(addressDTO);
-        if (imoocjsonResult.getStatus() != 200) {
-            return imoocjsonResult;
-        }
+//        IMOOCJSONResult imoocjsonResult = checkAddress(addressDTO);
+//        if (imoocjsonResult.getStatus() != 200) {
+//            return imoocjsonResult;
+//        }
         addressService.addNewUserAddress(addressDTO);
         return IMOOCJSONResult.ok();
     }
@@ -55,13 +57,13 @@ public class AddressController {
     ) {
 
         if (StringUtils.isBlank(addressDTO.getAddressId())) {
-            return IMOOCJSONResult.errorMsg("修改地址出错");
+            throw new AddressException(30002);
         }
 
-        IMOOCJSONResult imoocjsonResult = checkAddress(addressDTO);
-        if (imoocjsonResult.getStatus() != 200) {
-            return imoocjsonResult;
-        }
+//        IMOOCJSONResult imoocjsonResult = checkAddress(addressDTO);
+//        if (imoocjsonResult.getStatus() != 200) {
+//            return imoocjsonResult;
+//        }
 
         addressService.updateUserAddress(addressDTO);
         return IMOOCJSONResult.ok();
@@ -76,7 +78,7 @@ public class AddressController {
     ) {
 
         if (StringUtils.isBlank(userId) || StringUtils.isBlank(addressId)) {
-            return IMOOCJSONResult.errorMsg("删除失败");
+            throw new AddressException(30001);
         }
 
         addressService.deleteUserAddress(userId, addressId);
@@ -93,7 +95,7 @@ public class AddressController {
     ) {
 
         if (StringUtils.isBlank(userId) || StringUtils.isBlank(addressId)) {
-            return IMOOCJSONResult.errorMsg("设置默认失败");
+            throw new AddressException(30000);
         }
 
         addressService.updateUserAddressToBeDefault(userId, addressId);
@@ -102,39 +104,39 @@ public class AddressController {
     }
 
 
-    private IMOOCJSONResult checkAddress(AddressDTO addressDTO) {
-        String receiver = addressDTO.getReceiver();
-        if (StringUtils.isBlank(receiver)) {
-            return IMOOCJSONResult.errorMsg("收货人不能为空");
-        }
-        if (receiver.length() > 12) {
-            return IMOOCJSONResult.errorMsg("收货人姓名不能太长");
-        }
-
-        String mobile = addressDTO.getMobile();
-        if (StringUtils.isBlank(mobile)) {
-            return IMOOCJSONResult.errorMsg("收货人手机号不能为空");
-        }
-        if (mobile.length() != 11) {
-            return IMOOCJSONResult.errorMsg("收货人手机号长度不正确");
-        }
-        boolean isMobileOk = MobileEmailUtils.checkMobileIsOk(mobile);
-        if (!isMobileOk) {
-            return IMOOCJSONResult.errorMsg("收货人手机号格式不正确");
-        }
-
-        String province = addressDTO.getProvince();
-        String city = addressDTO.getCity();
-        String district = addressDTO.getDistrict();
-        String detail = addressDTO.getDetail();
-        if (StringUtils.isBlank(province) ||
-                StringUtils.isBlank(city) ||
-                StringUtils.isBlank(district) ||
-                StringUtils.isBlank(detail)) {
-            return IMOOCJSONResult.errorMsg("收货地址信息不能为空");
-        }
-
-        return IMOOCJSONResult.ok();
-    }
+//    private IMOOCJSONResult checkAddress(AddressDTO addressDTO) {
+//        String receiver = addressDTO.getReceiver();
+//        if (StringUtils.isBlank(receiver)) {
+//            return IMOOCJSONResult.errorMsg("收货人不能为空");
+//        }
+//        if (receiver.length() > 12) {
+//            return IMOOCJSONResult.errorMsg("收货人姓名不能太长");
+//        }
+//
+//        String mobile = addressDTO.getMobile();
+//        if (StringUtils.isBlank(mobile)) {
+//            return IMOOCJSONResult.errorMsg("收货人手机号不能为空");
+//        }
+//        if (mobile.length() != 11) {
+//            return IMOOCJSONResult.errorMsg("收货人手机号长度不正确");
+//        }
+//        boolean isMobileOk = MobileEmailUtils.checkMobileIsOk(mobile);
+//        if (!isMobileOk) {
+//            return IMOOCJSONResult.errorMsg("收货人手机号格式不正确");
+//        }
+//
+//        String province = addressDTO.getProvince();
+//        String city = addressDTO.getCity();
+//        String district = addressDTO.getDistrict();
+//        String detail = addressDTO.getDetail();
+//        if (StringUtils.isBlank(province) ||
+//                StringUtils.isBlank(city) ||
+//                StringUtils.isBlank(district) ||
+//                StringUtils.isBlank(detail)) {
+//            return IMOOCJSONResult.errorMsg("收货地址信息不能为空");
+//        }
+//
+//        return IMOOCJSONResult.ok();
+//    }
 
 }

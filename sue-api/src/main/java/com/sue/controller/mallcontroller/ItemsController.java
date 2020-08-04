@@ -1,5 +1,6 @@
 package com.sue.controller.mallcontroller;
 
+import com.sue.exception.commonException.DataNullException;
 import com.sue.pojo.Items;
 import com.sue.pojo.ItemsImg;
 import com.sue.pojo.ItemsParam;
@@ -41,7 +42,7 @@ public class ItemsController {
     ) {
 
         if (StringUtils.isBlank(itemId)) {
-            return IMOOCJSONResult.errorMsg(null);
+           throw new DataNullException(44400);
         }
 
         Items items = itemService.queryItemById(itemId);
@@ -87,7 +88,7 @@ public class ItemsController {
     ) {
 
         if (StringUtils.isBlank(itemId)) {
-            return IMOOCJSONResult.errorMsg(null);
+            throw new DataNullException(44400);
         }
 
         PagedGridResult pagedGridResult = itemService.queryPageComments(itemId, level, page, pageSize);
@@ -109,7 +110,7 @@ public class ItemsController {
     ) {
 
         if (StringUtils.isBlank(keywords)) {
-            return IMOOCJSONResult.errorMsg(null);
+            throw new DataNullException(44400);
         }
 
         PagedGridResult pagedGridResult = itemService.searchItems(keywords, sort, page, pageSize);
@@ -131,7 +132,7 @@ public class ItemsController {
     ) {
 
         if (catId == null) {
-            return IMOOCJSONResult.errorMsg(null);
+            throw new DataNullException(44400);
         }
 
         PagedGridResult pagedGridResult = itemService.searchItems(catId, sort, page, pageSize);
@@ -147,7 +148,7 @@ public class ItemsController {
     ) {
 
         if (StringUtils.isBlank(itemSpecIds)) {
-            return IMOOCJSONResult.ok();
+            throw new DataNullException(44400);
         }
 
         return IMOOCJSONResult.ok(itemService.queryItemsBySpecIds(itemSpecIds));

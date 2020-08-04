@@ -13,6 +13,7 @@ import com.sue.pojo.vo.ShopCartVO;
 import com.sue.service.mallservice.ItemService;
 import com.sue.utils.DesensitizationUtil;
 import com.sue.utils.PagedGridResult;
+import com.sue.utils.PagedGridResultUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -153,7 +154,7 @@ public class ItemServiceImpl implements ItemService {
             i.setNickname(DesensitizationUtil.commonDisplay(i.getNickname()));
         });
 
-        return this.setterPagedGrid(itemCommentVOS, page);
+        return PagedGridResultUtils.setterPagedGrid(itemCommentVOS, page);
     }
 
     /**
@@ -175,7 +176,7 @@ public class ItemServiceImpl implements ItemService {
 
         List<SearchItemsVO> searchItemsVOS = itemsMapper.searchItems(stringObjectHashMap);
 
-        return this.setterPagedGrid(searchItemsVOS, page);
+        return PagedGridResultUtils.setterPagedGrid(searchItemsVOS, page);
     }
 
     /**
@@ -197,7 +198,7 @@ public class ItemServiceImpl implements ItemService {
 
         List<SearchItemsVO> searchItemsVOS = itemsMapper.searchItemsByThirdCat(stringObjectHashMap);
 
-        return this.setterPagedGrid(searchItemsVOS, page);
+        return PagedGridResultUtils.setterPagedGrid(searchItemsVOS, page);
     }
 
     /**
@@ -277,21 +278,11 @@ public class ItemServiceImpl implements ItemService {
         //分布式锁 zookeeper redis 两个都可以做分布式锁
         int result = itemsMapper.decreaseItemSpecStock(specId, buyCounts);
 
-        if(result != 1){
+        if (result != 1) {
             throw new RuntimeException("订单创建失败，原因库存不足");
         }
 
 
-    }
-
-    private PagedGridResult setterPagedGrid(List<?> list, Integer page) {
-        PageInfo<?> pageList = new PageInfo<>(list);
-        PagedGridResult pagedGridResult = new PagedGridResult();
-        pagedGridResult.setPage(page);
-        pagedGridResult.setRows(list);
-        pagedGridResult.setTotal(pageList.getPages());
-        pagedGridResult.setRecords(pageList.getTotal());
-        return pagedGridResult;
     }
 
 

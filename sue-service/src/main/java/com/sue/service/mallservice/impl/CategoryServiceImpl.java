@@ -38,7 +38,7 @@ public class CategoryServiceImpl implements CategoryService {
         Example example = new Example(Category.class);
         Example.Criteria criteria = example.createCriteria();
         //查找根节点
-        criteria.andEqualTo("type",1);
+        criteria.andEqualTo("type", 1);
         return categoryMapper.selectByExample(example);
     }
 
@@ -58,8 +58,8 @@ public class CategoryServiceImpl implements CategoryService {
     @Transactional(propagation = Propagation.SUPPORTS)
     @Override
     public List<NewItemsVO> getSixNewItemsLazy(Integer rootCatId) {
-        Map<String,Object> map = new HashMap<>();
-        map.put("rootCatId",rootCatId);
+        Map<String, Object> map = new HashMap<>();
+        map.put("rootCatId", rootCatId);
 
         return categoryMapperCustom.getSixNewItemsLazy(map);
     }

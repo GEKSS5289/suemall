@@ -16,6 +16,7 @@ public interface UserService {
 
     /**
      * 创建用户
+     *
      * @param userDTO
      * @return
      */
@@ -24,6 +25,6 @@ public interface UserService {
     /**
      * 检索用户名和密码是否匹配
      */
-    public Users queryUserForLogin(String username,String password);
+    public Users queryUserForLogin(String username, String password);
 
 }

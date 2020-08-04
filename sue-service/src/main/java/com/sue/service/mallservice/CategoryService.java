@@ -20,6 +20,7 @@ public interface CategoryService {
 
     /**
      * 查询首页每个一级分类下的6条最新数据
+     *
      * @param rootCatId
      * @return
      */
