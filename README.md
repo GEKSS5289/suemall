@@ -1,4 +1,5 @@
-# sue-mall Release
+# sue-mall Release(部署版本)
+#####其余分支(master sue-jpa sue-mybatis 都属于开发原型)
 测试环境-Linux(CentOS 7)
 ## 安装jdk1.8
     去甲骨文官网寻找jdk1.8
