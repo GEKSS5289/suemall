@@ -1,0 +1,17 @@
+{
+  "groups": [
+    {
+      "name": "error",
+      "type": "com.sue.core.configuration.ExceptionCodeConfiguration",
+      "sourceType": "com.sue.core.configuration.ExceptionCodeConfiguration"
+    }
+  ],
+  "properties": [
+    {
+      "name": "error.codes",
+      "type": "java.util.Map<java.lang.Integer,java.lang.String>",
+      "sourceType": "com.sue.core.configuration.ExceptionCodeConfiguration"
+    }
+  ],
+  "hints": []
+}

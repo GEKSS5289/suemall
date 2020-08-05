@@ -14,6 +14,7 @@ com\sue\pojo\Items.class
 com\sue\pojo\Carousel.class
 com\sue\pojo\OrderItems.class
 com\sue\pojo\vo\MySubOrderItemVO.class
+com\sue\pojo\dto\malldto\UserRegisterDTO.class
 com\sue\pojo\dto\malldto\SubmitOrderDTO.class
 com\sue\pojo\vo\SearchItemsVO.class
 com\sue\pojo\ItemsImg.class

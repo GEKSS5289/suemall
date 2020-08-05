@@ -35,3 +35,4 @@ com\sue\utils\DesensitizationUtil.class
 org\n3r\idworker\strategy\DefaultWorkerIdStrategy$2.class
 org\n3r\idworker\strategy\DefaultWorkerIdStrategy.class
 com\sue\utils\MD5Utils.class
+com\sue\utils\PagedGridResultUtils.class
