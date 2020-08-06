@@ -58,7 +58,7 @@
     解压nginx压缩文件:tar -zxvf nginx-1.16.1.tar.gz
     编译:
         首先创建nginx临时目录:mkdir /var/temp/nginx -p
-        在nginx目录下编译(输入如下指令目的是创建makefile):
+        在nginx目录下编译(直接在命令行输入如下指令目的是创建makefile):
                        ./configure \
                        --prefix=/usr/local/nginx \
                        --pid-path=/var/run/nginx/nginx.pid \
@@ -71,6 +71,18 @@
                        --http-fastcgi-temp-path=/var/temp/nginx/fastcgi \
                        --http-uwsgi-temp-path=/var/temp/nginx/uwsgi \
                        --http-scgi-temp-path=/var/temp/nginx/scgizoo_sample.cfg
+        命令解释:
+                       –prefix	指定nginx安装目录
+                       –pid-path	指向nginx的pid
+                       –lock-path	锁定安装文件，防止被恶意篡改或误操作
+                       –error-log	错误日志
+                       –http-log-path	http日志
+                       –with-http_gzip_static_module	启用gzip模块，在线实时压缩输出数据流
+                       –http-client-body-temp-path	设定客户端请求的临时目录
+                       –http-proxy-temp-path	设定http代理临时目录
+                       –http-fastcgi-temp-path	设定fastcgi临时目录
+                       –http-uwsgi-temp-path	设定uwsgi临时目录
+                       –http-scgi-temp-path	设定scgi临时目录
         输入make （安装make install）
     进入sbin目录启动nginx:./nginx  
         停止:./nginx -s stop
