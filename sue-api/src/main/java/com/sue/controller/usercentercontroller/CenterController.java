@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 /**
  * @author sue
- * @date 2020/8/3 13:21 yes
+ * @date 2020/8/3 13:21
  */
 
 @RestController

@@ -179,24 +179,50 @@
                         }
                 }
         查看用户请求:
-            cd /var/log/nginx
-            vim access.log
+           cd /var/log/nginx
+           vim access.log
     nginx的常见错误:
-        [error] open() "/var/run/nginx/nginx.pid" failed
-        解决:mkdir /var/run/nginx
-        [error] invalid PID number "" in "/var/run/nginx/nginx.pid"
-        解决:./nginx -c /usr/local/nginx/conf/nginx.conf
+           [error] open() "/var/run/nginx/nginx.pid" failed
+           解决:mkdir /var/run/nginx
+           [error] invalid PID number "" in "/var/run/nginx/nginx.pid"
+           解决:./nginx -c /usr/local/nginx/conf/nginx.conf
     nginx手动日志切割:
-      创建cut_my_log.sh
-        #!/bin/bash
-        LOG_PATH="/var/log/nginx/"
-        RECORD_TIME=$(date -d "yesterday" +%Y-%m-%d+%H:%M)
-        PID=/var/run/nginx/nginx.pid
-        mv ${LOG_PATH}/access.log ${LOG_PATH}/access.${RECORD_TIME}.log
-        mv ${LOG_PATH}/error.log ${LOG_PATH}/error.${RECORD_TIME}.log
-        #向Nginx主进程发送信号，用于重新打开日志文件
-        kill -USR1 `cat $PID`
-      添加可执行权限
-        chmod +x cut_my_log.sh
-      测试效果
-        ./cut_my_log.sh
+          创建cut_my_log.sh
+            #!/bin/bash
+            LOG_PATH="/var/log/nginx/"
+            RECORD_TIME=$(date -d "yesterday" +%Y-%m-%d+%H:%M)
+            PID=/var/run/nginx/nginx.pid
+            mv ${LOG_PATH}/access.log ${LOG_PATH}/access.${RECORD_TIME}.log
+            mv ${LOG_PATH}/error.log ${LOG_PATH}/error.${RECORD_TIME}.log
+            #向Nginx主进程发送信号，用于重新打开日志文件
+            kill -USR1 `cat $PID`
+          添加可执行权限
+            chmod +x cut_my_log.sh
+          测试效果
+            ./cut_my_log.sh
+    nginx日志切割-定时:
+        安装定时任务:
+            yum install crontabs
+        crontab -e 编辑并且添加一行新的任务:
+            */1 * * * * /usr/local/nginx/sbin/cut_my_log.sh
+        重启定时任务:service crond restart
+        常用定时任务列表:
+            service crond start         //启动服务
+            service crond stop          //关闭服务
+            service crond restart       //重启服务
+            service crond reload        //重新载入配置
+            crontab -e                  // 编辑任务
+            crontab -l                  // 查看任务列表
+        定时任务表达式：
+        Cron表达式是，分为5或6个域，每个域代表一个含义，如下所示：
+        分	时	日	月	星期几	年（可选）
+        取值范围	0-59	0-23	1-31	1-12	1-7	2019/2020/2021/…
+        常用表达式:
+        每分钟执行:
+        */1 * * * *
+        每日凌晨（每天晚上23:59）执行
+        59 23 * * *
+        每日凌晨1点执行:
+        0 1 * * *
+        
+              
