@@ -123,7 +123,7 @@
             如果在云服务器安装，需要开启默认的nginx端口：80
             如果在虚拟机安装，需要关闭防火墙
             本地win或mac需要关闭防火墙
-    nginx.conf核心配置:
+ #####  nginx.conf核心配置:
             设置worker进程的用户，指的linux中的用户，会涉及到nginx操作目录或文件的一些权限，默认为nobody
             user root
         worker进程工作数设置，一般来说CPU有几个，就设置几个，或者设置为N-1也行
@@ -181,12 +181,12 @@
         查看用户请求:
            cd /var/log/nginx
            vim access.log
-    nginx的常见错误:
+  ##### nginx的常见错误:
            [error] open() "/var/run/nginx/nginx.pid" failed
            解决:mkdir /var/run/nginx
            [error] invalid PID number "" in "/var/run/nginx/nginx.pid"
            解决:./nginx -c /usr/local/nginx/conf/nginx.conf
-    nginx手动日志切割:
+  #####  nginx手动日志切割:
           创建cut_my_log.sh
             #!/bin/bash
             LOG_PATH="/var/log/nginx/"
@@ -200,7 +200,7 @@
             chmod +x cut_my_log.sh
           测试效果
             ./cut_my_log.sh
-    nginx日志切割-定时:
+#####    nginx日志切割-定时:
         安装定时任务:
             yum install crontabs
         crontab -e 编辑并且添加一行新的任务:
