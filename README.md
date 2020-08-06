@@ -246,7 +246,7 @@
             alias /home/imooc
         }
         用户访问的时候请求为：url:port/hello/files/img/face.png，如此相当于为目录imooc做一个自定义的别名。
-#### nginx location匹配规则
+##### nginx location匹配规则
        location 的匹配规则
        空格：默认匹配，普通匹配
        location / {
@@ -274,3 +274,12 @@
        location ^~ /imooc/img {
            root /home;
        }
+ ##### nginx跨域配置
+        #允许跨域请求的域，*代表所有
+        add_header 'Access-Control-Allow-Origin' *;
+        #允许带上cookie请求
+        add_header 'Access-Control-Allow-Credentials' 'true';
+        #允许请求的方法，比如 GET/POST/PUT/DELETE
+        add_header 'Access-Control-Allow-Methods' *;
+        #允许请求的header
+        add_header 'Access-Control-Allow-Headers' *;
