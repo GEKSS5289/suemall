@@ -224,5 +224,18 @@
         59 23 * * *
         每日凌晨1点执行:
         0 1 * * *
-        
-              
+ ##### nginx路由
+        假如服务器路径为：/home/imooc/files/img/face.png
+        root 路径完全匹配访问
+        配置的时候为:
+        location /imooc {
+            root /home
+        }
+        用户访问的时候请求为：url:port/imooc/files/img/face.png
+        alias 可以为你的路径做一个别名，对用户透明
+        配置的时候为:
+        location /hello {
+            alias /home/imooc
+        }
+        用户访问的时候请求为：url:port/hello/files/img/face.png，如此相当于为目录imooc做一个自定义的别名。
+          
