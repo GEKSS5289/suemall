@@ -181,3 +181,8 @@
         查看用户请求:
             cd /var/log/nginx
             vim access.log
+    nginx的常见错误:
+        [error] open() "/var/run/nginx/nginx.pid" failed
+        解决:mkdir /var/run/nginx
+        [error] invalid PID number "" in "/var/run/nginx/nginx.pid"
+        解决:./nginx -c /usr/local/nginx/conf/nginx.conf
