@@ -232,7 +232,7 @@
             压缩文件类型:
                 gzip_typs text/plain application/javascript application/x-javascript text/css
                 application/xml text/javascript application/x-httpd-php image/jpeg image/git image/png application/json
- ##### nginx路由
+ ##### nginx root 和 alias
         假如服务器路径为：/home/imooc/files/img/face.png
         root 路径完全匹配访问
         配置的时候为:
@@ -246,4 +246,32 @@
             alias /home/imooc
         }
         用户访问的时候请求为：url:port/hello/files/img/face.png，如此相当于为目录imooc做一个自定义的别名。
-          
+#### nginx location匹配规则
+       location 的匹配规则
+       空格：默认匹配，普通匹配
+       
+       location / {
+            root /home;
+       }
+       =：精确匹配
+       
+       location = /imooc/img/face1.png {
+           root /home;
+       }
+       ~*：匹配正则表达式，不区分大小写
+       
+       #符合图片的显示
+       location ~* .(GIF|jpg|png|jpeg) {
+           root /home;
+       }
+       ~：匹配正则表达式，区分大小写
+       
+       #GIF必须大写才能匹配到
+       location ~ .(GIF|jpg|png|jpeg) {
+           root /home;
+       }
+       ^~：以某个字符路径开头
+       
+       location ^~ /imooc/img {
+           root /home;
+       }
