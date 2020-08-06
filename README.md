@@ -42,6 +42,16 @@
                 return builder.sources(Application.class);
             }
         }
+## 部署sue-mall
+    两台tomcat服务器在同一台计算机节点上
+    第一台:tomcat-frontend  (在webapps中存放了前端两个项目)
+        foodie-shop 门户网站
+        foodie-center 用户中心
+    第二台:tomcat-api (在webapps中存放了后端服务程序)
+        foodie-dev-api 给前端两个项目提供服务
+    cookie问题:部署后发现无法保存cookie 问题是由tomcat-api下的 webapps下的foodie-dev-api服务造成的
+        原因:采用了tomcat9.0.33默认的cookie处理器所以会造成此类问题
+        解决办法: cd /conf/context.xml 添加    <CookieProcessor classNam="org.apache.tomcat.util.http.LegacyCookieProcessor"/>将cookie处理器替换为曾经老版本的
 
 ## 安装jdk1.8
     去甲骨文官网寻找jdk1.8
@@ -70,16 +80,6 @@
     application.yml 主配置文件
     application-dev.yml 开发环境配置文件
     application-prod.yml 生产环境配置文件 
-## 部署sue-mall
-    两台tomcat服务器在同一台计算机节点上
-    第一台:tomcat-frontend  (在webapps中存放了前端两个项目)
-        foodie-shop 门户网站
-        foodie-center 用户中心
-    第二台:tomcat-api (在webapps中存放了后端服务程序)
-        foodie-dev-api 给前端两个项目提供服务
-    cookie问题:部署后发现无法保存cookie 问题是由tomcat-api下的 webapps下的foodie-dev-api服务造成的
-        原因:采用了tomcat9.0.33默认的cookie处理器所以会造成此类问题
-        解决办法: cd /conf/context.xml 添加    <CookieProcessor classNam="org.apache.tomcat.util.http.LegacyCookieProcessor"/>将cookie处理器替换为曾经老版本的
    
 ## nginx反向代理部署
     安装gcc环境:  yum install gcc-c++
@@ -92,7 +92,7 @@
         在nginx目录下编译(直接在命令行输入如下指令目的是创建makefile):
                        ./configure \
                        --prefix=/usr/local/nginx \
-                       --conf-path=/usr/local/nginx/nginx.conf \
+                       --conf-path=/usr/local/nginx/conf/nginx.conf \
                        --pid-path=/var/run/nginx/nginx.pid \
                        --lock-path=/var/lock/nginx.lock \
                        --error-log-path=/var/log/nginx/error.log \
@@ -115,7 +115,8 @@
                        –http-fastcgi-temp-path	设定fastcgi临时目录
                        –http-uwsgi-temp-path	设定uwsgi临时目录
                        –http-scgi-temp-path	设定scgi临时目录
-        输入make （安装make install）
+        输入make
+        输入make install
     进入sbin目录启动nginx:./nginx  
         停止:./nginx -s stop
         重新加载:./nginx -s reload
@@ -224,6 +225,13 @@
         59 23 * * *
         每日凌晨1点执行:
         0 1 * * *
+ ##### nginx gzip
+            开启:gzip on;
+            限制最小压缩:gzip_min_length 1;
+            压缩级别:gzip_comp_level 3;
+            压缩文件类型:
+                gzip_typs text/plain application/javascript application/x-javascript text/css
+                application/xml text/javascript application/x-httpd-php image/jpeg image/git image/png application/json
  ##### nginx路由
         假如服务器路径为：/home/imooc/files/img/face.png
         root 路径完全匹配访问
