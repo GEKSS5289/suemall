@@ -186,3 +186,17 @@
         解决:mkdir /var/run/nginx
         [error] invalid PID number "" in "/var/run/nginx/nginx.pid"
         解决:./nginx -c /usr/local/nginx/conf/nginx.conf
+    nginx手动日志切割:
+      创建cut_my_log.sh
+        #!/bin/bash
+        LOG_PATH="/var/log/nginx/"
+        RECORD_TIME=$(date -d "yesterday" +%Y-%m-%d+%H:%M)
+        PID=/var/run/nginx/nginx.pid
+        mv ${LOG_PATH}/access.log ${LOG_PATH}/access.${RECORD_TIME}.log
+        mv ${LOG_PATH}/error.log ${LOG_PATH}/error.${RECORD_TIME}.log
+        #向Nginx主进程发送信号，用于重新打开日志文件
+        kill -USR1 `cat $PID`
+      添加可执行权限
+        chmod +x cut_my_log.sh
+      测试效果
+        ./cut_my_log.sh
