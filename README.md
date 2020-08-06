@@ -12,6 +12,16 @@
     将sue-api服务模块的pom文件里增加<packaging>war</packageing>
     （注意:jar包是服务化概念 war包是应用程序概念）
     去除spring-boot-starter-web中的org-springframework-starter-tomcat(为springboot自带tomcat组件)
+        <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-web</artifactId>
+                <exclusions>
+                    <exclusion>
+                        <groupId>org.sprinframework.boot</groupId>
+                        <artifactId>org-springframework-starter-tomcat</artifactId>
+                    </exclusion>
+                </exclusions>
+        </dependency>
     添加javax.servlet依赖:
         <dependency>
                  <groupId>javax.servlet</groupId>
