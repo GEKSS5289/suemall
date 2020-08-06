@@ -172,3 +172,6 @@
                             index  index.html index.htm;
                         }
                 }
+        查看用户请求:
+            cd /var/log/nginx
+            vim access.log
