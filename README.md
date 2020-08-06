@@ -124,7 +124,7 @@
             如果在虚拟机安装，需要关闭防火墙
             本地win或mac需要关闭防火墙
  #####  nginx.conf核心配置:
-            设置worker进程的用户，指的linux中的用户，会涉及到nginx操作目录或文件的一些权限，默认为nobody
+        设置worker进程的用户，指的linux中的用户，会涉及到nginx操作目录或文件的一些权限，默认为nobody
             user root
         worker进程工作数设置，一般来说CPU有几个，就设置几个，或者设置为N-1也行
             worker_processes 1;
