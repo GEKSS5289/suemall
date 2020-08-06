@@ -61,6 +61,7 @@
         在nginx目录下编译(直接在命令行输入如下指令目的是创建makefile):
                        ./configure \
                        --prefix=/usr/local/nginx \
+                       --conf-path=/usr/local/nginx/nginx.conf \
                        --pid-path=/var/run/nginx/nginx.pid \
                        --lock-path=/var/lock/nginx.lock \
                        --error-log-path=/var/log/nginx/error.log \
