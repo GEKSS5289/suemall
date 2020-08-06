@@ -5,6 +5,7 @@
 ## 虚拟机固定IP设置
     vim /etc/sysconfig/network-scripts/ifcfg-ens33
     添加:
+        BOOTPROTO=static
         IPADDR=192.168.182.152
         DNS1=192.168.2.1（填写自己的DNS解析）
         GATEWAY=192.168.2.1(填写自己的默认网关)
@@ -283,3 +284,10 @@
         add_header 'Access-Control-Allow-Methods' *;
         #允许请求的header
         add_header 'Access-Control-Allow-Headers' *;
+ ##### nginx防盗链
+        #对源站点验证
+        valid_referers *.imooc.com; 
+        #非法引入会进入下方判断
+        if ($invalid_referer) {
+            return 404;
+        }
