@@ -50,3 +50,32 @@
         原因:采用了tomcat9.0.33默认的cookie处理器所以会造成此类问题
         解决办法: cd /conf/context.xml 添加    <CookieProcessor classNam="org.apache.tomcat.util.http.LegacyCookieProcessor"/>将cookie处理器替换为曾经老版本的
    
+## nginx反向代理部署
+    安装gcc环境:  yum install gcc-c++
+    安装PCRE库,用于解析正则表达式:yum install -y pcre pcre-devel
+    安装zlib库和解压缩依赖:yum install -y zlib zlib-devel
+    安装SSL安全加密套接字的协议层，用于http安全传输，也就是https: yum install -y openssl openssl-devel
+    解压nginx压缩文件:tar -zxvf nginx-1.16.1.tar.gz
+    编译:
+        首先创建nginx临时目录:mkdir /var/temp/nginx -p
+        在nginx目录下编译(输入如下指令目的是创建makefile):
+                       ./configure \
+                       --prefix=/usr/local/nginx \
+                       --pid-path=/var/run/nginx/nginx.pid \
+                       --lock-path=/var/lock/nginx.lock \
+                       --error-log-path=/var/log/nginx/error.log \
+                       --http-log-path=/var/log/nginx/access.log \
+                       --with-http_gzip_static_module \
+                       --http-client-body-temp-path=/var/temp/nginx/client \
+                       --http-proxy-temp-path=/var/temp/nginx/proxy \
+                       --http-fastcgi-temp-path=/var/temp/nginx/fastcgi \
+                       --http-uwsgi-temp-path=/var/temp/nginx/uwsgi \
+                       --http-scgi-temp-path=/var/temp/nginx/scgizoo_sample.cfg
+        输入make （安装make install）
+    进入sbin目录启动nginx:./nginx  
+        停止:./nginx -s stop
+        重新加载:./nginx -s reload
+    注意事项:
+            如果在云服务器安装，需要开启默认的nginx端口：80
+            如果在虚拟机安装，需要关闭防火墙
+            本地win或mac需要关闭防火墙
