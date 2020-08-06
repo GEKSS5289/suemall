@@ -8,6 +8,12 @@
         IPADDR=192.168.182.152
         DNS1=192.168.2.1（填写自己的DNS解析）
         GATEWAY=192.168.2.1(填写自己的默认网关)
+## 虚拟机开放端口
+    开启放火墙:systemctl start firewalld 
+    开放端口号:firewall-cmd --zone=public --add-port=需要开放的端口号/tcp --permanent
+    关闭端口号:firewall-cmd --zone=public --remove-port=需要关闭的端口号/tcp --permanent
+    查看所有开放端口号:firewall-cmd --zone=public --list-ports
+    重新加载配置文件:firewall-cmd --reload
 ## sue-mall打包(war)
     将sue-api服务模块的pom文件里增加<packaging>war</packageing>
     （注意:jar包是服务化概念 war包是应用程序概念）
