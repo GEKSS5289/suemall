@@ -372,6 +372,7 @@
          ip_hash 通过用户访问的本地ip来做负载均衡
          upstream tomcats {
                  ip_hash;
+                 
                  server 192.168.1.173:8080;
                  server 192.168.1.174:8080 down;
                  server 192.168.1.175:8080;
