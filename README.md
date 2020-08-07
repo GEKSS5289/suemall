@@ -579,5 +579,58 @@
                 }
             
             }
-## keepalived
-     
+## keepalived 2.0.20安装
+    解压:tar -zxvf keepalived-2.0.20.tar.gz
+    到keepalived安装目录下输入:./configure --prefix=/usr/local/keepalived --sysconf=/etc
+        prefix：keepalived安装的位置
+        sysconf：keepalived核心配置文件所在位置，固定位置，改成其他位置则keepalived启动不了，/var/log/messages中会报错
+    配置过程中可能会出现警告信息，如下所示:
+        *** WARNING - this build will not support IPVS with IPv6. Please install libnl/libnl-3 dev libraries to support 
+        则:yum -y install libnl libnl-devel  
+        (重新./configure --prefix=/usr/local/keepalived --sysconf=/etc)
+    安装
+       make && makeinstall
+## keepalived配置文件(master)
+    ! Configuration File for keepalived
+    
+    global_defs {
+       #路由id：当前安装keepalived的节点主机标识符，保证全局唯一
+       router_id keep_171
+    }
+    
+    vrrp_instance VI_1 {
+        state MASTER
+        interface ens33
+        virtual_router_id 51
+        priority 100
+        advert_int 1
+        authentication {
+            auth_type PASS
+            auth_pass 1111
+        }
+        virtual_ipaddress {
+            192.168.182.161
+        }
+    }
+## keepalived配置文件(backup)
+    ! Configuration File for keepalived
+    
+    global_defs {
+       #路由id：当前安装keepalived的节点主机标识符，保证全局唯一
+       router_id keep_172
+    }
+    
+    vrrp_instance VI_1 {
+        state BACKUP
+        interface ens33
+        virtual_router_id 51
+        priority 80
+        advert_int 1
+        authentication {
+            auth_type PASS
+            auth_pass 1111
+        }
+        virtual_ipaddress {
+            192.168.182.161
+        }
+    }
