@@ -291,3 +291,19 @@
         if ($invalid_referer) {
             return 404;
         }
+  ##### nginx负载均衡
+           配置上有服务器
+           upstream tomcats{
+                 server 192.168.182.151:8080;
+                 server 192.168.182.152:8080;
+                 server 192.168.182.153:8080;
+            }
+            配置反向代理监听端口
+            server {
+                    listen       80;
+                    server_name  shop.z.mukewang.com;
+          
+                    location / {
+                        proxy_pass http://tomcats;
+                    }
+            }
