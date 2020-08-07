@@ -399,5 +399,23 @@
                  proxy_pass  http://tomcats;
              }
          }  
+   ##### nginx缓存
+            浏览器缓存：            
+            加速用户访问，提升单个用户（浏览器访问者）体验，缓存在本地
+            Nginx缓存
+            缓存在nginx端，提升所有访问到nginx这一端的用户
+            提升访问上游（upstream）服务器的速度
+            用户访问仍然会产生请求流量
+            控制浏览器缓存：
+            location /files {
+                alias /home/imooc;
+                # expires 10s;
+                # expires @22h30m;
+                # expires -1h;
+                # expires epoch;
+                # expires off;
+                expires max;
+            }
+            
    
         
