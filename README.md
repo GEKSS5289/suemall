@@ -354,3 +354,26 @@
                }
          注意:
              该参数不能使用在hash和random load balancing中
+   ##### upstream 指令参数 max_fails、fail_timeout
+         max_fails：表示失败几次，则标记server已宕机，剔出上游服务。
+         fail_timeout：表示失败的重试时间。
+         假设目前设置如下:
+           max_fails=2 fail_timeout=15s 
+           则代表在15秒内请求某一server失败达到2次后，
+           则认为该server已经挂了或者宕机了，随后再过15秒，
+           这15秒内不会有新的请求到达刚刚挂掉的节点上，
+           而是会请求到正常运作的server，
+           15秒后会再有新请求尝试连接挂掉的server，如果还是失败，重复上一过程，直到恢复。
+   ##### nginx keepalive
+         keepalive:设置长连接处理数量(提供吞吐量)
+         proxy_http_version 1.1; 设置长连接版本为1.1
+         proxy_set_header Connection ""; 清除connction header信息
+   ##### nginx ip_hash
+         ip_hash 通过用户访问的本地ip来做负载均衡
+         upstream tomcats {
+                 ip_hash;
+                 server 192.168.1.173:8080;
+                 server 192.168.1.174:8080 down;
+                 server 192.168.1.175:8080;
+         }
+        
