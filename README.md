@@ -293,7 +293,7 @@
         }
   ##### nginx负载均衡
            配置上有服务器
-           upstream tomcats{
+            upstream tomcats{
                  server 192.168.182.151:8080;
                  server 192.168.182.152:8080;
                  server 192.168.182.153:8080;
