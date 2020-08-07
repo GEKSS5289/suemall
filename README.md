@@ -590,7 +590,7 @@
         (重新./configure --prefix=/usr/local/keepalived --sysconf=/etc)
     安装
        make && makeinstall
-## keepalived配置文件(master)
+## keepalived配置文件(master) 双机主备模式
     ! Configuration File for keepalived
     
     global_defs {
@@ -612,7 +612,7 @@
             192.168.182.161
         }
     }
-## keepalived配置文件(backup)
+## keepalived配置文件(backup) 双机主备模式
     ! Configuration File for keepalived
     
     global_defs {
@@ -667,3 +667,72 @@
     }
     4. 重启Keepalived使得配置文件生效
     systemctl restart keepalived
+## keepalived 双机热备模式
+    主节点配置文件(/etc/keepalived/keepalived.conf):
+            global_defs {
+               router_id keep_171
+            }
+            
+            vrrp_instance VI_1 {
+                state MASTER
+                interface ens33
+                virtual_router_id 51
+                priority 100
+                advert_int 1
+                authentication {
+                    auth_type PASS
+                    auth_pass 1111
+                }
+                virtual_ipaddress {
+                    192.168.182.161
+                }
+            }
+            
+            vrrp_instance VI_2 {
+                state BACKUP
+                interface ens33
+                virtual_router_id 52
+                priority 80
+                advert_int 1
+                authentication {
+                    auth_type PASS
+                    auth_pass 1111
+                }
+                virtual_ipaddress {
+                    192.168.182.162
+                }
+            }
+     备节点配置文件(/etc/keepalived/keepalived.conf):
+                 global_defs {
+                    router_id keep_172
+                 }
+                 
+                 vrrp_instance VI_1 {
+                     state BACKUP
+                     interface ens33
+                     virtual_router_id 51
+                     priority 80
+                     advert_int 1
+                     authentication {
+                         auth_type PASS
+                         auth_pass 1111
+                     }
+                     virtual_ipaddress {
+                         192.168.182.161
+                     }
+                 }
+                 
+                 vrrp_instance VI_2 {
+                     state MASTER
+                     interface ens33
+                     virtual_router_id 52
+                     priority 100
+                     advert_int 1
+                     authentication {
+                         auth_type PASS
+                         auth_pass 1111
+                     }
+                     virtual_ipaddress {
+                         192.168.182.162
+                     }
+                 }
