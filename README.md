@@ -513,13 +513,10 @@
             http {
                 include       mime.types;
                 default_type  application/octet-stream;
-            
-            
-            
                 sendfile        on;
-            
                 keepalive_timeout  65;
             
+               #上游服务器集群
                upstream api{
                 #server 192.168.182.151:8080;
                 #server 192.168.182.152:8080;
@@ -527,7 +524,7 @@
                 server 192.168.182.150:8088;	
                }
                 
-              
+               #配置服务
                server{
                 listen 80;
                 server_name api.z.mukewang.com;
@@ -537,10 +534,12 @@
                     }
             
                }
+               #静态文件服务
                 server {
                     listen       80;
                     server_name  shop.z.mukewang.com;
             
+                    #解决跨域
                     add_header 'Access-Control-Allow-Origin' *;
                     add_header 'Access-Control-Allow-Credentials' 'true';
                     add_header 'Access-Control-Allow-Methods' *;
@@ -558,43 +557,28 @@
             
                 }
             
-                 
+           
+                #静态文件服务
+                server {
+                    listen       80;
+                    server_name  center.z.mukewang.com;
             
+                    add_header 'Access-Control-Allow-Origin' *;
+                    add_header 'Access-Control-Allow-Credentials' 'true';
+                    add_header 'Access-Control-Allow-Methods' *;
+                    add_header 'Access-Control-Allow-Headers' *;
             
-                # another virtual host using mix of IP-, name-, and port-based configuration
-                #
-                #server {
-                #    listen       8000;
-                #    listen       somename:8080;
-                #    server_name  somename  alias  another.alias;
+                    location / {
+                        root /home/webapps/foodie-center;
+                        index index.html;
+                    }
+                
+                    error_page   500 502 503 504  /50x.html;
+                    location = /50x.html {
+                        root   html;
+                    }
             
-                #    location / {
-                #        root   html;
-                #        index  index.html index.htm;
-                #    }
-                #}
-            
-            
-                # HTTPS server
-                #
-                #server {
-                #    listen       443 ssl;
-                #    server_name  localhost;
-            
-                #    ssl_certificate      cert.pem;
-                #    ssl_certificate_key  cert.key;
-            
-                #    ssl_session_cache    shared:SSL:1m;
-                #    ssl_session_timeout  5m;
-            
-                #    ssl_ciphers  HIGH:!aNULL:!MD5;
-                #    ssl_prefer_server_ciphers  on;
-            
-                #    location / {
-                #        root   html;
-                #        index  index.html index.htm;
-                #    }
-                #}
+                }
             
             }
             
