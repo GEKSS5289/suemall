@@ -377,4 +377,27 @@
                  server 192.168.1.174:8080 down;
                  server 192.168.1.175:8080;
          }
+   ##### nginx url_hash 与 least_conn
+         url_hash 根据每次请求url地址，hash后访问到固定的服务器节点
+         least_conn 最少连接数
+         upstream tomcats {
+             # url hash
+             hash $request_uri;
+             # 最少连接数
+             # least_conn
+         
+             server 192.168.1.173:8080;
+             server 192.168.1.174:8080;
+             server 192.168.1.175:8080;
+         }
+         
+         server {
+             listen 80;
+             server_name www.tomcats.com;
+         
+             location / {
+                 proxy_pass  http://tomcats;
+             }
+         }  
+   
         
