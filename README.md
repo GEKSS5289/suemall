@@ -307,3 +307,50 @@
                         proxy_pass http://tomcats;
                     }
             }
+ ##### nginx指令参数max_conns
+       max_conns:限制每台最大连接数
+       worker进程设置1个，便于测试观察成功的连接数
+       worker_processes  1;
+       
+       upstream tomcats {
+               server 192.168.1.173:8080 max_conns=2;
+               server 192.168.1.174:8080 max_conns=2;
+               server 192.168.1.175:8080 max_conns=2；
+       }
+  ##### nginx指令参数weight=1
+        weight:每台服务器分配到的权重
+      
+        upstream tomcats {
+                server 192.168.1.173:8080 weight=1;
+                server 192.168.1.174:8080 weight=2;
+                server 192.168.1.175:8080 weight=3；
+        }
+  ##### nginx指令参数slow_start
+        商业版
+            upstream tomcats {
+                    server 192.168.1.173:8080 weight=6 slow_start=60s;
+            #       server 192.168.1.190:8080;
+                    server 192.168.1.174:8080 weight=2;
+                    server 192.168.1.175:8080 weight=2;
+            }
+        注意:
+            该参数不能使用在hash和random load balancing中
+            如果在upstream中只有一台server，则该参数失败
+   ##### nginx指令参数down
+         指定某台服务器节点不可用
+            upstream tomcats {
+                    server 192.168.1.173:8080 down;
+            #       server 192.168.1.190:8080;
+                    server 192.168.1.174:8080 weight=1;
+                    server 192.168.1.175:8080 weight=1;
+            }
+   ##### nginx指令参数backup
+         当服务器节点中的所有机器宕机，启动被backup标记的备用机
+               upstream tomcats {
+                       server 192.168.1.173:8080 backup;
+               #       server 192.168.1.190:8080;
+                       server 192.168.1.174:8080 weight=1;
+                       server 192.168.1.175:8080 weight=1;
+               }
+         注意:
+             该参数不能使用在hash和random load balancing中
