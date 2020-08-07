@@ -80,8 +80,7 @@
 ## 系统多配置文件
     application.yml 主配置文件
     application-dev.yml 开发环境配置文件
-    application-prod.yml 生产环境配置文件 
-   
+    application-prod.yml 生产环境配置文件
 ## nginx反向代理部署
     安装gcc环境:  yum install gcc-c++
     安装PCRE库,用于解析正则表达式:yum install -y pcre pcre-devel
@@ -184,7 +183,7 @@
         查看用户请求:
            cd /var/log/nginx
            vim access.log
-  ##### nginx的常见错误:
+  #####  nginx的常见错误:
            [error] open() "/var/run/nginx/nginx.pid" failed
            解决:mkdir /var/run/nginx
            [error] invalid PID number "" in "/var/run/nginx/nginx.pid"
@@ -493,6 +492,7 @@
            3. reload nginx
            ./nginx -s reload   
    # nginx最终部署配置(nginx.conf)
+         
             user root;
             worker_processes 2;
             
@@ -513,33 +513,34 @@
             http {
                 include       mime.types;
                 default_type  application/octet-stream;
+            
+            
+            
                 sendfile        on;
+            
                 keepalive_timeout  65;
             
-               #上游服务器集群
-               upstream api{
+               upstream api.z.mukewang.com{
                 #server 192.168.182.151:8080;
                 #server 192.168.182.152:8080;
                 #server 192.168.182.153:8080;	
                 server 192.168.182.150:8088;	
                }
                 
-               #配置服务
+              
                server{
                 listen 80;
                 server_name api.z.mukewang.com;
                 
-                location ~{
-                        proxy_pass http://api;
-                    }
+                location / {
+                        proxy_pass http://api.z.mukewang.com;
+                }
             
                }
-               #静态文件服务
                 server {
                     listen       80;
                     server_name  shop.z.mukewang.com;
             
-                    #解决跨域
                     add_header 'Access-Control-Allow-Origin' *;
                     add_header 'Access-Control-Allow-Credentials' 'true';
                     add_header 'Access-Control-Allow-Methods' *;
@@ -556,9 +557,6 @@
                     }
             
                 }
-            
-           
-                #静态文件服务
                 server {
                     listen       80;
                     server_name  center.z.mukewang.com;
@@ -572,7 +570,7 @@
                         root /home/webapps/foodie-center;
                         index index.html;
                     }
-                
+            
                     error_page   500 502 503 504  /50x.html;
                     location = /50x.html {
                         root   html;
@@ -581,5 +579,5 @@
                 }
             
             }
-            
+
                  
