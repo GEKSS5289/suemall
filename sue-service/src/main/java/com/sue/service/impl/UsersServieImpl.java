@@ -5,24 +5,20 @@ import com.sue.enums.Sex;
 import com.sue.pojo.Users;
 import com.sue.repository.UsersRepository;
 import com.sue.service.UsersServie;
-import com.sue.utils.*;
-
+import com.sue.utils.CookieUtils;
+import com.sue.utils.DateUtil;
+import com.sue.utils.JsonUtils;
+import com.sue.utils.MD5Utils;
 import org.apache.commons.lang3.StringUtils;
 import org.n3r.idworker.Sid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
-import springfox.documentation.spring.web.json.Json;
-import sun.dc.pr.PRError;
 
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.beans.Transient;
 import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
-import java.sql.Timestamp;
 import java.util.Date;
 
 
