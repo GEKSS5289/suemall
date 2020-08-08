@@ -736,3 +736,145 @@
                          192.168.182.162
                      }
                  }
+  ## LVS-DR模式 配置LVS节点与ipvsadm
+                前期准备
+                服务器与ip规划
+                    LVS - 1台
+                    VIP（虚拟IP）：192.168.1.150
+                    DIP（转发者IP/内网IP）：192.168.1.151
+                    Nginx - 2台（RealServer）
+                    RIP（真实IP/内网IP）：192.168.1.171
+                    RIP（真实IP/内网IP）：192.168.1.172
+                所有计算机节点关闭网络配置管理器，因为有可能会和网络接口冲突：
+                        systemctl stop NetworkManager 
+                        systemctl disable NetworkManager
+                创建子接口
+                进入到网卡配置目录，找到咱们的ens33 复制 ens33:1
+                        cd /etc/sysconfig/network-scripts
+                        cp ifcfg-ens33 ifcfg-ens33:1
+                        vim ifcfg-ens33:1
+                            修改内容如下:
+                                   DEVICE="ens33:1"
+                                   ONBOOT="yes"
+                                   IPADDR=192.168.182.140 (虚拟IP)
+                                   NETMASK=255.255.255.0
+                                   BOOTPROTO=static
+                                   注：配置中的 192.168.1.150 就是咱们的vip，是提供给外网用户访问的ip地址，道理和nginx+keepalived那时讲的vip是一样的。
+                        重启网络服务
+                              service network restart
+                 安装ipvsadm: yum install -y ipvsadm
+                 检查:ipvsadm -Ln
+                    LVS常用指令:
+                           ipvsadm的用法和格式如下：
+                           ipvsadm -A|E -t|u|f virutal-service-address:port [-s scheduler] [-p [timeout]] [-M netmask]
+                           ipvsadm -D -t|u|f virtual-service-address
+                           ipvsadm -C
+                           ipvsadm -R
+                           ipvsadm -S [-n]
+                           ipvsadm -a|e -t|u|f service-address:port -r real-server-address:port [-g|i|m] [-w weight]
+                           ipvsadm -d -t|u|f service-address -r server-address
+                           ipvsadm -L|l [options]
+                           ipvsadm -Z [-t|u|f service-address]
+                           ipvsadm --set tcp tcpfin udp
+                           ipvsadm --start-daemon state [--mcast-interface interface]
+                           ipvsadm --stop-daemon
+                           ipvsadm -h
+                           
+                           命令选项解释：
+                           有两种命令选项格式，长的和短的，具有相同的意思。在实际使用时，两种都可以。
+                           
+                           -A --add-service 在内核的虚拟服务器表中添加一条新的虚拟服务器记录。也就是增加一台新的虚拟服务器。
+                           
+                           -E --edit-service 编辑内核虚拟服务器表中的一条虚拟服务器记录。
+                           
+                           -D --delete-service 删除内核虚拟服务器表中的一条虚拟服务器记录。
+                           
+                           -C --clear 清除内核虚拟服务器表中的所有记录。
+                           
+                           -R --restore 恢复虚拟服务器规则
+                           
+                           -S --save 保存虚拟服务器规则，输出为-R选项可读的格式
+                           
+                           -a --add-server 在内核虚拟服务器表的一条记录里添加一条新的真实服务器记录。也就是在一个虚拟服务器中增加一台新的真实服务器
+                           
+                           -e --edit-server 编辑一条虚拟服务器记录中的某条真实服务器记录
+                           
+                           -d --delete-server 删除一条虚拟服务器记录中的某条真实服务器记录
+                           
+                           -L|-l --list 显示内核虚拟服务器表
+                           
+                           -Z --zero 虚拟服务表计数器清零（清空当前的连接数量等）
+                           
+                           --set tcp tcpfin udp 设置连接超时值
+                           
+                           --start-daemon 启动同步守护进程。他后面可以是master或backup，用来说明LVS Router是master或是backup。在这个功能上也可以采用keepalived的VRRP功能。
+                           
+                           --stop-daemon 停止同步守护进程
+                           
+                           -h --help 显示帮助信息
+                           
+                           其他的选项:
+                           -t --tcp-service service-address 说明虚拟服务器提供的是tcp的服务[vip:port] or [real-server-ip:port]
+                           
+                           -u --udp-service service-address 说明虚拟服务器提供的是udp的服务[vip:port] or [real-server-ip:port]
+                           
+                           -f --fwmark-service fwmark 说明是经过iptables标记过的服务类型。
+                           
+                           -s --scheduler scheduler 使用的调度算法，有这样几个选项rr|wrr|lc|wlc|lblc|lblcr|dh|sh|sed|nq,
+                           默认的调度算法是： wlc.
+                           
+                           -p --persistent [timeout] 持久稳固的服务。这个选项的意思是来自同一个客户的多次请求，将被同一台真实的服务器处理。timeout的默认值为300秒。
+                           
+                           -M --netmask netmask persistent granularity mask
+                           
+                           -r --real-server server-address 真实的服务器[Real-Server:port]
+                           
+                           -g --gatewaying 指定LVS的工作模式为直接路由模式（也是LVS默认的模式）
+                           
+                           -i --ipip 指定LVS的工作模式为隧道模式
+                           
+                           -m --masquerading 指定LVS的工作模式为NAT模式
+                           
+                           -w --weight weight 真实服务器的权值
+                           
+                           --mcast-interface interface 指定组%B
+   ## 搭建LVS-DR模式 为两台RS配置虚拟IP
+            配置虚拟网络子接口(回环接口)
+                     cd /etc/sysconfig/network-scripts
+                     cp ifcfg-lo ifcfg-lo:1
+                     vim ifcfg-lo:1
+                        修改内容如下:
+                            DEVICE=lo:1
+                            IPADDR=192.168.182.140 (虚拟IP)
+                            NEWMASK=255.255.255.255(倒数第二个)
+                            (文件中其他内容不要修改)
+    
+   ## 搭建LVS-DR模式 为两台RS配置arp
+            ARP响应级别与通告行为 的概念
+                arp-ignore：ARP响应级别（处理请求）
+                
+                0：只要本机配置了ip，就能响应请求
+                1：请求的目标地址到达对应的网络接口，才会响应请求
+                arp-announce：ARP通告行为（返回响应）
+                
+                0：本机上任何网络接口都向外通告，所有的网卡都能接受到通告
+                1：尽可能避免本网卡与不匹配的目标进行通告
+                2：只在本网卡通告
+            配置ARP
+                打开sysctl.conf
+                vim /etc/sysctl.conf
+                配置所有网卡、默认网卡以及虚拟网卡的arp响应级别和通告行为，分别对应：all，default，lo:
+                # configration for lvs
+                net.ipv4.conf.all.arp_ignore = 1
+                net.ipv4.conf.default.arp_ignore = 1
+                net.ipv4.conf.lo.arp_ignore = 1
+                net.ipv4.conf.all.arp_announce = 2
+                net.ipv4.conf.default.arp_announce = 2
+                net.ipv4.conf.lo.arp_announce = 2
+            刷新配置文件：
+                sysctl -p
+            增加一个网关，用于接收数据报文，当有请求到本机后，会交给lo去处理：
+                route add -host 192.168.182.140 dev lo:1
+            防止重启失效，做如下处理，用于开机自启动：
+                echo "route add -host 192.168.1.150 dev lo:1" >> /etc/rc.local                
+                            
