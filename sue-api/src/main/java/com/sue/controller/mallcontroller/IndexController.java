@@ -2,12 +2,18 @@ package com.sue.controller.mallcontroller;
 
 import com.sue.enums.YesOrNO;
 import com.sue.exception.commonException.DataNullException;
+import com.sue.pojo.Carousel;
+import com.sue.pojo.Category;
+import com.sue.pojo.vo.CategoryVO;
 import com.sue.service.mallservice.CarouselService;
 import com.sue.service.mallservice.CategoryService;
 import com.sue.utils.IMOOCJSONResult;
+import com.sue.utils.JsonUtils;
+import com.sue.utils.RedisOperator;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +21,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author sue
@@ -35,19 +44,43 @@ public class IndexController {
     @Autowired
     private CategoryService categoryService;
 
+    @Autowired
+    private RedisOperator redisOperator;
+
+
 
     @GetMapping("/carousel")
     @ApiOperation(value = "获取首页轮播图列表", notes = "获取轮播图列表", httpMethod = "GET")
     public IMOOCJSONResult carousel() {
-        return IMOOCJSONResult.ok(carouselService.queryall(YesOrNO.YES.type));
+
+        String carousel = redisOperator.get("carousel");
+        List<Carousel> queryall = new ArrayList<>();
+        if(StringUtils.isBlank(carousel)){
+           queryall = carouselService.queryall(YesOrNO.YES.type);
+           redisOperator.set("carousel", JsonUtils.objectToJson(queryall));
+        }else{
+           queryall = JsonUtils.jsonToList(carousel,Carousel.class);
+        }
+        return IMOOCJSONResult.ok(queryall);
     }
+
 
 
     @ApiOperation(value = "获取商品分类(1级)", notes = "获取商品分类(1级)", httpMethod = "GET")
     @GetMapping("/cats")
     public IMOOCJSONResult cats() {
 
-        return IMOOCJSONResult.ok(categoryService.queryAllRootLevelCat());
+        String cats = redisOperator.get("cats");
+        List<Category> categories = new ArrayList<>();
+        if(StringUtils.isBlank(cats)){
+          categories = categoryService.queryAllRootLevelCat();
+          redisOperator.set("cats",JsonUtils.objectToJson(categories));
+        }else{
+            categories = JsonUtils.jsonToList(cats,Category.class);
+        }
+
+
+        return IMOOCJSONResult.ok(categories);
     }
 
 
@@ -61,8 +94,15 @@ public class IndexController {
         if (rootCatId == null) {
             throw new DataNullException(44400);
         }
-
-        return IMOOCJSONResult.ok(categoryService.getSubCatList(rootCatId));
+        String subCats = redisOperator.get("subcats:"+rootCatId);
+        List<CategoryVO> subCatList = new ArrayList<>();
+        if(StringUtils.isBlank(subCats)){
+            subCatList = categoryService.getSubCatList(rootCatId);
+            redisOperator.set("subcats:"+rootCatId,JsonUtils.objectToJson(subCatList));
+        }else{
+            subCatList = JsonUtils.jsonToList(subCats,CategoryVO.class);
+        }
+        return IMOOCJSONResult.ok(subCatList);
     }
 
 
