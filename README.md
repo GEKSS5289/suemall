@@ -1,21 +1,20 @@
 # sue-mall Release(部署版本)
-## 其余分支(master sue-jpa sue-mybatis 都属于开发原型)
 测试环境-Linux(CentOS 7)
 
-## 虚拟机固定IP设置
+# 虚拟机固定IP设置
     vim /etc/sysconfig/network-scripts/ifcfg-ens33
     添加:
         BOOTPROTO=static
         IPADDR=192.168.182.152
         DNS1=192.168.2.1（填写自己的DNS解析）
         GATEWAY=192.168.2.1(填写自己的默认网关)
-## 虚拟机开放端口
+# 虚拟机开放端口
     开启放火墙:systemctl start firewalld 
     开放端口号:firewall-cmd --zone=public --add-port=需要开放的端口号/tcp --permanent
     关闭端口号:firewall-cmd --zone=public --remove-port=需要关闭的端口号/tcp --permanent
     查看所有开放端口号:firewall-cmd --zone=public --list-ports
     重新加载配置文件:firewall-cmd --reload
-## sue-mall打包(war)
+# sue-mall打包(war)
     将sue-api服务模块的pom文件里增加<packaging>war</packageing>
     （注意:jar包是服务化概念 war包是应用程序概念）
     去除spring-boot-starter-web中的org-springframework-starter-tomcat(为springboot自带tomcat组件)
@@ -43,7 +42,7 @@
                 return builder.sources(Application.class);
             }
         }
-## 部署sue-mall
+# 部署sue-mall
     两台tomcat服务器在同一台计算机节点上
     第一台:tomcat-frontend  (在webapps中存放了前端两个项目)
         foodie-shop 门户网站
@@ -54,18 +53,18 @@
         原因:采用了tomcat9.0.33默认的cookie处理器所以会造成此类问题
         解决办法: cd /conf/context.xml 添加    <CookieProcessor classNam="org.apache.tomcat.util.http.LegacyCookieProcessor"/>将cookie处理器替换为曾经老版本的
 
-## 安装jdk1.8
+# 安装jdk1.8
     去甲骨文官网寻找jdk1.8
     tar -zxvf /home/software/jdk-8u191-linux-x64.tar.gz  解压
     export JAVA_HOME=/usr/java/jdk1.8.0_191
     export CLASSPATH=.:%JAVA_HOME%/lib/dt.jar:%JAVA_HOME%/lib/tools.jar  
     export PATH=$PATH:$JAVA_HOME/bin
-## 安装tomcat9.0.33
+# 安装tomcat9.0.33
     去www.apache.org官网下载tomcat9.0.33
     tar -zxvf /home/software/apache-tomcat-9.0.33.tar.gz 解压
     cd apache-tomcat-9.0.33/bin
     ./startup.sh 启动
-## 安装mysql8.0
+# 安装mysql8.0
     检查:yum -y remove MySQL-*
     如果系统中存在:find / -name mysql
     删除配置文件:rm -rf /etc/my.cnf
@@ -77,11 +76,11 @@
     查看临时密码:grep "A temporary password" /var/log/mysqld.log
     更改临时密码:ALTER USER 'root'@'localhost' IDENTIFIED BY 'new password';
     配置远程访问:GRANT ALL ON *.* TO 'root'@'%';
-## 系统多配置文件
+# 系统多配置文件
     application.yml 主配置文件
     application-dev.yml 开发环境配置文件
     application-prod.yml 生产环境配置文件
-## nginx反向代理部署
+# nginx反向代理部署
     安装gcc环境:  yum install gcc-c++
     安装PCRE库,用于解析正则表达式:yum install -y pcre pcre-devel
     安装zlib库和解压缩依赖:yum install -y zlib zlib-devel
@@ -125,7 +124,7 @@
             如果在云服务器安装，需要开启默认的nginx端口：80
             如果在虚拟机安装，需要关闭防火墙
             本地win或mac需要关闭防火墙
- ##  nginx.conf核心配置:
+ #  nginx.conf核心配置:
         设置worker进程的用户，指的linux中的用户，会涉及到nginx操作目录或文件的一些权限，默认为nobody
             user root
         worker进程工作数设置，一般来说CPU有几个，就设置几个，或者设置为N-1也行
@@ -183,12 +182,12 @@
         查看用户请求:
            cd /var/log/nginx
            vim access.log
-  ##  nginx的常见错误:
+  #  nginx的常见错误:
            [error] open() "/var/run/nginx/nginx.pid" failed
            解决:mkdir /var/run/nginx
            [error] invalid PID number "" in "/var/run/nginx/nginx.pid"
            解决:./nginx -c /usr/local/nginx/conf/nginx.conf
-  ##  nginx手动日志切割:
+  #  nginx手动日志切割:
           创建cut_my_log.sh
             #!/bin/bash
             LOG_PATH="/var/log/nginx/"
@@ -202,7 +201,7 @@
             chmod +x cut_my_log.sh
           测试效果
             ./cut_my_log.sh
-##    nginx日志切割-定时:
+#    nginx日志切割-定时:
         安装定时任务:
             yum install crontabs
         crontab -e 编辑并且添加一行新的任务:
@@ -226,14 +225,14 @@
         59 23 * * *
         每日凌晨1点执行:
         0 1 * * *
- ## nginx gzip
+ # nginx gzip
             开启:gzip on;
             限制最小压缩:gzip_min_length 1;
             压缩级别:gzip_comp_level 3;
             压缩文件类型:
                 gzip_typs text/plain application/javascript application/x-javascript text/css
                 application/xml text/javascript application/x-httpd-php image/jpeg image/git image/png application/json
- ## nginx root 和 alias
+ # nginx root 和 alias
         假如服务器路径为：/home/imooc/files/img/face.png
         root 路径完全匹配访问
         配置的时候为:
@@ -247,7 +246,7 @@
             alias /home/imooc
         }
         用户访问的时候请求为：url:port/hello/files/img/face.png，如此相当于为目录imooc做一个自定义的别名。
-## nginx location匹配规则
+# nginx location匹配规则
        location 的匹配规则
        空格：默认匹配，普通匹配
        location / {
@@ -275,7 +274,7 @@
        location ^~ /imooc/img {
            root /home;
        }
- ## nginx跨域配置
+ # nginx跨域配置
         #允许跨域请求的域，*代表所有
         add_header 'Access-Control-Allow-Origin' *;
         #允许带上cookie请求
@@ -284,14 +283,14 @@
         add_header 'Access-Control-Allow-Methods' *;
         #允许请求的header
         add_header 'Access-Control-Allow-Headers' *;
- ## nginx防盗链
+ # nginx防盗链
         #对源站点验证
         valid_referers *.imooc.com; 
         #非法引入会进入下方判断
         if ($invalid_referer) {
             return 404;
         }
-  ## nginx负载均衡
+  # nginx负载均衡
            配置上有服务器
             upstream tomcats{
                  server 192.168.182.151:8080;
@@ -307,7 +306,7 @@
                         proxy_pass http://tomcats;
                     }
             }
- ## nginx指令参数max_conns
+ # nginx指令参数max_conns
        max_conns:限制每台最大连接数
        worker进程设置1个，便于测试观察成功的连接数
        worker_processes  1;
@@ -317,7 +316,7 @@
                server 192.168.1.174:8080 max_conns=2;
                server 192.168.1.175:8080 max_conns=2；
        }
-  ## nginx指令参数weight=1
+  # nginx指令参数weight=1
         weight:每台服务器分配到的权重
       
         upstream tomcats {
@@ -325,7 +324,7 @@
                 server 192.168.1.174:8080 weight=2;
                 server 192.168.1.175:8080 weight=3；
         }
-  ## nginx指令参数slow_start
+  # nginx指令参数slow_start
         商业版
             upstream tomcats {
                     server 192.168.1.173:8080 weight=6 slow_start=60s;
@@ -336,7 +335,7 @@
         注意:
             该参数不能使用在hash和random load balancing中
             如果在upstream中只有一台server，则该参数失败
-   ## nginx指令参数down
+   # nginx指令参数down
          指定某台服务器节点不可用
             upstream tomcats {
                     server 192.168.1.173:8080 down;
@@ -344,7 +343,7 @@
                     server 192.168.1.174:8080 weight=1;
                     server 192.168.1.175:8080 weight=1;
             }
-   ## nginx指令参数backup
+   # nginx指令参数backup
          当服务器节点中的所有机器宕机，启动被backup标记的备用机
                upstream tomcats {
                        server 192.168.1.173:8080 backup;
@@ -354,7 +353,7 @@
                }
          注意:
              该参数不能使用在hash和random load balancing中
-   ## upstream 指令参数 max_fails、fail_timeout
+   # upstream 指令参数 max_fails、fail_timeout
          max_fails：表示失败几次，则标记server已宕机，剔出上游服务。
          fail_timeout：表示失败的重试时间。
          假设目前设置如下:
@@ -364,11 +363,11 @@
            这15秒内不会有新的请求到达刚刚挂掉的节点上，
            而是会请求到正常运作的server，
            15秒后会再有新请求尝试连接挂掉的server，如果还是失败，重复上一过程，直到恢复。
-   ## nginx keepalive
+   # nginx keepalive
          keepalive:设置长连接处理数量(提供吞吐量)
          proxy_http_version 1.1; 设置长连接版本为1.1
          proxy_set_header Connection ""; 清除connction header信息
-   ## nginx ip_hash
+   # nginx ip_hash
          ip_hash 通过用户访问的本地ip来做负载均衡
          upstream tomcats {
                  ip_hash;
@@ -377,7 +376,7 @@
                  server 192.168.1.174:8080 down;
                  server 192.168.1.175:8080;
          }
-   ## nginx url_hash 与 least_conn
+   # nginx url_hash 与 least_conn
          url_hash 根据每次请求url地址，hash后访问到固定的服务器节点
          least_conn 最少连接数
          upstream tomcats {
@@ -399,7 +398,7 @@
                  proxy_pass  http://tomcats;
              }
          }  
-   ## nginx缓存
+   # nginx缓存
             浏览器缓存：            
             加速用户访问，提升单个用户（浏览器访问者）体验，缓存在本地
             Nginx缓存
@@ -416,7 +415,7 @@
                 # expires off;
                 expires max;
             }
-   ## nginx反向代理缓存
+   # nginx反向代理缓存
             # proxy_cache_path 设置缓存目录
             #       keys_zone 设置共享内存以及占用空间大小
             #       max_size 设置缓存大小
@@ -432,7 +431,7 @@
                 # 针对200和304状态码缓存时间为8小时
                 proxy_cache_valid   200 304 8h;
             }
-   ## nginx配置安全域名连接
+   # nginx配置安全域名连接
            1. 安装SSL模块
            要在nginx中配置https，就必须安装ssl模块，也就是: http_ssl_module。
            
@@ -491,7 +490,7 @@
             }
            3. reload nginx
            ./nginx -s reload   
-   ## nginx最终部署配置(nginx.conf)
+   # nginx最终部署配置(nginx.conf)
          
             user root;
             worker_processes 2;
@@ -579,7 +578,7 @@
                 }
             
             }
-## keepalived 2.0.20安装
+# keepalived 2.0.20安装
     解压:tar -zxvf keepalived-2.0.20.tar.gz
     到keepalived安装目录下输入:./configure --prefix=/usr/local/keepalived --sysconf=/etc
         prefix：keepalived安装的位置
@@ -590,7 +589,7 @@
         (重新./configure --prefix=/usr/local/keepalived --sysconf=/etc)
     安装
        make && makeinstall
-## keepalived配置文件(master) 双机主备模式
+# keepalived配置文件(master) 双机主备模式
     ! Configuration File for keepalived
     
     global_defs {
@@ -612,7 +611,7 @@
             192.168.182.161
         }
     }
-## keepalived配置文件(backup) 双机主备模式
+# keepalived配置文件(backup) 双机主备模式
     ! Configuration File for keepalived
     
     global_defs {
@@ -634,7 +633,7 @@
             192.168.182.161
         }
     }
-## keepalived 配置nginx自动重启
+# keepalived 配置nginx自动重启
     Keepalived配置Nginx自动重启
     1. 增加Nginx重启检测脚本
     vim /etc/keepalived/check_nginx_alive_or_not.sh
@@ -667,7 +666,7 @@
     }
     4. 重启Keepalived使得配置文件生效
     systemctl restart keepalived
-## keepalived 双机热备模式
+# keepalived 双机热备模式
     主节点配置文件(/etc/keepalived/keepalived.conf):
             global_defs {
                router_id keep_171
@@ -736,7 +735,7 @@
                          192.168.182.162
                      }
                  }
-  ## LVS-DR模式 配置LVS节点与ipvsadm
+  # LVS-DR模式 配置LVS节点与ipvsadm
                 前期准备
                 服务器与ip规划
                     LVS - 1台
@@ -838,7 +837,7 @@
                            -w --weight weight 真实服务器的权值
                            
                            --mcast-interface interface 指定组%B
-   ## 搭建LVS-DR模式 为两台RS配置虚拟IP
+   # 搭建LVS-DR模式 为两台RS配置虚拟IP
             配置虚拟网络子接口(回环接口)
                      cd /etc/sysconfig/network-scripts
                      cp ifcfg-lo ifcfg-lo:1
@@ -849,32 +848,97 @@
                             NEWMASK=255.255.255.255(倒数第二个)
                             (文件中其他内容不要修改)
     
-   ## 搭建LVS-DR模式 为两台RS配置arp
+   # 搭建LVS-DR模式 为两台RS配置arp
             ARP响应级别与通告行为 的概念
                 arp-ignore：ARP响应级别（处理请求）
-                
                 0：只要本机配置了ip，就能响应请求
                 1：请求的目标地址到达对应的网络接口，才会响应请求
                 arp-announce：ARP通告行为（返回响应）
-                
                 0：本机上任何网络接口都向外通告，所有的网卡都能接受到通告
                 1：尽可能避免本网卡与不匹配的目标进行通告
                 2：只在本网卡通告
             配置ARP
                 打开sysctl.conf
-                vim /etc/sysctl.conf
+                    vim /etc/sysctl.conf
                 配置所有网卡、默认网卡以及虚拟网卡的arp响应级别和通告行为，分别对应：all，default，lo:
-                # configration for lvs
-                net.ipv4.conf.all.arp_ignore = 1
-                net.ipv4.conf.default.arp_ignore = 1
-                net.ipv4.conf.lo.arp_ignore = 1
-                net.ipv4.conf.all.arp_announce = 2
-                net.ipv4.conf.default.arp_announce = 2
-                net.ipv4.conf.lo.arp_announce = 2
-            刷新配置文件：
-                sysctl -p
-            增加一个网关，用于接收数据报文，当有请求到本机后，会交给lo去处理：
-                route add -host 192.168.182.140 dev lo:1
-            防止重启失效，做如下处理，用于开机自启动：
-                echo "route add -host 192.168.1.150 dev lo:1" >> /etc/rc.local                
-                            
+                    # configration for lvs
+                    net.ipv4.conf.all.arp_ignore = 1
+                    net.ipv4.conf.default.arp_ignore = 1
+                    net.ipv4.conf.lo.arp_ignore = 1
+                    net.ipv4.conf.all.arp_announce = 2
+                    net.ipv4.conf.default.arp_announce = 2
+                    net.ipv4.conf.lo.arp_announce = 2
+                刷新配置文件：
+                    sysctl -p
+                增加一个网关，用于接收数据报文，当有请求到本机后，会交给lo去处理：
+                    route add -host 192.168.182.140 dev lo:1
+                防止重启失效，做如下处理，用于开机自启动：
+                    echo "route add -host 192.168.1.150 dev lo:1" >> /etc/rc.local                
+ # 搭建LVS-DR模式 使用ipvsadm配置集群规则
+            创建LVS节点，用户访问的集群调度者
+                ipvsadm -A -t 192.168.182.140:80 -s rr -p 5
+                -A：添加集群
+                -t：tcp协议
+                ip地址：设定集群的访问ip，也就是LVS的虚拟ip
+                -s：设置负载均衡的算法，rr表示轮询
+                -p：设置连接持久化的时间
+            创建2台RS真实服务器
+            ipvsadm -a -t 192.168.182.140:80 -r 192.168.1.171:80 -g
+            ipvsadm -a -t 192.168.182.140:80 -r 192.168.1.172:80 -g
+                -a：添加真实服务器
+                -t：tcp协议
+                -r：真实服务器的ip地址
+                -g：设定DR模式
+            保存到规则库，否则重启失效
+                ipvsadm -S
+            检查集群
+                查看集群列表
+                    ipvsadm -Ln
+                查看集群状态
+                    ipvsadm -Ln --stats
+            其他命令
+                # 重启ipvsadm，重启后需要重新配置
+                service ipvsadm restart
+                # 查看持久化连接
+                ipvsadm -Ln --persistent-conn
+                # 查看连接请求过期时间以及请求源ip和目标ip
+                ipvsadm -Lnc
+                # 设置tcp tcpfin udp 的过期时间（一般保持默认）
+                ipvsadm --set 1 1 1
+                # 查看过期时间
+                ipvsadm -Ln --timeout
+            更详细的帮助文档：
+                ipvsadm -h
+                man ipvsadm
+ # Redis安装
+        解压: 
+            tar -zxvf redis-5.0.8.tar.gz
+        安装gcc-c++:
+            yum install -y gcc-c++
+        进入redis-5.0.8目录
+            make && make install
+        进入目录下utils下
+            复制 redis_init_script
+                cp redis_init_script /etc/init.d/
+        在/usr/local/下创建redis文件夹
+            拷贝目录下redis-5.0.8安装目录下的redis.conf 到 /usr/local/redis/文件下
+        修改redis.conf
+            daemonize yes
+            dir /usr/local/redis/working (记得在相应地址创建working)
+            bind 0.0.0.0 (让本机以外的计算机节点连接redis)
+            requirepass shushun (redis登录密码)
+        修改/etc/init.d/redis_init_script 文件
+            CONF="/usr/local/redis/redis.conf"
+        给文件赋予权限
+            chmod 777 redis_init_script
+        运行redis
+            ./redis_init_script start
+        设置redis开机自启动 修改redis_init_script
+            vim redis_init_script
+                在REDISPORT=6379上方空白处添加:
+                    #chkconfig: 22345 10 90
+                    #description: Start and Stop redis
+                    随后保存:wq退出
+            执行命令:
+                chkconfig redis_init_script on
+        
