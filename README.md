@@ -1066,3 +1066,24 @@
             zrangebyscore zset 分数1 分数2 limit start end：查询分数之间的member(包含分数1 分数2)，获得的结果集再次根据下标区间做查询
             
             zrem zset value：删除member
+# SpringBoot整合Redis
+        引入依赖
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-data-redis</artifactId>
+            </dependency>
+         配置yml or properties 文件关于redis的配置
+            spring:
+              redis:
+                host: 192.168.182.150
+                port: 6379
+                password: shushun
+         测试
+            @Autowired
+            private RedisTemplate redisTemplate;
+          
+            redisTemplate.opsForValue().set(key, value);
+            
+            (String)redisTemplate.opsForValue().get(key);
+            
+            redisTemplate.delete(key);
