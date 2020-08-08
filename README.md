@@ -1,5 +1,5 @@
 # sue-mall Release(部署版本)
-##### 其余分支(master sue-jpa sue-mybatis 都属于开发原型)
+## 其余分支(master sue-jpa sue-mybatis 都属于开发原型)
 测试环境-Linux(CentOS 7)
 
 ## 虚拟机固定IP设置
@@ -125,7 +125,7 @@
             如果在云服务器安装，需要开启默认的nginx端口：80
             如果在虚拟机安装，需要关闭防火墙
             本地win或mac需要关闭防火墙
- #####  nginx.conf核心配置:
+ ##  nginx.conf核心配置:
         设置worker进程的用户，指的linux中的用户，会涉及到nginx操作目录或文件的一些权限，默认为nobody
             user root
         worker进程工作数设置，一般来说CPU有几个，就设置几个，或者设置为N-1也行
@@ -183,12 +183,12 @@
         查看用户请求:
            cd /var/log/nginx
            vim access.log
-  #####  nginx的常见错误:
+  ##  nginx的常见错误:
            [error] open() "/var/run/nginx/nginx.pid" failed
            解决:mkdir /var/run/nginx
            [error] invalid PID number "" in "/var/run/nginx/nginx.pid"
            解决:./nginx -c /usr/local/nginx/conf/nginx.conf
-  #####  nginx手动日志切割:
+  ##  nginx手动日志切割:
           创建cut_my_log.sh
             #!/bin/bash
             LOG_PATH="/var/log/nginx/"
@@ -202,7 +202,7 @@
             chmod +x cut_my_log.sh
           测试效果
             ./cut_my_log.sh
-#####    nginx日志切割-定时:
+##    nginx日志切割-定时:
         安装定时任务:
             yum install crontabs
         crontab -e 编辑并且添加一行新的任务:
@@ -226,14 +226,14 @@
         59 23 * * *
         每日凌晨1点执行:
         0 1 * * *
- ##### nginx gzip
+ ## nginx gzip
             开启:gzip on;
             限制最小压缩:gzip_min_length 1;
             压缩级别:gzip_comp_level 3;
             压缩文件类型:
                 gzip_typs text/plain application/javascript application/x-javascript text/css
                 application/xml text/javascript application/x-httpd-php image/jpeg image/git image/png application/json
- ##### nginx root 和 alias
+ ## nginx root 和 alias
         假如服务器路径为：/home/imooc/files/img/face.png
         root 路径完全匹配访问
         配置的时候为:
@@ -247,7 +247,7 @@
             alias /home/imooc
         }
         用户访问的时候请求为：url:port/hello/files/img/face.png，如此相当于为目录imooc做一个自定义的别名。
-##### nginx location匹配规则
+## nginx location匹配规则
        location 的匹配规则
        空格：默认匹配，普通匹配
        location / {
@@ -275,7 +275,7 @@
        location ^~ /imooc/img {
            root /home;
        }
- ##### nginx跨域配置
+ ## nginx跨域配置
         #允许跨域请求的域，*代表所有
         add_header 'Access-Control-Allow-Origin' *;
         #允许带上cookie请求
@@ -284,14 +284,14 @@
         add_header 'Access-Control-Allow-Methods' *;
         #允许请求的header
         add_header 'Access-Control-Allow-Headers' *;
- ##### nginx防盗链
+ ## nginx防盗链
         #对源站点验证
         valid_referers *.imooc.com; 
         #非法引入会进入下方判断
         if ($invalid_referer) {
             return 404;
         }
-  ##### nginx负载均衡
+  ## nginx负载均衡
            配置上有服务器
             upstream tomcats{
                  server 192.168.182.151:8080;
@@ -307,7 +307,7 @@
                         proxy_pass http://tomcats;
                     }
             }
- ##### nginx指令参数max_conns
+ ## nginx指令参数max_conns
        max_conns:限制每台最大连接数
        worker进程设置1个，便于测试观察成功的连接数
        worker_processes  1;
@@ -317,7 +317,7 @@
                server 192.168.1.174:8080 max_conns=2;
                server 192.168.1.175:8080 max_conns=2；
        }
-  ##### nginx指令参数weight=1
+  ## nginx指令参数weight=1
         weight:每台服务器分配到的权重
       
         upstream tomcats {
@@ -325,7 +325,7 @@
                 server 192.168.1.174:8080 weight=2;
                 server 192.168.1.175:8080 weight=3；
         }
-  ##### nginx指令参数slow_start
+  ## nginx指令参数slow_start
         商业版
             upstream tomcats {
                     server 192.168.1.173:8080 weight=6 slow_start=60s;
@@ -336,7 +336,7 @@
         注意:
             该参数不能使用在hash和random load balancing中
             如果在upstream中只有一台server，则该参数失败
-   ##### nginx指令参数down
+   ## nginx指令参数down
          指定某台服务器节点不可用
             upstream tomcats {
                     server 192.168.1.173:8080 down;
@@ -344,7 +344,7 @@
                     server 192.168.1.174:8080 weight=1;
                     server 192.168.1.175:8080 weight=1;
             }
-   ##### nginx指令参数backup
+   ## nginx指令参数backup
          当服务器节点中的所有机器宕机，启动被backup标记的备用机
                upstream tomcats {
                        server 192.168.1.173:8080 backup;
@@ -354,7 +354,7 @@
                }
          注意:
              该参数不能使用在hash和random load balancing中
-   ##### upstream 指令参数 max_fails、fail_timeout
+   ## upstream 指令参数 max_fails、fail_timeout
          max_fails：表示失败几次，则标记server已宕机，剔出上游服务。
          fail_timeout：表示失败的重试时间。
          假设目前设置如下:
@@ -364,11 +364,11 @@
            这15秒内不会有新的请求到达刚刚挂掉的节点上，
            而是会请求到正常运作的server，
            15秒后会再有新请求尝试连接挂掉的server，如果还是失败，重复上一过程，直到恢复。
-   ##### nginx keepalive
+   ## nginx keepalive
          keepalive:设置长连接处理数量(提供吞吐量)
          proxy_http_version 1.1; 设置长连接版本为1.1
          proxy_set_header Connection ""; 清除connction header信息
-   ##### nginx ip_hash
+   ## nginx ip_hash
          ip_hash 通过用户访问的本地ip来做负载均衡
          upstream tomcats {
                  ip_hash;
@@ -377,7 +377,7 @@
                  server 192.168.1.174:8080 down;
                  server 192.168.1.175:8080;
          }
-   ##### nginx url_hash 与 least_conn
+   ## nginx url_hash 与 least_conn
          url_hash 根据每次请求url地址，hash后访问到固定的服务器节点
          least_conn 最少连接数
          upstream tomcats {
@@ -399,7 +399,7 @@
                  proxy_pass  http://tomcats;
              }
          }  
-   ##### nginx缓存
+   ## nginx缓存
             浏览器缓存：            
             加速用户访问，提升单个用户（浏览器访问者）体验，缓存在本地
             Nginx缓存
@@ -416,7 +416,7 @@
                 # expires off;
                 expires max;
             }
-   ##### nginx反向代理缓存
+   ## nginx反向代理缓存
             # proxy_cache_path 设置缓存目录
             #       keys_zone 设置共享内存以及占用空间大小
             #       max_size 设置缓存大小
@@ -432,7 +432,7 @@
                 # 针对200和304状态码缓存时间为8小时
                 proxy_cache_valid   200 304 8h;
             }
-   ##### nginx配置安全域名连接
+   ## nginx配置安全域名连接
            1. 安装SSL模块
            要在nginx中配置https，就必须安装ssl模块，也就是: http_ssl_module。
            
@@ -491,7 +491,7 @@
             }
            3. reload nginx
            ./nginx -s reload   
-   # nginx最终部署配置(nginx.conf)
+   ## nginx最终部署配置(nginx.conf)
          
             user root;
             worker_processes 2;
