@@ -21,7 +21,10 @@ E:\SbootProject\sue-mall\sue-api\src\main\java\com\sue\controller\mallcontroller
 E:\SbootProject\sue-mall\sue-api\src\main\java\com\sue\exception\mallexception\AddressException.java
 E:\SbootProject\sue-mall\sue-api\src\main\java\com\sue\exception\commonException\DataNullException.java
 E:\SbootProject\sue-mall\sue-api\src\main\java\com\sue\controller\usercentercontroller\MyCommentController.java
+<<<<<<< HEAD
 E:\SbootProject\sue-mall\sue-api\src\main\java\com\sue\WarStarterApplication.java
+=======
+>>>>>>> master
 E:\SbootProject\sue-mall\sue-api\src\main\java\com\sue\exception\usercenterexception\UserCenterException.java
 E:\SbootProject\sue-mall\sue-api\src\main\java\com\sue\core\ExceptionCatcher.java
 E:\SbootProject\sue-mall\sue-api\src\main\java\com\sue\exception\AbstractException.java

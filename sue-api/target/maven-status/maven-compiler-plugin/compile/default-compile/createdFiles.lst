@@ -27,7 +27,10 @@ com\sue\core\util\ClearDataUtils.class
 com\sue\controller\mallcontroller\ItemsController.class
 com\sue\exception\usercenterexception\UserCenterException.class
 com\sue\exception\AbstractException.class
+<<<<<<< HEAD
 com\sue\core\util\FileUtils.class
 com\sue\exception\mallexception\PassportException.class
 com\sue\WarStarterApplication.class
 com\sue\controller\mallcontroller\AddressController.class
+=======
+>>>>>>> master
