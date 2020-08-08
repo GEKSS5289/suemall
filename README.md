@@ -941,4 +941,15 @@
                     随后保存:wq退出
             执行命令:
                 chkconfig redis_init_script on
+# Redis命令行客户端
+        redis-cli -a password shutdown：关闭redis
+        ./redis_init_script stop：关闭redis
+ 
+        redis-cli：进入到redis客户端
+        auth pwd：输入密码
         
+        set key value：设置缓存
+        get key：获得缓存
+        del key：删除缓存
+        
+        redis-cli -a password ping：查看是否存活
