@@ -9,4 +9,3 @@ com\sue\config\WebMvcConfig.class
 com\sue\config\CorsConfig.class
 com\sue\controller\usercentercontroller\MyCommentController.class
 com\sue\exception\AbstractException.class
-com\sue\exception\passportexception\PassportException.class
