@@ -1218,6 +1218,10 @@
                 :wq
         启动哨兵sentinel
             redis-sentinel sentinel.conf(哨兵配置文件)
+        sentinel集群选举leader规则 (%取余  /取商)
+            Sentinel节点数/2 + 1
+            = 2/2 + 1
+            = 2
 # Redis解决哨兵不同步问题
         
         一般master数据无法同步给slave的方案检查为如下：
