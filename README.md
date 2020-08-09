@@ -938,6 +938,7 @@
                 在REDISPORT=6379上方空白处添加:
                     #chkconfig: 22345 10 90
                     #description: Start and Stop redis
+                    添加CLIEXEC -a "shushun" (redis才可以执行脚本)
                     随后保存:wq退出
             执行命令:
                 chkconfig redis_init_script on
@@ -1172,3 +1173,32 @@
             如果你能接受一段时间的缓存丢失，那么可以使用RDB
             如果你对实时性的数据比较care，那么就用AOF
             使用RDB和AOF结合一起做持久化，RDB做冷备，可以在不同时期对不同版本做恢复，AOF做热备，保证数据仅仅只有1秒的损失。当AOF破损不可用了，那么再用RDB恢复，这样就做到了两者的相互结合，也就是说Redis恢复会先加载AOF，如果AOF有问题会再加载RDB，这样就达到冷热备份的目的了。
+# Redis 主从模式
+        配置文件 redis.conf (master) 无需配置
+        配置文件 redis.conf (slave)
+                relicaof 填写master节点ip 6379
+                masterauth 填写master节点redis-cli密码
+# Redis 缓存过期处理与内存淘汰机制
+        引子
+            计算机内存有限，越大越贵，Redis的高并发高性能都是基于内存的，用硬盘的话GG。
+        已过期的key如何处理？
+        设置了expire的key缓存过期了，但是服务器的内存还是会被占用，这是因为redis所基于的两种删除策略
+        redis有两种策略：
+            （主动）定时删除
+            定时随机的检查过期的key，如果过期则清理删除。（每秒检查次数在redis.conf中的hz配置）
+            （被动）惰性删除
+            当客户端请求一个已经过期的key的时候，那么redis会检查这个key是否过期，如果过期了，则删除，然后返回一个nil。这种策略对cpu比较友好，不会有太多的损耗，但是内存占用会比较高。
+            所以，虽然key过期了，但是只要没有被redis清理，那么其实内存还是会被占用着的。
+            
+            那么如果内存被Redis缓存占用慢了咋办？
+            内存占满了，可以使用硬盘，来保存，但是没意义，因为硬盘没有内存快，会影响redis性能。
+            所以，当内存占用满了以后，redis提供了一套缓存淘汰机制：MEMORY MANAGEMENT
+            
+            maxmemory：当内存已使用率到达，则开始清理缓存
+            
+            * noeviction：旧缓存永不过期，新缓存设置不了，返回错误
+            * allkeys-lru：清除最少用的旧缓存，然后保存新的缓存（推荐使用）
+            * allkeys-random：在所有的缓存中随机删除（不推荐）
+            * volatile-lru：在那些设置了expire过期时间的缓存中，清除最少用的旧缓存，然后保存新的缓存
+            * volatile-random：在那些设置了expire过期时间的缓存中，随机删除缓存
+            * volatile-ttl：在那些设置了expire过期时间的缓存中，删除即将过期的
