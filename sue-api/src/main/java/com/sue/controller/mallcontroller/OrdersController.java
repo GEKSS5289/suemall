@@ -10,6 +10,7 @@ import com.sue.pojo.dto.malldto.SubmitOrderDTO;
 import com.sue.pojo.vo.MerchantOrdersVO;
 import com.sue.pojo.vo.OrderVO;
 import com.sue.service.mallservice.OrderService;
+import com.sue.utils.CookieUtils;
 import com.sue.utils.IMOOCJSONResult;
 import com.sue.utils.JsonUtils;
 import com.sue.utils.RedisOperator;
@@ -70,7 +71,11 @@ public class OrdersController extends BaseController {
         String orderId = order.getOrderId();
 
 
-//        CookieUtils.setCookie(request,response,FOODIE_SHOPCART,"",true);
+        //清理覆盖现有的redis中的购物车数据
+        shopcartDTOS.removeAll(order.getToBeRemovedShopcatdList());
+        redisOperator.set(FOODIE_SHOPCART+":"+submitOrderDTO.getUserId(),JsonUtils.objectToJson(shopcartDTOS));
+
+        CookieUtils.setCookie(request,response,FOODIE_SHOPCART,JsonUtils.objectToJson(shopcartDTOS),true);
 
         if(!PayCenterDataUtils.sendPayCenter(order,restTemplate)){
             throw new OrdersException(20001);
