@@ -1203,3 +1203,40 @@
             * volatile-lru：在那些设置了expire过期时间的缓存中，清除最少用的旧缓存，然后保存新的缓存
             * volatile-random：在那些设置了expire过期时间的缓存中，随机删除缓存
             * volatile-ttl：在那些设置了expire过期时间的缓存中，删除即将过期的
+ # Redis配置哨兵
+        复制sentinel.conf 到 /usr/local/redis/ 
+        修改sentinel.conf 中的配置
+            vim sentinel.conf
+                daemonize yes 允许哨兵模式后台运行
+                logfile "/usr/local/redis/sentinel/redis-sentinel.log" 设置哨兵日志文件目录
+                dir "/usr/local/redis/sentinel" 设置哨兵工作目录
+                sentinel monitor sue-master 192.168.182.150 6379 2
+                sentinel auth-pass sue-master shushun
+                sentinel config-epoch sue-master 0
+                sentinel leader-epoch sue-master 0
+                :wq
+        启动哨兵sentinel
+            redis-sentinel sentinel.conf(哨兵配置文件)
+# Redis解决哨兵不同步问题
+        
+        一般master数据无法同步给slave的方案检查为如下：
+            网络通信问题，要保证互相ping通，内网互通。
+            关闭防火墙，对应的端口开放（虚拟机中建议永久关闭防火墙，云服务器的话需要保证内网互通）。
+            统一所有的密码，通过逐台检查机器以防某个节点被遗漏。 
+# Redis哨兵信息检查 
+        # 查看imooc-master下的master节点信息
+            sentinel master imooc-master
+        
+        # 查看imooc-master下的slaves节点信息
+            sentinel slaves imooc-master
+        
+        # 查看imooc-master下的哨兵节点信息
+            sentinel sentinels imooc-master
+# SpringBoot集成Redis哨兵
+        spring:
+          redis:
+            #database: 1
+            password: shushun
+            sentinel:
+              master: imooc-master
+              nodes: 192.168.1.191:26379,192.168.1.192:26379,192.168.1.193:26379   
