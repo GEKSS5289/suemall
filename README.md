@@ -1178,6 +1178,7 @@
         配置文件 redis.conf (slave)
                 relicaof 填写master节点ip 6379
                 masterauth 填写master节点redis-cli密码
+                replica-read-only yes 从节点只读
 # Redis 缓存过期处理与内存淘汰机制
         引子
             计算机内存有限，越大越贵，Redis的高并发高性能都是基于内存的，用硬盘的话GG。
