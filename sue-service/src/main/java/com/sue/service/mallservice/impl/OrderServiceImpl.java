@@ -5,6 +5,7 @@ import com.sue.mapper.OrderItemsMapper;
 import com.sue.mapper.OrderStatusMapper;
 import com.sue.mapper.OrdersMapper;
 import com.sue.pojo.*;
+import com.sue.pojo.dto.malldto.ShopcartDTO;
 import com.sue.pojo.dto.malldto.SubmitOrderDTO;
 import com.sue.pojo.vo.MerchantOrdersVO;
 import com.sue.pojo.vo.OrderVO;
@@ -19,6 +20,7 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -57,7 +59,7 @@ public class OrderServiceImpl implements OrderService {
      */
     @Transactional(propagation = Propagation.REQUIRED)
     @Override
-    public OrderVO createOrder(SubmitOrderDTO submitOrderDTO) {
+    public OrderVO createOrder(List<ShopcartDTO> list,SubmitOrderDTO submitOrderDTO) {
 
 
         String userId = submitOrderDTO.getUserId();
@@ -79,12 +81,15 @@ public class OrderServiceImpl implements OrderService {
         String itemSpecIdArr[] = itemSpecIds.split(",");
         Integer totalAmount = 0;
         Integer realPayAmount = 0; //优惠后的价格累计
+        List<ShopcartDTO> toBeRemoveShopCartList = new ArrayList<>();
+
 
         for (String itemSpecId : itemSpecIdArr) {
 
+            ShopcartDTO buyCountsFromShopCart = getBuyCountsFromShopCart(list, itemSpecId);
             //TODO 整合redis之后，商品购买的数量重新从redis的购物车中获取
-            int buyCounts = 1;
-
+            int buyCounts = buyCountsFromShopCart.getBuyCounts();
+            toBeRemoveShopCartList.add(buyCountsFromShopCart);
 
             //2.1 根据规格Id，查询规格的具体信息，主要获取价格
             ItemsSpec itemsSpec = itemService.queryItemSpecById(itemSpecId);
@@ -145,9 +150,24 @@ public class OrderServiceImpl implements OrderService {
         OrderVO orderVO = new OrderVO();
         orderVO.setOrderId(orderId);
         orderVO.setMerchantOrdersVO(merchantOrdersVO);
+        orderVO.setToBeRemovedShopcatdList(toBeRemoveShopCartList);
         return orderVO;
     }
 
+    /**
+     * 从redis中的购物车获取商品目的:counts
+     * @param shopcartDTOS
+     * @param specId
+     * @return
+     */
+    private ShopcartDTO getBuyCountsFromShopCart(List<ShopcartDTO> shopcartDTOS,String specId){
+        for(ShopcartDTO cart:shopcartDTOS){
+            if(cart.getSpecId().equals(specId)){
+                return cart;
+            }
+        }
+        return null;
+    }
 
     /**
      * 修改订单状态

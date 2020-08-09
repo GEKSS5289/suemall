@@ -14,6 +14,7 @@ com\sue\enums\OrderStatusEnum.class
 org\n3r\idworker\Sid.class
 org\n3r\idworker\RandomCodeStrategy.class
 org\n3r\idworker\utils\IPv4Utils.class
+com\sue\utils\RedisOperator$1.class
 org\n3r\idworker\utils\Props$Silent.class
 com\sue\utils\PagedGridResult.class
 com\sue\enums\CommentLevel.class
@@ -25,6 +26,7 @@ org\n3r\idworker\strategy\DayPrefixRandomCodeStrategy.class
 org\n3r\idworker\IdWorker.class
 com\sue\utils\DateUtil.class
 com\sue\utils\JsonUtils.class
+com\sue\utils\RedisOperator.class
 org\n3r\idworker\strategy\DefaultWorkerIdStrategy$1.class
 com\sue\utils\CookieUtils.class
 com\sue\utils\IMOOCJSONResult.class
