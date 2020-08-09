@@ -1225,6 +1225,7 @@
             关闭防火墙，对应的端口开放（虚拟机中建议永久关闭防火墙，云服务器的话需要保证内网互通）。
             统一所有的密码，通过逐台检查机器以防某个节点被遗漏。 
 # Redis哨兵信息检查 
+        redis-cli -p 26379(redis哨兵端口号)
         # 查看imooc-master下的master节点信息
             sentinel master imooc-master
         
