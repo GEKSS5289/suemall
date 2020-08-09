@@ -1240,3 +1240,17 @@
             sentinel:
               master: imooc-master
               nodes: 192.168.1.191:26379,192.168.1.192:26379,192.168.1.193:26379   
+# Redis构建集群
+    redis.conf (每一台节点都需要配置)
+        # 开启集群模式
+        cluster-enabled yes
+        # 每一个节点需要有一个配置文件，需要6份。每个节点处于集群的角色都需要告知其他所有节点，彼此知道，这个文件用于存储集群模式下的集群状态等信息，这个文件是由redis自己维护，我们不用管。如果你要重新创建集群，那么把这个文件删了就行
+        cluster-config-file nodes-201.conf
+        # 超时时间，超时则认为master宕机，随后主备切换
+        cluster-node-timeout 5000
+        # 开启AOF
+        appendonly yes
+    创建集群
+        redis-cli -a shushun --cluster create ip1:port1 ip2:port2 ip3:port3 ip4:port4 ip5:port5 ip6:port6 --cluster-replicas 1
+    检查集群信息
+        redis-cli --cluster check ip:port
