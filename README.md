@@ -1211,7 +1211,7 @@
                 daemonize yes 允许哨兵模式后台运行
                 logfile "/usr/local/redis/sentinel/redis-sentinel.log" 设置哨兵日志文件目录
                 dir "/usr/local/redis/sentinel" 设置哨兵工作目录
-                sentinel monitor sue-master 192.168.182.150 6379 2
+                sentinel monitor sue-master 192.168.182.150 6379 2   关于2的意思 有两个哨兵发现master无法ping通则标记master为down机节点 开始执行故障转移由竞选成功的从节点变成争当master
                 sentinel auth-pass sue-master shushun
                 sentinel config-epoch sue-master 0
                 sentinel leader-epoch sue-master 0
