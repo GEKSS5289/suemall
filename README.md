@@ -51,7 +51,7 @@
         foodie-dev-api 给前端两个项目提供服务
     cookie问题:部署后发现无法保存cookie 问题是由tomcat-api下的 webapps下的foodie-dev-api服务造成的
         原因:采用了tomcat9.0.33默认的cookie处理器所以会造成此类问题
-        解决办法: cd /conf/context.xml 添加    <CookieProcessor classNam="org.apache.tomcat.util.http.LegacyCookieProcessor"/>将cookie处理器替换为曾经老版本的
+        解决办法: cd /conf/context.xml 添加    <CookieProcessor className="org.apache.tomcat.util.http.LegacyCookieProcessor"/>将cookie处理器替换为曾经老版本的
 
 # 安装jdk1.8
     去甲骨文官网寻找jdk1.8
