@@ -1254,6 +1254,8 @@
         redis-cli -a shushun --cluster create ip1:port1 ip2:port2 ip3:port3 ip4:port4 ip5:port5 ip6:port6 --cluster-replicas 1
     检查集群信息
         redis-cli --cluster check ip:port
+    查看集群数据
+        redis-cli -c -a shushun -h 192.168.182.157 -p 6379
 # SpringBoot整合Redis集群
     redis:
         password: shushun
