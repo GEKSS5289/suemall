@@ -1207,6 +1207,7 @@
         复制sentinel.conf 到 /usr/local/redis/ 
         修改sentinel.conf 中的配置
             vim sentinel.conf
+                protected-mode no
                 daemonize yes 允许哨兵模式后台运行
                 logfile "/usr/local/redis/sentinel/redis-sentinel.log" 设置哨兵日志文件目录
                 dir "/usr/local/redis/sentinel" 设置哨兵工作目录
