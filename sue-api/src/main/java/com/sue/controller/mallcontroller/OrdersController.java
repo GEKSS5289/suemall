@@ -5,13 +5,17 @@ import com.sue.enums.OrderStatusEnum;
 import com.sue.enums.PayMethod;
 import com.sue.exception.mallexception.OrdersException;
 import com.sue.pojo.OrderStatus;
+import com.sue.pojo.dto.malldto.ShopcartDTO;
 import com.sue.pojo.dto.malldto.SubmitOrderDTO;
 import com.sue.pojo.vo.MerchantOrdersVO;
 import com.sue.pojo.vo.OrderVO;
 import com.sue.service.mallservice.OrderService;
 import com.sue.utils.IMOOCJSONResult;
+import com.sue.utils.JsonUtils;
+import com.sue.utils.RedisOperator;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import org.apache.commons.lang3.StringUtils;
 import org.aspectj.weaver.ast.Or;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.*;
@@ -23,6 +27,8 @@ import org.springframework.web.client.RestTemplate;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author sue
@@ -40,7 +46,8 @@ public class OrdersController extends BaseController {
     @Autowired
     private RestTemplate restTemplate;
 
-
+    @Autowired
+    private RedisOperator redisOperator;
 
     @ApiOperation(value = "用户下单", notes = "用户下单", httpMethod = "POST")
     @PostMapping("/create")
@@ -51,8 +58,15 @@ public class OrdersController extends BaseController {
             throw new OrdersException(20000);
         }
 
+
+        String shopcartJson = redisOperator.get(FOODIE_SHOPCART+":"+submitOrderDTO.getUserId());
+        List<ShopcartDTO> shopcartDTOS = new ArrayList<>();
+        if(StringUtils.isBlank(shopcartJson)){
+            throw new  OrdersException(20002);
+        }
+        shopcartDTOS = JsonUtils.jsonToList(shopcartJson,ShopcartDTO.class);
         //创建订单
-        OrderVO order = orderService.createOrder(submitOrderDTO);
+        OrderVO order = orderService.createOrder(shopcartDTOS,submitOrderDTO);
         String orderId = order.getOrderId();
 
 

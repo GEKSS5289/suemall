@@ -1,8 +1,11 @@
 package com.sue.service.mallservice;
 
 import com.sue.pojo.OrderStatus;
+import com.sue.pojo.dto.malldto.ShopcartDTO;
 import com.sue.pojo.dto.malldto.SubmitOrderDTO;
 import com.sue.pojo.vo.OrderVO;
+
+import java.util.List;
 
 /**
  * @author sue
@@ -15,7 +18,7 @@ public interface OrderService {
      *
      * @param submitOrderDTO
      */
-    public OrderVO createOrder(SubmitOrderDTO submitOrderDTO);
+    public OrderVO createOrder(List<ShopcartDTO> list, SubmitOrderDTO submitOrderDTO);
 
 
     /**
