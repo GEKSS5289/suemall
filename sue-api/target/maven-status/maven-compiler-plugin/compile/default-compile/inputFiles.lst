@@ -8,9 +8,11 @@ E:\SbootProject\sue-mall\sue-api\src\main\java\com\sue\exception\usercenterexcep
 E:\SbootProject\sue-mall\sue-api\src\main\java\com\sue\controller\usercentercontroller\CenterController.java
 E:\SbootProject\sue-mall\sue-api\src\main\java\com\sue\exception\mallexception\OrdersException.java
 E:\SbootProject\sue-mall\sue-api\src\main\java\com\sue\exception\usercenterexception\CenterException.java
+E:\SbootProject\sue-mall\sue-api\src\main\java\com\sue\controller\RedisController.java
 E:\SbootProject\sue-mall\sue-api\src\main\java\com\sue\controller\usercentercontroller\MyOrdersController.java
 E:\SbootProject\sue-mall\sue-api\src\main\java\com\sue\exception\usercenterexception\MyOrderException.java
 E:\SbootProject\sue-mall\sue-api\src\main\java\com\sue\controller\mallcontroller\IndexController.java
+E:\SbootProject\sue-mall\sue-api\src\main\java\com\sue\interceptor\UserTokenInterceptor.java
 E:\SbootProject\sue-mall\sue-api\src\main\java\com\sue\controller\mallcontroller\BaseController.java
 E:\SbootProject\sue-mall\sue-api\src\main\java\com\sue\controller\usercentercontroller\UserCenterController.java
 E:\SbootProject\sue-mall\sue-api\src\main\java\com\sue\core\util\ClearDataUtils.java

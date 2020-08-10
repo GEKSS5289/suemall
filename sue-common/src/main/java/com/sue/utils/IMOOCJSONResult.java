@@ -74,7 +74,9 @@ public class IMOOCJSONResult {
     public static  IMOOCJSONResult errorUserQQ(String msg) {
         return new  IMOOCJSONResult(556, msg, null);
     }
-
+    public static  IMOOCJSONResult errorUserTicket(String msg) {
+        return new  IMOOCJSONResult(557, msg, null);
+    }
     public IMOOCJSONResult() {
 
     }
