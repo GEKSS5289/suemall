@@ -35,8 +35,8 @@ spring:
       max-request-size: 512000
   profiles:
     active: dev
-  session:
-    store-type: redis
+#  session:
+#    store-type: redis
 ############################################################
 #
 # mybatis 配置
