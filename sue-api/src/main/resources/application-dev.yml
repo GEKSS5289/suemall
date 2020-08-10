@@ -7,9 +7,9 @@ spring:
     password: 123456
     username: root
   redis:
-    password: shushun
-    cluster:
-      nodes: 192.168.182.154:6379,192.168.182.155:6379,192.168.182.156:6379,192.168.182.157:6379,192.168.182.158:6379,192.168.182.159:6379
+#    password: shushun
+#    cluster:
+#      nodes: 192.168.182.154:6379,192.168.182.155:6379,192.168.182.156:6379,192.168.182.157:6379,192.168.182.158:6379,192.168.182.159:6379
     #哨兵模式
 #    password: shushun
 #    sentinel:
@@ -19,6 +19,11 @@ spring:
 #    host: 192.168.182.150
 #    port: 6379
 #    password: shushun
+    host: 192.168.182.151
+    port: 6379
+    password: shushun
+
+
 mybatis:
   configuration:
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl

@@ -5,21 +5,27 @@ import com.sue.core.util.ClearDataUtils;
 import com.sue.core.util.FileUtils;
 import com.sue.pojo.Users;
 import com.sue.pojo.dto.usercenterdto.CenterUserDTO;
+import com.sue.pojo.vo.UsersVO;
 import com.sue.service.usercenterservice.UserCenterService;
 import com.sue.utils.CookieUtils;
 import com.sue.utils.IMOOCJSONResult;
 import com.sue.utils.JsonUtils;
+import com.sue.utils.RedisOperator;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
+import java.io.IOException;
+import java.util.UUID;
 
 /**
  * @author sue
@@ -36,6 +42,9 @@ public class UserCenterController extends BaseController {
     @Autowired
     private UserCenterService userCenterService;
 
+    @Autowired
+    private RedisOperator redisOperator;
+
 
     @ApiOperation(value = "更新用户信息", notes = "更新用户信息", httpMethod = "POST")
     @PostMapping("/update")
@@ -47,14 +56,19 @@ public class UserCenterController extends BaseController {
             HttpServletResponse response
     ) {
         Users users = userCenterService.updateUserInfo(userId, centerUserDTO);
-        ClearDataUtils.setNullProperties(users);
+//        ClearDataUtils.setNullProperties(users);
+        UsersVO usersVO = conventUsersVO(users);
+
         CookieUtils.setCookie(
                 request,
                 response,
                 "user",
-                JsonUtils.objectToJson(users),
+                JsonUtils.objectToJson(usersVO),
                 true
         );
+
+
+
         return IMOOCJSONResult.ok(users);
     }
 
@@ -75,18 +89,35 @@ public class UserCenterController extends BaseController {
 
         Users users = userCenterService.updateUserFace(userId, finalUserFaceUrl);
 
-        ClearDataUtils.setNullProperties(users);
+//        ClearDataUtils.setNullProperties(users);
+
+        UsersVO usersVO = conventUsersVO(users);
+
 
         CookieUtils.setCookie(
                 request,
                 response,
                 "user",
-                JsonUtils.objectToJson(users),
+                JsonUtils.objectToJson(usersVO),
                 true
         );
 
         return IMOOCJSONResult.ok();
     }
+
+
+    private UsersVO conventUsersVO(Users user){
+        //实现用户的redis会话
+        String uniqueToken = UUID.randomUUID().toString().trim();
+
+        redisOperator.set(REDIS_USER_TOKEN+":"+user.getId(),uniqueToken);
+
+        UsersVO usersVO = new UsersVO();
+        BeanUtils.copyProperties(user,usersVO);
+        usersVO.setUserUniqueToken(uniqueToken);
+        return usersVO;
+    }
+
 
 
 }
