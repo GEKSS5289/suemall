@@ -13,6 +13,7 @@ import java.io.File;
 public class BaseController {
     public static final String FOODIE_SHOPCART = "shopcart";
     public static final String IMAGES_ERVER_URL = "http://localhost:8088/foodie/faces";
+    public static final String REDIS_USER_TOKEN = "redis_user_token";
     //微信支付成功 -> 支付中心 -> 天天吃货平台 （会调通知的Url）
     public static final String payReturnUrl = "http://localhost:8088/orders/notifyMerchantOrderPaid";
     String paymentUrl = "http://payment.t.mukewang.com/foodie-payment/payment/createMerchantOrder";
