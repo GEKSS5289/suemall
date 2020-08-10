@@ -111,7 +111,6 @@ public class UserTokenInterceptor implements HandlerInterceptor {
             } catch (IOException var12) {
                 var12.printStackTrace();
             }
-
         }
 
     }

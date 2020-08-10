@@ -74,6 +74,10 @@ public class PassportController extends BaseController {
 
         BeanUtils.copyProperties(userRegisterDTO, userDTO);
 
+        if (userService.queryUsernameIsExist(userDTO.getUsername())) {
+            throw new PassportException(10002);
+        }
+
         Users user = userService.createUser(userDTO);
 
 //        ClearDataUtils.setNullProperties(user);

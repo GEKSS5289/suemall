@@ -50,8 +50,9 @@ public class ExceptionCatcher {
     @ExceptionHandler(value = AbstractException.class)
     @ResponseStatus(code = HttpStatus.OK)
     public IMOOCJSONResult handleExceptions(
-            AbstractException e
+            AbstractException e,HttpServletResponse response
     ){
+        response.setCharacterEncoding("UTF-8");
         return IMOOCJSONResult.errorMsg(exceptionCodeConfiguration.getMessage(e.getCode()));
     }
 
@@ -60,9 +61,10 @@ public class ExceptionCatcher {
     @ResponseStatus(code = HttpStatus.BAD_REQUEST)
     public IMOOCJSONResult handleBeanValidation(
             HttpServletRequest request,
-            MethodArgumentNotValidException e
+            MethodArgumentNotValidException e,
+            HttpServletResponse response
     ){
-
+        response.setCharacterEncoding("UTF-8");
         String requestUrl = request.getRequestURL().toString();
         String method = request.getMethod();
 
