@@ -1274,3 +1274,22 @@
 # 预防缓存穿透
     设置空值并设置过期时间
     布隆过滤器
+# SpringSession整合
+    引入 Spring Session 依赖
+        <dependency>
+            <groupId>org.springframework.session</groupId>
+            <artifactId>spring-session-data-redis</artifactId>
+        </dependency>
+        
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-security</artifactId>
+        </dependency>
+    配置存储类型
+        spring:
+          session:
+            store-type: redis
+    开启redis作为spring session
+        @EnableRedisHttpSession  // 开启使用redis作为spring session
+    去除安全自动装配
+        @SpringBootApplication(exclude = {SecurityAutoConfiguration.class})
