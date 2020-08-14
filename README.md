@@ -1238,12 +1238,18 @@
         
         # 查看imooc-master下的哨兵节点信息
             sentinel sentinels imooc-master
+# SpringBoot集成Redis
+     添加依赖:
+            <dependency>
+                        <groupId>org.springframework.boot</groupId>
+                        <artifactId>spring-boot-starter-data-redis</artifactId>
+            </dependency>
+      配置application.yml
+            redis:
+                host: 192.168.182.150
+                port: 6379
+                password: shushun              
 # SpringBoot集成Redis哨兵
-    添加依赖:
-        <dependency>
-                    <groupId>org.springframework.boot</groupId>
-                    <artifactId>spring-boot-starter-data-redis</artifactId>
-        </dependency>
     配置application.yml
         spring:
           redis:
