@@ -1239,6 +1239,12 @@
         # 查看imooc-master下的哨兵节点信息
             sentinel sentinels imooc-master
 # SpringBoot集成Redis哨兵
+    添加依赖:
+        <dependency>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-starter-data-redis</artifactId>
+        </dependency>
+    配置application.yml
         spring:
           redis:
             #database: 1
