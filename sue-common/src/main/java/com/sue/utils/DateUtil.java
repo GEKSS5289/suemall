@@ -11,7 +11,7 @@ import java.util.*;
 public class DateUtil {
 
     /**
-     * Base ISO 8601 Date format yyyyMMdd i.e., 20021225 for the 25th day of December in the year 2002
+     Base ISO 8601 Date format yyyyMMdd i.e., 20021225 for the 25th day of December in the year 2002
      */
     public static final String ISO_DATE_FORMAT = "yyyyMMdd";
 
