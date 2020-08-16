@@ -12,14 +12,12 @@ import java.io.File;
 @RestController
 public class BaseController {
     public static final String FOODIE_SHOPCART = "shopcart";
-<<<<<<< HEAD
+
     public static final String IMAGES_ERVER_URL = "http://api.z.mukewang.com:8088/foodie/faces";
     //微信支付成功 -> 支付中心 -> 天天吃货平台 （会调通知的Url）公网IP才能接收到回调通知
-=======
-    public static final String IMAGES_ERVER_URL = "http://localhost:8088/foodie/faces";
+
     public static final String REDIS_USER_TOKEN = "redis_user_token";
     //微信支付成功 -> 支付中心 -> 天天吃货平台 （会调通知的Url）
->>>>>>> master
     public static final String payReturnUrl = "http://localhost:8088/orders/notifyMerchantOrderPaid";
     String paymentUrl = "http://payment.t.mukewang.com/foodie-payment/payment/createMerchantOrder";
 
