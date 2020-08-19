@@ -109,10 +109,10 @@ public class ItemsController {
             @RequestParam(defaultValue = "10", required = false) Integer pageSize
     ) {
 
-        if (StringUtils.isBlank(keywords)) {
+        if (StringUtils.isBlank(keywords) || page == 0 || pageSize == 0) {
             throw new DataNullException(44400);
         }
-
+        System.out.println(pageSize);
         PagedGridResult pagedGridResult = itemService.searchItems(keywords, sort, page, pageSize);
         return IMOOCJSONResult.ok(pagedGridResult);
     }
@@ -131,7 +131,7 @@ public class ItemsController {
             @RequestParam(defaultValue = "10", required = false) Integer pageSize
     ) {
 
-        if (catId == null) {
+        if (catId == null || page == 0 || pageSize == 0) {
             throw new DataNullException(44400);
         }
 

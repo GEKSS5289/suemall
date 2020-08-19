@@ -4,10 +4,6 @@ server:
 spring:
   datasource:                                           # 数据源的相关配置
     url: jdbc:mysql://localhost:3306/foodie-shop-dev?useUnicode=true&characterEncoding=UTF-8&autoReconnect=true&serverTimezone=GMT%2B8
-<<<<<<< HEAD
-=======
-    username: root
->>>>>>> master
     password: 123456
     username: root
   redis:
@@ -20,16 +16,14 @@ spring:
 #      master: sue-master
 #      nodes: 192.168.182.150:26379,192.168.182.151:26379,192.168.182.152:26379
     #Redis 单机实例
-<<<<<<< HEAD
 #    host: 192.168.182.150
 #    port: 6379
 #    password: shushun
-=======
     host: 192.168.182.151
     port: 6379
     password: shushun
 
->>>>>>> master
+
 mybatis:
   configuration:
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
