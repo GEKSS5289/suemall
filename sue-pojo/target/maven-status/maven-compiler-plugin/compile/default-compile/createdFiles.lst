@@ -22,6 +22,7 @@ com\sue\pojo\vo\ItemInfoVO.class
 com\sue\pojo\vo\ShopCartVO.class
 com\sue\pojo\dto\usercenterdto\OrderItemsCommentDTO.class
 com\sue\pojo\OrderStatus.class
+com\sue\pojo\vo\UsersVO.class
 com\sue\pojo\ItemsSpec.class
 com\sue\pojo\Users.class
 com\sue\pojo\UserAddress.class

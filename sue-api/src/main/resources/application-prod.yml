@@ -1,6 +1,14 @@
 server:
-  port: 80
+  port: 8099
 spring:
+  application:
+    name: sue-mall
+#  boot:
+#    admin:
+#      client:
+#        url: http://localhost:8988
+#        instance:
+#          name: sue-mall
   datasource:
     url: jdbc:mysql://192.168.182.150:3306/foodie-shop-dev?useUnicode=true&characterEncoding=UTF-8&autoReconnect=true&serverTimezone=GMT%2B8
     username: root
@@ -9,3 +17,20 @@ spring:
     host: 192.168.182.151
     port: 6379
     password: shushun
+management:
+  endpoint:
+    health:
+      show-details: always
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+info:
+  project-name: sue-mall
+  author: sue
+  owner-email: xxxx
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
+excluded-datasources: dataSource
