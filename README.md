@@ -125,6 +125,7 @@
                        –http-fastcgi-temp-path	设定fastcgi临时目录
                        –http-uwsgi-temp-path	设定uwsgi临时目录
                        –http-scgi-temp-path	设定scgi临时目录
+                       
         输入make
         输入make install
     进入sbin目录启动nginx:./nginx  
