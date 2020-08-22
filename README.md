@@ -75,6 +75,9 @@
     查看状态:service mysqld status
     查看临时密码:grep "A temporary password" /var/log/mysqld.log
     更改临时密码:ALTER USER 'root'@'localhost' IDENTIFIED BY 'new password';
+    修改root用户的host为远程可访问: 
+                use mysql
+                update user set host='%' where user='root'
     配置远程访问:GRANT ALL ON *.* TO 'root'@'%';
     
     其他命令:
