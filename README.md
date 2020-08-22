@@ -76,6 +76,13 @@
     查看临时密码:grep "A temporary password" /var/log/mysqld.log
     更改临时密码:ALTER USER 'root'@'localhost' IDENTIFIED BY 'new password';
     配置远程访问:GRANT ALL ON *.* TO 'root'@'%';
+    
+    其他命令:
+        重置密码: 
+            在/etc/my.cnf 中[mysqld]后添加skip-grant-tables 重启服务 输入mysql
+            ALTER USER 'root'@'%' IDENTIFIED WITH mysql_native_password BY 'ShuShun@1558';(如果遇到问题则flush privileges;在重试此命令)
+    
+            
 # 系统多配置文件
     application.yml 主配置文件
     application-dev.yml 开发环境配置文件
