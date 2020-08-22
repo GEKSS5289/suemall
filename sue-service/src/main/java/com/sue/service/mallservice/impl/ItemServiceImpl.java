@@ -14,6 +14,10 @@ import com.sue.service.mallservice.ItemService;
 import com.sue.utils.DesensitizationUtil;
 import com.sue.utils.PagedGridResult;
 import com.sue.utils.PagedGridResultUtils;
+import lombok.extern.slf4j.Slf4j;
+import org.redisson.Redisson;
+import org.redisson.api.RLock;
+import org.redisson.api.RedissonClient;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -21,12 +25,13 @@ import tk.mybatis.mapper.entity.Example;
 
 import javax.annotation.Resource;
 import java.util.*;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @author sue
  * @date 2020/8/1 17:40
  */
-
+@Slf4j
 @Service
 public class ItemServiceImpl implements ItemService {
 
@@ -44,6 +49,9 @@ public class ItemServiceImpl implements ItemService {
 
     @Resource
     private ItemsCommentsMapper itemsCommentsMapper;
+
+    @Resource
+    private RedissonClient redissonClient;
 
     /**
      * 根据商品Id查询详情
@@ -276,11 +284,24 @@ public class ItemServiceImpl implements ItemService {
         //synchronized () 不推荐使用 集群下无用，性能低下
         //锁数据库 不推荐 导致数据库性能低下
         //分布式锁 zookeeper redis 两个都可以做分布式锁
+
+        RLock lock = redissonClient.getLock("item_Lock" + specId);
+        lock.lock(5, TimeUnit.SECONDS);
         int result = itemsMapper.decreaseItemSpecStock(specId, buyCounts);
 
-        if (result != 1) {
-            throw new RuntimeException("订单创建失败，原因库存不足");
+        try{
+            log.info("获得了锁");
+            if (result != 1) {
+                log.info("库存不足");
+                throw new RuntimeException("订单创建失败，原因库存不足");
+            }
+        }catch (RuntimeException e){
+            throw e;
+        }finally {
+            log.info("释放了锁");
+            lock.unlock();
         }
+
 
 
     }
