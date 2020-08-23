@@ -76,7 +76,7 @@ public class OrderServiceImpl implements OrderService {
         String orderId = sid.nextShort();
         Orders newOrders = new Orders(orderId, submitOrderDTO, userAddress);
 
-
+        ordersMapper.insert(newOrders);
         //2.循环根据itemSpecIds保存订单商品信息表
         String itemSpecIdArr[] = itemSpecIds.split(",");
         Integer totalAmount = 0;
@@ -127,7 +127,8 @@ public class OrderServiceImpl implements OrderService {
 
         newOrders.setTotalAmount(totalAmount);
         newOrders.setRealPayAmount(realPayAmount);
-        ordersMapper.insert(newOrders);
+        newOrders.setUserId(null);
+        ordersMapper.updateByPrimaryKeySelective(newOrders);
 
 
         //3.保存订单状态表

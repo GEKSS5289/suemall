@@ -38,7 +38,7 @@ spring:
       max-file-size: 512000
       max-request-size: 512000
   profiles:
-    active: prod
+    active: dev
 
 
 ############################################################

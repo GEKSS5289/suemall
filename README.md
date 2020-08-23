@@ -87,7 +87,7 @@
             ALTER USER 'root'@'%' IDENTIFIED WITH mysql_native_password BY 'ShuShun@1558';(如果遇到问题则flush privileges;在重试此命令)
     
             
-# 系统多配置文件
+# 系统多配置文件 
     application.yml 主配置文件
     application-dev.yml 开发环境配置文件
     application-prod.yml 生产环境配置文件

@@ -52,6 +52,8 @@ public class Orders {
         this.setLeftMsg(submitOrderDTO.getLeftMsg());
         this.setIsComment(YesOrNO.NO.type);
         this.setIsDelete(YesOrNO.NO.type);
+        this.setTotalAmount(0);
+        this.setRealPayAmount(0);
         this.setCreatedTime(new Date());
         this.setUpdatedTime(new Date());
     }
